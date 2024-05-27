@@ -543,17 +543,15 @@
         "libs": {
           "hlsparserj>=1.0.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/hlsparserj-1.0.0.jar",
           "mpd-parser>=release-0.8-jdk8": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/mpd-parser-0.8-jdk8.jar",
-          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/jackson-core-2.10.2.jar",
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/jackson-annotations-2.10.2.jar",
-          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/jackson-databind-2.10.2.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/jackson-module-jaxb-annotations-2.10.2.jar",
-          "stax2-api>=4.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/stax2-api-4.2.jar",
-          "woodstox-core>=5.3.0":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/woodstox-core-5.3.0.jar"
+          "jackson-core>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/jackson-core-2.10.2.jar",
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/jackson-databind-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/jackson-module-jaxb-annotations-2.10.2.jar",
+          "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/stax2-api-4.2.jar",
+          "woodstox-core>=5.3.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/woodstox-core-5.3.0.jar"
         },
-        "depends": [
-          "jmeter-http"
-        ]
+        "depends": ["jmeter-http"]
       },
       "3.0.1": {
         "changes": "Patch fix for playlist reload timing and behaviour for interrupted tests",
@@ -561,17 +559,15 @@
         "libs": {
           "hlsparserj>=1.0.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/hlsparserj-1.0.0.jar",
           "mpd-parser>=release-0.8-jdk8": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/mpd-parser-0.8-jdk8.jar",
-          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/jackson-core-2.10.2.jar",
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/jackson-annotations-2.10.2.jar",
-          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/jackson-databind-2.10.2.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/jackson-module-jaxb-annotations-2.10.2.jar",
-          "stax2-api>=4.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/stax2-api-4.2.jar",
-          "woodstox-core>=5.3.0":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/woodstox-core-5.3.0.jar"
+          "jackson-core>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/jackson-core-2.10.2.jar",
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/jackson-databind-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/jackson-module-jaxb-annotations-2.10.2.jar",
+          "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/stax2-api-4.2.jar",
+          "woodstox-core>=5.3.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/woodstox-core-5.3.0.jar"
         },
-        "depends": [
-          "jmeter-http"
-        ]
+        "depends": ["jmeter-http"]
       },
       "3.0.2": {
         "changes": "Patch fix for equals signs on URIs, subtitles better handled",
@@ -579,17 +575,15 @@
         "libs": {
           "hlsparserj>=1.0.1-c287e78": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/hlsparserj-c287e78.jar",
           "mpd-parser>=release-0.8-jdk8": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/mpd-parser-0.8-jdk8.jar",
-          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-core-2.10.2.jar",
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-annotations-2.10.2.jar",
-          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-databind-2.10.2.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-module-jaxb-annotations-2.10.2.jar",
-          "stax2-api>=4.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/stax2-api-4.2.jar",
-          "woodstox-core>=5.3.0":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/woodstox-core-5.3.0.jar"
+          "jackson-core>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-core-2.10.2.jar",
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-databind-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-module-jaxb-annotations-2.10.2.jar",
+          "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/stax2-api-4.2.jar",
+          "woodstox-core>=5.3.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/woodstox-core-5.3.0.jar"
         },
-        "depends": [
-          "jmeter-http"
-        ]
+        "depends": ["jmeter-http"]
       },
       "3.0.3": {
         "changes": "Patch fix master-slave tests & URL protocol recognition improved",
@@ -597,17 +591,15 @@
         "libs": {
           "hlsparserj>=1.0.1-c287e78": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/hlsparserj-c287e78.jar",
           "mpd-parser>=release-0.8-jdk8": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/mpd-parser-0.8-jdk8.jar",
-          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/jackson-core-2.10.2.jar",
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/jackson-annotations-2.10.2.jar",
-          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/jackson-databind-2.10.2.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/jackson-module-jaxb-annotations-2.10.2.jar",
-          "stax2-api>=4.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/stax2-api-4.2.jar",
-          "woodstox-core>=5.3.0":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/woodstox-core-5.3.0.jar"
+          "jackson-core>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/jackson-core-2.10.2.jar",
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/jackson-databind-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/jackson-module-jaxb-annotations-2.10.2.jar",
+          "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/stax2-api-4.2.jar",
+          "woodstox-core>=5.3.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/woodstox-core-5.3.0.jar"
         },
-        "depends": [
-          "jmeter-http"
-        ]
+        "depends": ["jmeter-http"]
       },
       "3.1": {
         "changes": "Improved protocol recognition and fixed minor dash issues",
@@ -615,14 +607,14 @@
         "libs": {
           "hlsparserj>=1.0.1-c287e78": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/hlsparserj-c287e78.jar",
           "mpd-parser>=release-0.8-jdk8": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/mpd-parser-0.8-jdk8.jar",
-          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-core-2.10.2.jar",
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-annotations-2.10.2.jar",
-          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-databind-2.10.2.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-module-jaxb-annotations-2.10.2.jar",
-          "jaxb-api>=2.3.1":"https://repo1.maven.org/maven2/javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar",
-          "stax2-api>=4.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/stax2-api-4.2.jar",
-          "woodstox-core>=5.3.0":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/woodstox-core-5.3.0.jar"
+          "jackson-core>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-core-2.10.2.jar",
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-databind-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-module-jaxb-annotations-2.10.2.jar",
+          "jaxb-api>=2.3.1": "https://repo1.maven.org/maven2/javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar",
+          "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/stax2-api-4.2.jar",
+          "woodstox-core>=5.3.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/woodstox-core-5.3.0.jar"
         },
         "depends": [
           "jmeter-http"
@@ -1151,214 +1143,219 @@
         "changes": "Siebel Plugin has evolved into Correlation Recorder with lots of new features. Please check documentation to learn about all the new goodies!",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jmeter-bzm-correlation-recorder-1.0.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-annotations-2.10.2.jar",
-          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-databind-2.10.2.jar",
-          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-core-2.10.2.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-module-jaxb-annotations-2.10.2.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-databind-2.10.2.jar",
+          "jackson-core>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-core-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-module-jaxb-annotations-2.10.2.jar"
         }
       },
       "1.1": {
         "changes": "Improvement in ui, documentation and new functionalities for Correlation Extractor and Replacements ",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jmeter-bzm-correlation-recorder-1.1.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-annotations-2.10.2.jar",
-          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-databind-2.10.2.jar",
-          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-core-2.10.2.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-module-jaxb-annotations-2.10.2.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-databind-2.10.2.jar",
+          "jackson-core>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-core-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-module-jaxb-annotations-2.10.2.jar"
         }
       },
       "1.1.1": {
         "changes": "Fixed issue with duplicated rules with disable them",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jmeter-bzm-correlation-recorder-1.1.1.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-annotations-2.10.2.jar",
-          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-databind-2.10.2.jar",
-          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-core-2.10.2.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-module-jaxb-annotations-2.10.2.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-databind-2.10.2.jar",
+          "jackson-core>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-core-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-module-jaxb-annotations-2.10.2.jar"
         }
       },
       "1.1.2": {
         "changes": "Fixed issue that removed equals sign from request body",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jmeter-bzm-correlation-recorder-1.1.2.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-annotations-2.10.2.jar",
-          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-databind-2.10.2.jar",
-          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-core-2.10.2.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-module-jaxb-annotations-2.10.2.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-databind-2.10.2.jar",
+          "jackson-core>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-core-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-module-jaxb-annotations-2.10.2.jar"
         }
       },
       "1.2": {
         "changes": "Added Groups of Correlation Rules",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jmeter-bzm-correlation-recorder-1.2.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-annotations-2.12.0.jar",
-          "jackson-databind>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-databind-2.12.0.jar",
-          "jackson-core>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-core-2.12.0.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-module-jaxb-annotations-2.10.2.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.12.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-annotations-2.12.0.jar",
+          "jackson-databind>=2.12.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-databind-2.12.0.jar",
+          "jackson-core>=2.12.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-core-2.12.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-module-jaxb-annotations-2.10.2.jar"
         }
       },
       "1.2.2": {
         "changes": "Provided some minor fixes and tweaks for the Regex Extractors, UI behaviors and Correlation Repositories.",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.2/jmeter-bzm-correlation-recorder-1.2.2.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.2/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.2/jackson-annotations-2.12.0.jar",
-          "jackson-databind>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.2/jackson-databind-2.12.0.jar",
-          "jackson-core>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.2/jackson-core-2.12.0.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.2/jackson-module-jaxb-annotations-2.10.2.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.2/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.12.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.2/jackson-annotations-2.12.0.jar",
+          "jackson-databind>=2.12.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.2/jackson-databind-2.12.0.jar",
+          "jackson-core>=2.12.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.2/jackson-core-2.12.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.2/jackson-module-jaxb-annotations-2.10.2.jar"
         }
       },
       "1.2.3": {
         "changes": "Improved compatibility with new versions of JMeter and with MS Windows.",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jmeter-bzm-correlation-recorder-1.2.3.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jackson-annotations-2.12.0.jar",
-          "jackson-databind>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jackson-databind-2.12.0.jar",
-          "jackson-core>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jackson-core-2.12.0.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jackson-module-jaxb-annotations-2.10.2.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.12.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jackson-annotations-2.12.0.jar",
+          "jackson-databind>=2.12.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jackson-databind-2.12.0.jar",
+          "jackson-core>=2.12.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jackson-core-2.12.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jackson-module-jaxb-annotations-2.10.2.jar"
         }
       },
       "2.0": {
         "changes": "Added support for automatic correlations and rules analysis, alongside general improvements.",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jmeter-bzm-correlation-recorder-2.0.0.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-annotations-2.13.0.jar",
-          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-databind-2.13.0.jar",
-          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-core-2.13.0.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-module-jaxb-annotations-2.10.2.jar",
-		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jmeter-bzm-commons-0.2.1.jar",
-		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/json-20190722.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-module-jaxb-annotations-2.10.2.jar",
+          "jmeter-bzm-commons>=0.2.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jmeter-bzm-commons-0.2.1.jar",
+          "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/json-20190722.jar"
         }
       },
       "2.0.1": {
         "changes": "Fixed a UI update lock issue.",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jmeter-bzm-correlation-recorder-2.0.1.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-annotations-2.13.0.jar",
-          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-databind-2.13.0.jar",
-          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-core-2.13.0.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-module-jaxb-annotations-2.10.2.jar",
-		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jmeter-bzm-commons-0.2.1.jar",
-		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/json-20190722.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-module-jaxb-annotations-2.10.2.jar",
+          "jmeter-bzm-commons>=0.2.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jmeter-bzm-commons-0.2.1.jar",
+          "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/json-20190722.jar"
         }
       },
       "2.0.2": {
         "changes": "Minor fixes and improvements in rule export.",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jmeter-bzm-correlation-recorder-2.0.2.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-annotations-2.13.0.jar",
-          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-databind-2.13.0.jar",
-          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-core-2.13.0.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-module-jaxb-annotations-2.10.2.jar",
-		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jmeter-bzm-commons-0.2.1.jar",
-		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/json-20190722.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-module-jaxb-annotations-2.10.2.jar",
+          "jmeter-bzm-commons>=0.2.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jmeter-bzm-commons-0.2.1.jar",
+          "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/json-20190722.jar"
         }
       },
       "2.0.3": {
         "changes": "Minor fixes and improvements.",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jmeter-bzm-correlation-recorder-2.0.3.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-annotations-2.13.0.jar",
-          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-databind-2.13.0.jar",
-          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-core-2.13.0.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-module-jaxb-annotations-2.10.2.jar",
-		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jmeter-bzm-commons-0.2.1.jar",
-		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/json-20190722.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-module-jaxb-annotations-2.10.2.jar",
+          "jmeter-bzm-commons>=0.2.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jmeter-bzm-commons-0.2.1.jar",
+          "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/json-20190722.jar"
         }
       },
-	  "2.1": {
+      "2.1": {
         "changes": "Improvements and fixes, as well as integration with the BlazeMeter correlation rules repository.",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jmeter-bzm-correlation-recorder-2.1.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jackson-annotations-2.13.0.jar",
-          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jackson-databind-2.13.0.jar",
-          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jackson-core-2.13.0.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jackson-module-jaxb-annotations-2.10.2.jar",
-		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jmeter-bzm-commons-0.2.1.jar",
-		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/json-20190722.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jackson-module-jaxb-annotations-2.10.2.jar",
+          "jmeter-bzm-commons>=0.2.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jmeter-bzm-commons-0.2.1.jar",
+          "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/json-20190722.jar"
         },
-		"depends": [
-			"bzm-repositories"
-		]
+        "depends": ["bzm-repositories"]
       },
-	  "2.2": {
+      "2.2": {
         "changes": "Improvements and fixes, as well saving of rules to remote repositories was also incorporate.d",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jmeter-bzm-correlation-recorder-2.2.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-annotations-2.13.0.jar",
-          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-databind-2.13.0.jar",
-          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-core-2.13.0.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-module-jaxb-annotations-2.10.2.jar",
-		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jmeter-bzm-commons-0.2.1.jar",
-		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/json-20190722.jar",
-		  "maven-artifact>=3.8.4":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/maven-artifact-3.8.4.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-module-jaxb-annotations-2.10.2.jar",
+          "jmeter-bzm-commons>=0.2.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jmeter-bzm-commons-0.2.1.jar",
+          "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/json-20190722.jar",
+          "maven-artifact>=3.8.4": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/maven-artifact-3.8.4.jar"
         },
-		"depends": [
-			"bzm-repositories"
-		]
+        "depends": ["bzm-repositories"]
       },
-	  "2.2.1": {
+      "2.2.1": {
         "changes": "Improvements and fixes",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jmeter-bzm-correlation-recorder-2.2.1.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jackson-annotations-2.13.0.jar",
-          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jackson-databind-2.13.0.jar",
-          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jackson-core-2.13.0.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jackson-module-jaxb-annotations-2.10.2.jar",
-		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jmeter-bzm-commons-0.2.1.jar",
-		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/json-20190722.jar",
-		  "maven-artifact>=3.8.4":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/maven-artifact-3.8.4.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jackson-module-jaxb-annotations-2.10.2.jar",
+          "jmeter-bzm-commons>=0.2.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/jmeter-bzm-commons-0.2.1.jar",
+          "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/json-20190722.jar",
+          "maven-artifact>=3.8.4": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/maven-artifact-3.8.4.jar"
         },
-		"depends": [
-			"bzm-repositories"
-		]
+        "depends": ["bzm-repositories"]
       },
-	  "2.3": {
+      "2.3": {
         "changes": "History Manager and bug fixes.",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jmeter-bzm-correlation-recorder-2.3.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jackson-annotations-2.13.0.jar",
-          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jackson-databind-2.13.0.jar",
-          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jackson-core-2.13.0.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jackson-module-jaxb-annotations-2.10.2.jar",
-		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jmeter-bzm-commons-0.2.1.jar",
-		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/json-20190722.jar",
-		  "maven-artifact>=3.8.4":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/maven-artifact-3.8.4.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jackson-module-jaxb-annotations-2.10.2.jar",
+          "jmeter-bzm-commons>=0.2.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/jmeter-bzm-commons-0.2.1.jar",
+          "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/json-20190722.jar",
+          "maven-artifact>=3.8.4": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/maven-artifact-3.8.4.jar"
         },
-		"depends": [
-			"bzm-repositories"
-		]
+        "depends": ["bzm-repositories"]
       },
-    "2.4": {
+      "2.4": {
         "changes": "JSON Extractor and Replacement analysis and legacy support and bug fixes",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jmeter-bzm-correlation-recorder-2.4.jar",
         "libs": {
-          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jackson-dataformat-xml-2.10.2.jar",
-          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jackson-annotations-2.13.0.jar",
-          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jackson-databind-2.13.0.jar",
-          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jackson-core-2.13.0.jar",
-          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jackson-module-jaxb-annotations-2.10.2.jar",
-      "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jmeter-bzm-commons-0.2.1.jar",
-      "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/json-20190722.jar",
-      "maven-artifact>=3.8.4":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/maven-artifact-3.8.4.jar"
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jackson-module-jaxb-annotations-2.10.2.jar",
+          "jmeter-bzm-commons>=0.2.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/jmeter-bzm-commons-0.2.1.jar",
+          "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/json-20190722.jar",
+          "maven-artifact>=3.8.4": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/maven-artifact-3.8.4.jar"
         },
-    "depends": [
-      "bzm-repositories"
-    ]
+        "depends": ["bzm-repositories"]
+      },
+      "2.5": {
+        "changes": "JSON Extractor and Replacement analysis and legacy support and bug fixes",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5/jmeter-bzm-correlation-recorder-2.5.jar",
+        "libs": {
+          "jackson-dataformat-xml>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5/jackson-module-jaxb-annotations-2.10.2.jar",
+          "jmeter-bzm-commons>=0.2.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5/jmeter-bzm-commons-0.2.1.jar",
+          "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5/json-20190722.jar",
+          "maven-artifact>=3.8.4": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5/maven-artifact-3.8.4.jar"
+        },
+        "depends": ["bzm-repositories"]
       }
     }
   },
@@ -1375,13 +1372,13 @@
       "1.0": {
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/bzm-repositories-plugin-1.0.jar"
       },
-	  "1.1": {
+      "1.1": {
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/bzm-repositories-plugin-1.1.jar"
       },
-    "1.2": {
-      "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/bzm-repositories-plugin-1.2.jar"
+      "1.2": {
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/bzm-repositories-plugin-1.2.jar"
+      }
     }
-	}
   },
   {
     "id": "mqmeter",
@@ -1430,43 +1427,43 @@
     "versions": {
       "0.5.5": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.5.5/citrix-jmeter-0.5.5.jar",
-        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
       },
       "0.6.0": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.6.0/citrix-jmeter-0.6.0.jar",
-        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
       },
       "0.7.0": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.0/citrix-jmeter-0.7.0.jar",
-        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
       },
       "0.7.1": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.1/citrix-jmeter-0.7.1.jar",
-        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
       },
-	  "0.7.2": {
+      "0.7.2": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.2/citrix-jmeter-0.7.2.jar",
-        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
       },
-	  "0.7.3": {
+      "0.7.3": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.3/citrix-jmeter-0.7.3.jar",
-        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
       },
-	  "0.7.4": {
+      "0.7.4": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.4/citrix-jmeter-0.7.4.jar",
-        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
       },
-	  "0.7.5": {
+      "0.7.5": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.5/citrix-jmeter-0.7.5.jar",
-        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
       },
-	  "0.7.6": {
+      "0.7.6": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.6/citrix-jmeter-0.7.6.jar",
-        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
       },
-	  "0.7.7": {
+      "0.7.7": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.7/citrix-jmeter-0.7.7.jar",
-        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
       }
     }
   }

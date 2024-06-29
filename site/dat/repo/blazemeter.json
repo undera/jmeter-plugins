@@ -1049,8 +1049,8 @@
   },
   {
     "id": "bzm-siebel",
-    "name": "BlazeMeter - Correlation Recorder Plugin",
-    "description": "Correlation Recorder provides auto-correlation of variables at recording time",
+    "name": "BlazeMeter - Auto Correlation Recorder Plugin",
+    "description": "Auto Correlation Recorder provides automatic correlation and detection of variables at recording time",
     "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/CorrelationRecorder/master/docs/jmeterpluginsScreenshot.png",
     "helpUrl": "https://github.com/Blazemeter/CorrelationRecorder/blob/master/README.md",
     "vendor": "BlazeMeter",
@@ -1288,7 +1288,7 @@
   {
     "id": "bzm-repositories",
     "name": "BlazeMeter - Repositories",
-    "description": "BlazeMeter repositories functionality for the Correlation Recorder Plugin",
+    "description": "BlazeMeter repositories functionality for the Auto Correlation Recorder Plugin",
     "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/CorrelationRecorder/master/docs/bzmRepositoriesScreenshot.png",
     "helpUrl": "https://blazemeter.github.io/CorrelationRecorder/guide/installation-guide.html#integration-with-blazemeter",
     "vendor": "BlazeMeter",

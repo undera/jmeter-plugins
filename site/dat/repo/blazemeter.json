@@ -10,30 +10,42 @@
     "versions": {
       "0.1": {
         "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/jmeter-debugger-0.1.jar",
-        "depends": ["jmeter-core"]
+        "depends": [
+          "jmeter-core"
+        ]
       },
       "0.2": {
         "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/jmeter-debugger-0.2.jar",
-        "depends": ["jmeter-core"]
+        "depends": [
+          "jmeter-core"
+        ]
       },
       "0.3": {
         "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/jmeter-debugger-0.3.jar",
-        "depends": ["jmeter-core"]
+        "depends": [
+          "jmeter-core"
+        ]
       },
       "0.4": {
         "changes": "Fixed bugs on not evaluating variables",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.4/jmeter-debugger-0.4.jar",
-        "depends": ["jmeter-core"]
+        "depends": [
+          "jmeter-core"
+        ]
       },
       "0.5": {
         "changes": "<p>- Add last sampler result tab;</p><p>- Choose TG from context of tree;</p><p>- Fixed italic font in tree not shown on Mac;</p><p>- Fixed blue color for current element is blue-on-blue for Mac;</p><p>- Fixed logging lab for old jmeter versions;</p><p>- Fixed clear data in info tabs and listeners;</p><p>- Fixed modification thread groups;</p>",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.5/jmeter-debugger-0.5.jar",
-        "depends": ["jmeter-core"]
+        "depends": [
+          "jmeter-core"
+        ]
       },
       "0.6": {
         "changes": "Fix variables in assertions",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.6/jmeter-debugger-0.6.jar",
-        "depends": ["jmeter-core"]
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },
@@ -161,7 +173,9 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "0.2": {
         "changes": "Fixed class name clash with Debugger plugin",
@@ -169,7 +183,9 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "0.3": {
         "changes": "Fixed remote execution",
@@ -177,7 +193,9 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "0.4": {
         "changes": "Fixed reset Thread Context in all AbstractTestElements",
@@ -185,7 +203,9 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "0.5": {
         "changes": "Fixed Concurrency Modification exception for Config elements",
@@ -193,7 +213,9 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "0.7": {
         "changes": "Fixed unnecessary TE clone",
@@ -201,7 +223,9 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "0.8": {
         "changes": "Fixed sample labels for JMeter 5.0",
@@ -209,7 +233,9 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "0.9": {
         "changes": "Fixed Test Actions (Start Next Thread Loop, Stop Thread, Stop All Threads)",
@@ -217,7 +243,9 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "0.10": {
         "changes": "Add ability to limit the number of thread to start to simulate browser's real threading",
@@ -225,7 +253,9 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "0.11": {
         "changes": "Fix parallel controller for JMeter 5.3+",
@@ -233,7 +263,9 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "0.12": {
         "changes": "Fix parallel controller for JMeter 5.6.x",
@@ -241,7 +273,9 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },
@@ -473,21 +507,29 @@
     "versions": {
       "1.0": {
         "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/jmeter-hls-1.0/jmeter-hls-1.0.jar",
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "1.1": {
         "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/jmeter-hls-1.1/jmeter-hls-1.1.jar",
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "1.2": {
         "changes": "Some bugs fixed",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/jmeter-hls-1.2/jmeter-hls-1.2.jar",
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "1.3": {
         "changes": "Plugin name has been changed to continue with the convention of BlazeMeter plugins.\nLogo has been added.\nIssue in live stream when it did not show results in View Results Tree has been fixed.",
         "downloadUrl": "https://github.com/Blazemeter/HLSPlugin/releases/download/v1.3/jmeter-hls-1.3.jar",
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "2.0": {
         "changes": "Major new release with a lot of bug fixes and new features (simplified UI, granular assertions, etc). Please check the readme",
@@ -495,7 +537,9 @@
         "libs": {
           "hlsparserj>=1.0.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v2.0/hlsparserj-1.0.0.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "3.0": {
         "changes": "Major new release with support for MPEG DASH and new features (like automatic protocol recognition, sampler renaming, etc). Please check the readme",
@@ -511,7 +555,9 @@
           "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/stax2-api-4.2.jar",
           "woodstox-core>=5.3.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/woodstox-core-5.3.0.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "3.0.1": {
         "changes": "Patch fix for playlist reload timing and behaviour for interrupted tests",
@@ -527,7 +573,9 @@
           "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/stax2-api-4.2.jar",
           "woodstox-core>=5.3.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.1/woodstox-core-5.3.0.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "3.0.2": {
         "changes": "Patch fix for equals signs on URIs, subtitles better handled",
@@ -543,7 +591,9 @@
           "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/stax2-api-4.2.jar",
           "woodstox-core>=5.3.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/woodstox-core-5.3.0.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "3.0.3": {
         "changes": "Patch fix master-slave tests & URL protocol recognition improved",
@@ -559,7 +609,9 @@
           "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/stax2-api-4.2.jar",
           "woodstox-core>=5.3.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.3/woodstox-core-5.3.0.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       },
       "3.1": {
         "changes": "Improved protocol recognition and fixed minor dash issues",
@@ -576,7 +628,9 @@
           "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/stax2-api-4.2.jar",
           "woodstox-core>=5.3.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/woodstox-core-5.3.0.jar"
         },
-        "depends": ["jmeter-http"]
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },
@@ -600,7 +654,9 @@
       "1.6.2": {
         "changes": "Archive Java 8 HTTP2 Plugin",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.2/jmeter-bzm-http2-1.6.2.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.2/http2-client-9.4.35.v20201120.jar",
           "http2-common>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.2/http2-common-9.4.35.v20201120.jar",
@@ -629,7 +685,9 @@
     "versions": {
       "1.0": {
         "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/http2-1.0/jmeter-bzm-http2-1.0.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar",
           "jetty-client": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-client/9.4.0.v20161208/jetty-client-9.4.0.v20161208.jar",
@@ -646,7 +704,9 @@
       "1.1": {
         "changes": "Fix memory leak and JTL output error",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.1/jmeter-bzm-http2-1.1.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar",
           "jetty-client": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-client/9.4.0.v20161208/jetty-client-9.4.0.v20161208.jar",
@@ -663,7 +723,9 @@
       "1.2": {
         "changes": "Fix HTTP2 plugin POST support to include proper request and fix issue with callback handler",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.2/jmeter-bzm-http2-1.2.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.9.v20180320/http2-client-9.4.9.v20180320.jar",
           "http2-common>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.9.v20180320/http2-common-9.4.9.v20180320.jar",
@@ -678,7 +740,9 @@
       "1.3": {
         "changes": "Added support for standards JMeter listeners and partial support for push promise",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.3/jmeter-bzm-http2-1.3.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.9.v20180320/http2-client-9.4.9.v20180320.jar",
           "http2-common>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.9.v20180320/http2-common-9.4.9.v20180320.jar",
@@ -693,7 +757,9 @@
       "1.4": {
         "changes": "Fixed serialization issue for JMeter distributed mode",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.4/jmeter-bzm-http2-1.4.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.9.v20180320/http2-client-9.4.9.v20180320.jar",
           "http2-common>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.9.v20180320/http2-common-9.4.9.v20180320.jar",
@@ -708,7 +774,9 @@
       "1.4.1": {
         "changes": "Fix issue handling http responses without body (like 204 status code)",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/jmeter-bzm-http2-1.4.1.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=9.4.9.v20180320": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/http2-client-9.4.9.v20180320.jar",
           "http2-common>=9.4.9.v20180320": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/http2-common-9.4.9.v20180320.jar",
@@ -723,7 +791,9 @@
       "1.5": {
         "changes": "Request methods PATCH & DELETE were added. Also support for no SSL connections and libraries updated.",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/jmeter-bzm-http2-1.5.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/http2-client-9.4.26.v20200117.jar",
           "http2-common>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/http2-common-9.4.26.v20200117.jar",
@@ -738,7 +808,9 @@
       "1.6": {
         "changes": "Added support for Gzip in response headers and added data frame to PUT method",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jmeter-bzm-http2-1.6.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/http2-client-9.4.26.v20200117.jar",
           "http2-common>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/http2-common-9.4.26.v20200117.jar",
@@ -753,7 +825,9 @@
       "1.6.1": {
         "changes": "Updated Jetty dependencies",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/jmeter-bzm-http2-1.6.1.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/http2-client-9.4.35.v20201120.jar",
           "http2-common>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/http2-common-9.4.35.v20201120.jar",
@@ -768,7 +842,9 @@
       "2.0": {
         "changes": "Major release using as baseline Java 11 and Jetty 11, proxy support and many other new functionalities!",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/jmeter-bzm-http2-2.0.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/http2-client-11.0.6.jar",
           "http2-common>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/http2-common-11.0.6.jar",
@@ -785,7 +861,9 @@
       "2.0.1": {
         "changes": "Fixed NPE issues with resources took too long to answer",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/jmeter-bzm-http2-2.0.1.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/http2-client-11.0.6.jar",
           "http2-common>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/http2-common-11.0.6.jar",
@@ -802,7 +880,9 @@
       "2.0.2": {
         "changes": "Improvements in performance, memory usage and connections",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.2/jmeter-bzm-http2-2.0.2.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=11.0.10": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.2/http2-client-11.0.10.jar",
           "http2-common>=11.0.10": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.2/http2-common-11.0.10.jar",
@@ -819,7 +899,9 @@
       "2.0.3": {
         "changes": "Added support for HTTP 1.x, ALPN, multiplexing, and parallel execution. Also improvements in performance, memory and connection usage",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/jmeter-bzm-http2-2.0.3.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/http2-client-11.0.15.jar",
           "http2-common>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/http2-common-11.0.15.jar",
@@ -836,7 +918,9 @@
       "2.0.4": {
         "changes": "Added support for JMeter 5.6.x",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/jmeter-bzm-http2-2.0.4.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/http2-client-11.0.15.jar",
           "http2-common>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/http2-common-11.0.15.jar",
@@ -853,7 +937,9 @@
       "2.0.5": {
         "changes": "Fixes around iteration support in Thread Group and Loop Controllers, fixes in embedded resources, and better support for HTTP/1.",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/jmeter-bzm-http2-2.0.5.jar",
-        "depends": ["jmeter-http"],
+        "depends": [
+          "jmeter-http"
+        ],
         "libs": {
           "http2-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/http2-client-11.0.15.jar",
           "http2-common>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/http2-common-11.0.15.jar",
@@ -1206,7 +1292,9 @@
           "jmeter-bzm-commons>=0.2.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jmeter-bzm-commons-0.2.1.jar",
           "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/json-20190722.jar"
         },
-        "depends": ["bzm-repositories"]
+        "depends": [
+          "bzm-repositories"
+        ]
       },
       "2.2": {
         "changes": "Improvements and fixes, as well saving of rules to remote repositories was also incorporate.d",
@@ -1221,7 +1309,9 @@
           "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/json-20190722.jar",
           "maven-artifact>=3.8.4": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/maven-artifact-3.8.4.jar"
         },
-        "depends": ["bzm-repositories"]
+        "depends": [
+          "bzm-repositories"
+        ]
       },
       "2.2.1": {
         "changes": "Improvements and fixes",
@@ -1236,7 +1326,9 @@
           "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/json-20190722.jar",
           "maven-artifact>=3.8.4": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2.1/maven-artifact-3.8.4.jar"
         },
-        "depends": ["bzm-repositories"]
+        "depends": [
+          "bzm-repositories"
+        ]
       },
       "2.3": {
         "changes": "History Manager and bug fixes.",
@@ -1251,7 +1343,9 @@
           "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/json-20190722.jar",
           "maven-artifact>=3.8.4": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.3/maven-artifact-3.8.4.jar"
         },
-        "depends": ["bzm-repositories"]
+        "depends": [
+          "bzm-repositories"
+        ]
       },
       "2.4": {
         "changes": "JSON Extractor and Replacement analysis and legacy support and bug fixes",
@@ -1266,7 +1360,9 @@
           "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/json-20190722.jar",
           "maven-artifact>=3.8.4": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.4/maven-artifact-3.8.4.jar"
         },
-        "depends": ["bzm-repositories"]
+        "depends": [
+          "bzm-repositories"
+        ]
       },
       "2.5": {
         "changes": "JSON Extractor and Replacement support on automatic comparison and variable detection",
@@ -1281,7 +1377,19 @@
           "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5/json-20190722.jar",
           "maven-artifact>=3.8.4": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5/maven-artifact-3.8.4.jar"
         },
-        "depends": ["bzm-repositories"]
+        "depends": [
+          "bzm-repositories"
+        ]
+      },
+      "2.5.1": {
+        "changes": "",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5.1/jmeter-bzm-correlation-recorder-2.5.1.jar",
+        "libs": {
+          "": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5.1/jackson-annotations-2.13.3.jar\nhttps://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5.1/jackson-core-2.13.3.jar\nhttps://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5.1/jackson-databind-2.10.3.jar\nhttps://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5.1/jackson-dataformat-xml-2.10.3.jar\nhttps://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5.1/jackson-module-jaxb-annotations-2.10.3.jar\nhttps://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5.1/jmeter-bzm-commons-0.2.1.jar\nhttps://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5.1/jmeter-bzm-correlation-recorder-2.5.1.jar\nhttps://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5.1/json-20190722.jar\nhttps://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.5.1/maven-artifact-3.8.4.jar"
+        },
+        "depends": [
+          "bzm-repositories"
+        ]
       }
     }
   },
@@ -1353,43 +1461,83 @@
     "versions": {
       "0.5.5": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.5.5/citrix-jmeter-0.5.5.jar",
-        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": [
+          "jmeter-core",
+          "jmeter-components",
+          "jmeter-http"
+        ]
       },
       "0.6.0": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.6.0/citrix-jmeter-0.6.0.jar",
-        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": [
+          "jmeter-core",
+          "jmeter-components",
+          "jmeter-http"
+        ]
       },
       "0.7.0": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.0/citrix-jmeter-0.7.0.jar",
-        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": [
+          "jmeter-core",
+          "jmeter-components",
+          "jmeter-http"
+        ]
       },
       "0.7.1": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.1/citrix-jmeter-0.7.1.jar",
-        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": [
+          "jmeter-core",
+          "jmeter-components",
+          "jmeter-http"
+        ]
       },
       "0.7.2": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.2/citrix-jmeter-0.7.2.jar",
-        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": [
+          "jmeter-core",
+          "jmeter-components",
+          "jmeter-http"
+        ]
       },
       "0.7.3": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.3/citrix-jmeter-0.7.3.jar",
-        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": [
+          "jmeter-core",
+          "jmeter-components",
+          "jmeter-http"
+        ]
       },
       "0.7.4": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.4/citrix-jmeter-0.7.4.jar",
-        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": [
+          "jmeter-core",
+          "jmeter-components",
+          "jmeter-http"
+        ]
       },
       "0.7.5": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.5/citrix-jmeter-0.7.5.jar",
-        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": [
+          "jmeter-core",
+          "jmeter-components",
+          "jmeter-http"
+        ]
       },
       "0.7.6": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.6/citrix-jmeter-0.7.6.jar",
-        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": [
+          "jmeter-core",
+          "jmeter-components",
+          "jmeter-http"
+        ]
       },
       "0.7.7": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.7/citrix-jmeter-0.7.7.jar",
-        "depends": ["jmeter-core", "jmeter-components", "jmeter-http"]
+        "depends": [
+          "jmeter-core",
+          "jmeter-components",
+          "jmeter-http"
+        ]
       }
     }
   }

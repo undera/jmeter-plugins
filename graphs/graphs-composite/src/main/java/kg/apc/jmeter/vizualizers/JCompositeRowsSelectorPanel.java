@@ -132,13 +132,19 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
     }
 
     private synchronized void updateTree() {
-        //get previous selection
         TreePath selection = jTreeGraph1.getSelectionPath();
+        boolean chartsUpdated = updateVisualizers();
+        chartsUpdated |= addOrUpdateCharts();
 
-        //rows will not disapear, only chart if cleared...
+        if (chartsUpdated) {
+            model1.nodeStructureChanged(root1);
+            expandAll(jTreeGraph1, true);
+            jTreeGraph1.setSelectionPath(selection);
+        }
+    }
+
+    private boolean updateVisualizers() {
         boolean chartsUpdated = false;
-
-        //first, check if we need to remove some vizualizers
         for (int i = 0; i < root1.getChildCount(); i++) {
             TreeNode node = root1.getChildAt(i);
             if (!compositeModel.containsVisualizer(node.toString())) {
@@ -147,39 +153,46 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
                 i--;
             }
         }
+        return chartsUpdated;
+    }
 
+    private boolean addOrUpdateCharts() {
+        boolean chartsUpdated = false;
         Iterator<String> chartsIter = compositeModel.getVizualizerNamesIterator();
+
         while (chartsIter.hasNext()) {
             String chartName = chartsIter.next();
-            if (!isNodeContained(chartName, root1)) {
-                chartsUpdated = true;
-                DefaultMutableTreeNode node1 = new DefaultMutableTreeNode(chartName, true);
-                root1.add(node1);
-                Iterator<AbstractGraphRow> rowsIter = compositeModel.getRowsIterator(chartName);
-                while (rowsIter.hasNext()) {
-                    AbstractGraphRow row = rowsIter.next();
-                    node1.add(new DefaultMutableTreeNode(row.getLabel(), false));
-                }
-            } else {
-                Iterator<AbstractGraphRow> rowsIter = compositeModel.getRowsIterator(chartName);
-                DefaultMutableTreeNode chartNode1 = getNode(chartName, root1);
+            chartsUpdated |= addOrUpdateChart(chartName);
+        }
+        return chartsUpdated;
+    }
 
-                while (rowsIter.hasNext()) {
-                    String rowName = rowsIter.next().getLabel();
-                    if (!isNodeContained(rowName, chartNode1)) {
-                        chartsUpdated = true;
-                        chartNode1.add(new DefaultMutableTreeNode(rowName, false));
-                    }
-                }
+    private boolean addOrUpdateChart(String chartName) {
+        boolean chartsUpdated = false;
+        if (!isNodeContained(chartName, root1)) {
+            chartsUpdated = true;
+            DefaultMutableTreeNode node1 = new DefaultMutableTreeNode(chartName, true);
+            root1.add(node1);
+            chartsUpdated |= addRowsToNode(chartName, node1);
+        } else {
+            DefaultMutableTreeNode chartNode1 = getNode(chartName, root1);
+            chartsUpdated |= addRowsToNode(chartName, chartNode1);
+        }
+        return chartsUpdated;
+    }
+
+    private boolean addRowsToNode(String chartName, DefaultMutableTreeNode node) {
+        boolean rowsAdded = false;
+        Iterator<AbstractGraphRow> rowsIter = compositeModel.getRowsIterator(chartName);
+
+        while (rowsIter.hasNext()) {
+            String rowName = rowsIter.next().getLabel();
+            if (!isNodeContained(rowName, node)) {
+                rowsAdded = true;
+                node.add(new DefaultMutableTreeNode(rowName, false));
             }
         }
-
-        if (chartsUpdated) {
-            model1.nodeStructureChanged(root1);
-            expandAll(jTreeGraph1, true);
-            //restore selection
-            jTreeGraph1.setSelectionPath(selection);
-        }
+        return rowsAdded;
     }
 
     /**

@@ -146,32 +146,32 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
         editConstraints.weightx = 1.0;
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-        addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Filename: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 1, filename = new JTextField(20));
+        addToPanel(mainPanel, new PanelConstraints(labelConstraints, 0, 1), new JLabel("Filename: ", JLabel.RIGHT));
+        addToPanel(mainPanel, new PanelConstraints(editConstraints, 1, 1), filename = new JTextField(20));
         JButton browseButton = new JButton("Browse...");
-        addToPanel(mainPanel, labelConstraints, 2, 1, browseButton);
+        addToPanel(mainPanel, new PanelConstraints(labelConstraints, 2, 1), browseButton);
         GuiBuilderHelper.strechItemToComponent(filename, browseButton);
         browseButton.addActionListener(new BrowseAction(filename));
 
-        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Overwrite existing file: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, overwrite = new JCheckBox());
+        addToPanel(mainPanel, new PanelConstraints(labelConstraints, 0, 2), new JLabel("Overwrite existing file: ", JLabel.RIGHT));
+        addToPanel(mainPanel, new PanelConstraints(editConstraints, 1, 2), overwrite = new JCheckBox());
 
-        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Write File Header: ", JLabel.RIGHT));
+        addToPanel(mainPanel, new PanelConstraints(labelConstraints, 0, 3), new JLabel("Write File Header: ", JLabel.RIGHT));
         header = new JTextArea();
         header.setLineWrap(true);
-        addToPanel(mainPanel, editConstraints, 1, 3, GuiBuilderHelper.getTextAreaScrollPaneContainer(header, 3));
+        addToPanel(mainPanel, new PanelConstraints(editConstraints, 1, 3), GuiBuilderHelper.getTextAreaScrollPaneContainer(header, 3));
 
         editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
-        addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Record each sample as: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 4, columns = new JTextField(20));
+        addToPanel(mainPanel, new PanelConstraints(labelConstraints, 0, 4), new JLabel("Record each sample as: ", JLabel.RIGHT));
+        addToPanel(mainPanel, new PanelConstraints(editConstraints, 1, 4), columns = new JTextField(20));
 
         editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
-        addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Write File Footer: ", JLabel.RIGHT));
+        addToPanel(mainPanel, new PanelConstraints(labelConstraints, 0, 5), new JLabel("Write File Footer: ", JLabel.RIGHT));
         footer = new JTextArea();
         footer.setLineWrap(true);
-        addToPanel(mainPanel, editConstraints, 1, 5, GuiBuilderHelper.getTextAreaScrollPaneContainer(footer, 3));
+        addToPanel(mainPanel, new PanelConstraints(editConstraints, 1, 5), GuiBuilderHelper.getTextAreaScrollPaneContainer(footer, 3));
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
@@ -229,10 +229,10 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
         return ret;
     }
 
-    private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {
-        constraints.gridx = col;
-        constraints.gridy = row;
-        panel.add(component, constraints);
+    private void addToPanel(JPanel panel, PanelConstraints constraints, JComponent component) {
+        constraints.getGridBagConstraints().gridx = constraints.getCol();
+        constraints.getGridBagConstraints().gridy = constraints.getRow();
+        panel.add(component, constraints.getGridBagConstraints());
     }
 
     @Override
@@ -240,8 +240,7 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
         // do nothing
     }
 
-    private class CopyAction
-            implements ActionListener {
+    private class CopyAction implements ActionListener {
 
         @Override
         public void actionPerformed(final ActionEvent e) {
@@ -270,5 +269,29 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
             };
             clipboard.setContents(transferable, FlexibleFileWriterGui.this);
         }
+    }
+}
+
+class PanelConstraints {
+    private final GridBagConstraints gridBagConstraints;
+    private final int col;
+    private final int row;
+
+    public PanelConstraints(GridBagConstraints gridBagConstraints, int col, int row) {
+        this.gridBagConstraints = gridBagConstraints;
+        this.col = col;
+        this.row = row;
+    }
+
+    public GridBagConstraints getGridBagConstraints() {
+        return gridBagConstraints;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public int getRow() {
+        return row;
     }
 }

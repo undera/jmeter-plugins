@@ -2093,6 +2093,10 @@
       "0.2.2": {
         "changes": "Fix think time calculation. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.2/jmeter-har-import-plugin-v0.2.2.jar"
+      },
+      "0.2.3": {
+        "changes": "Fix Java version incompatibility. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.3/jmeter-har-import-plugin-v0.2.3.jar"
       }
     }
   }

@@ -2116,10 +2116,6 @@
     ],
     "versions": {
       "1.1": {
-        "changes": "The json config file is used for templates",
-        "downloadUrl": "https://github.com/DanilGolikov/JmeterNamesTemplater/releases/download/v1.1/jmeter-plugins-names-templater-1.1.jar"
-      },
-      "1.1-yaml": {
         "changes": "The yaml config file is used for templates",
         "downloadUrl": "https://github.com/DanilGolikov/JmeterNamesTemplater/releases/download/v1.1-yaml/jmeter-plugins-names-templater-1.1.jar",
         "libs": {

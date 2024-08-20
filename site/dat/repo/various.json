@@ -2099,5 +2099,33 @@
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.3/jmeter-har-import-plugin-v0.2.3.jar"
       }
     }
+  },
+  {
+    "id": "JmeterNamesTemplater",
+    "name": "JMeter Names Templater",
+    "description": "Jmeter Names Templater is a plugin for Jmeter that allows you to set naming templates for elements and rename them based on a described configuration file.",
+    "vendor": "Daniil Golikov",
+    "markerClass": "com.example.jmeter.plugin.gui.RenameElementsMenuCreator",
+    "helpUrl": "https://github.com/DanilGolikov/JmeterNamesTemplater/blob/master/README.md",
+    "componentClasses": [
+      "com.example.jmeter.plugin.gui.RenameElementsMenuCreator",
+      "com.example.jmeter.plugin.gui.PrintTreeItem",
+      "com.example.jmeter.plugin.gui.RenameSelectedTreeItem",
+      "com.example.jmeter.plugin.gui.RenameTreeItem",
+      "com.example.jmeter.plugin.RunThroughTree"
+    ],
+    "versions": {
+      "1.1": {
+        "changes": "The json config file is used for templates",
+        "downloadUrl": "https://github.com/DanilGolikov/JmeterNamesTemplater/releases/download/v1.1/jmeter-plugins-names-templater-1.1.jar"
+      },
+      "1.1-yaml": {
+        "changes": "The yaml config file is used for templates",
+        "downloadUrl": "https://github.com/DanilGolikov/JmeterNamesTemplater/releases/download/v1.1-yaml/jmeter-plugins-names-templater-1.1.jar",
+        "libs": {
+          "snakeyaml": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar"
+        }
+      }
+    }
   }
 ]

@@ -2105,14 +2105,14 @@
     "name": "JMeter Names Templater",
     "description": "Jmeter Names Templater is a plugin for Jmeter that allows you to set naming templates for elements and rename them based on a described configuration file.",
     "vendor": "Daniil Golikov",
-    "markerClass": "com.example.jmeter.plugin.gui.RenameElementsMenuCreator",
+    "markerClass": "dg.jmeter.plugins.templater.gui.RenameElementsMenuCreator",
     "helpUrl": "https://github.com/DanilGolikov/JmeterNamesTemplater/blob/master/README.md",
     "componentClasses": [
-      "com.example.jmeter.plugin.gui.RenameElementsMenuCreator",
-      "com.example.jmeter.plugin.gui.PrintTreeItem",
-      "com.example.jmeter.plugin.gui.RenameSelectedTreeItem",
-      "com.example.jmeter.plugin.gui.RenameTreeItem",
-      "com.example.jmeter.plugin.RunThroughTree"
+      "dg.jmeter.plugins.templater.gui.RenameElementsMenuCreator",
+      "dg.jmeter.plugins.templater.gui.PrintTreeItem",
+      "dg.jmeter.plugins.templater.gui.RenameSelectedTreeItem",
+      "dg.jmeter.plugins.templater.gui.RenameTreeItem",
+      "dg.jmeter.plugins.templater.RunThroughTree"
     ],
     "versions": {
       "1.1": {
@@ -2121,6 +2121,24 @@
         "libs": {
           "snakeyaml": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar"
         }
+      }
+    }
+  },
+	{
+    "id": "CustomJmeterFunctions",
+    "name": "Custom Jmeter Functions",
+    "description": "Adds custom jmeter functions (like ${__...})",
+    "vendor": "Daniil Golikov",
+    "markerClass": "dg.jmeter.plugins.functions.func.generateInnLegal",
+    "helpUrl": "https://github.com/DanilGolikov/CustomJmeterFunctions/blob/master/README.md",
+    "componentClasses": [
+      "dg.jmeter.plugins.functions.func.generateInnLegal",
+      "dg.jmeter.plugins.functions.func.timeRandom"
+    ],
+    "versions": {
+      "1.1.3": {
+        "changes": "Adds custom jmeter functions (like ${__...})",
+        "downloadUrl": "https://github.com/DanilGolikov/CustomJmeterFunctions/releases/download/v1.1.3/jmeter-plugins-custom-functions-1.1.3.jar"
       }
     }
   }

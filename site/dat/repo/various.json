@@ -2124,7 +2124,7 @@
       }
     }
   },
-	{
+  {
     "id": "CustomJmeterFunctions",
     "name": "Custom Jmeter Functions",
     "description": "Adds custom jmeter functions (like ${__...})",

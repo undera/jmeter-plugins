@@ -2098,6 +2098,11 @@
         "changes": "Fix Java version incompatibility. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.3/jmeter-har-import-plugin-v0.2.3.jar"
       }
+      ,
+      "0.2.5": {
+        "changes": "Fix issue with empty/null Cookie values. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.5/jmeter-har-import-plugin-v0.2.5.jar"
+      }
     }
   }
 ]

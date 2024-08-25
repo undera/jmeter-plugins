@@ -2125,20 +2125,20 @@
     }
   },
   {
-    "id": "CustomJmeterFunctions",
-    "name": "Custom Jmeter Functions",
-    "description": "Adds custom jmeter functions (like ${__...})",
+    "id": "UtilityJmeterFunctions",
+    "name": "Utility Jmeter Functions",
+    "description": "This plugin adds utility jmeter functions (like ${__...}). List of functions:<br>forEachArray<br>generateEmail<br>generateInnLegal<br>generateInnNatural<br>generateOgrn<br>generatePhoneNumber<br>generatePinCode<br>generateSnils<br>jsonPathFromVar<br>globalCounter<br>randomStringLiteral<br>samplerComment<br>timeRandom",
     "vendor": "Daniil Golikov",
     "markerClass": "dg.jmeter.plugins.functions.func.generateInnLegal",
-    "helpUrl": "https://github.com/DanilGolikov/CustomJmeterFunctions/blob/master/README.md",
+    "helpUrl": "https://github.com/DanilGolikov/UtilityJmeterFunctions/blob/v1.1.3/README.md",
     "componentClasses": [
       "dg.jmeter.plugins.functions.func.generateInnLegal",
       "dg.jmeter.plugins.functions.func.timeRandom"
     ],
     "versions": {
       "1.1.3": {
-        "changes": "Adds custom jmeter functions (like ${__...})",
-        "downloadUrl": "https://github.com/DanilGolikov/CustomJmeterFunctions/releases/download/v1.1.3/jmeter-plugins-custom-functions-1.1.3.jar"
+        "changes": "Adds utility jmeter functions (like ${__...})",
+        "downloadUrl": "https://github.com/DanilGolikov/UtilityJmeterFunctions/releases/download/v1.1.3/jmeter-plugins-utility-functions-1.1.3.jar"
       }
     }
   }

@@ -2104,5 +2104,49 @@
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.5/jmeter-har-import-plugin-v0.2.5.jar"
       }
     }
+  },
+  {
+    "id": "JmeterNamesTemplater",
+    "name": "JMeter Names Templater",
+    "description": "Jmeter Names Templater is a plugin for Jmeter that allows you to set naming templates for elements and rename them based on a described configuration file.",
+	  "screenshotUrl": "https://raw.githubusercontent.com/DanilGolikov/JmeterNamesTemplater/master/JMX%20Examples/ex1/ex1_config.png",
+    "vendor": "Daniil Golikov",
+    "markerClass": "dg.jmeter.plugins.templater.gui.RenameElementsMenuCreator",
+    "helpUrl": "https://github.com/DanilGolikov/JmeterNamesTemplater/blob/master/README.md",
+    "componentClasses": [
+      "dg.jmeter.plugins.templater.gui.RenameElementsMenuCreator",
+      "dg.jmeter.plugins.templater.gui.PrintTreeItem",
+      "dg.jmeter.plugins.templater.gui.RenameSelectedTreeItem",
+      "dg.jmeter.plugins.templater.gui.RenameTreeItem",
+      "dg.jmeter.plugins.templater.RunThroughTree"
+    ],
+    "versions": {
+      "1.1": {
+        "changes": "The yaml config file is used for templates",
+        "downloadUrl": "https://github.com/DanilGolikov/JmeterNamesTemplater/releases/download/v1.1-yaml/jmeter-plugins-names-templater-1.1.jar",
+        "libs": {
+          "snakeyaml": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "UtilityJmeterFunctions",
+    "name": "Utility Jmeter Functions",
+    "description": "This plugin adds utility jmeter functions (like ${__...}). List of functions:<br>forEachArray<br>generateEmail<br>generateInnLegal<br>generateInnNatural<br>generateOgrn<br>generatePhoneNumber<br>generatePinCode<br>generateSnils<br>jsonPathFromVar<br>globalCounter<br>randomStringLiteral<br>samplerComment<br>timeRandom",
+    "screenshotUrl": "https://raw.githubusercontent.com/DanilGolikov/UtilityJmeterFunctions/master/README_GIFs/allFunc.png",
+    "vendor": "Daniil Golikov",
+    "markerClass": "dg.jmeter.plugins.functions.func.generateInnLegal",
+    "helpUrl": "https://github.com/DanilGolikov/UtilityJmeterFunctions/blob/master/README.md",
+    "componentClasses": [
+      "dg.jmeter.plugins.functions.func.generateInnLegal",
+      "dg.jmeter.plugins.functions.func.timeRandom"
+    ],
+    "versions": {
+      "1.1.3": {
+        "changes": "Adds utility jmeter functions (like ${__...})",
+        "downloadUrl": "https://github.com/DanilGolikov/UtilityJmeterFunctions/releases/download/v1.1.3/jmeter-plugins-utility-functions-1.1.3.jar"
+      }
+    }
   }
 ]

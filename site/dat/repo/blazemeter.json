@@ -1397,6 +1397,23 @@
         "depends": [
           "bzm-repositories"
         ]
+      },
+      "2.6": {
+        "changes": "Encode and decode automatic correlation",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.6/jmeter-bzm-correlation-recorder-2.6.jar",
+        "libs": {
+          "jackson-dataformat-xml>=2.10.3": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.6/jackson-dataformat-xml-2.10.3.jar",
+          "jackson-annotations>=2.13.3": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.6/jackson-annotations-2.13.3.jar",
+          "jackson-databind>=2.10.3": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.6/jackson-databind-2.10.3.jar",
+          "jackson-core>=2.13.3": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.6/jackson-core-2.13.3.jar",
+          "jackson-module-jaxb-annotations>=2.10.3": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.6/jackson-module-jaxb-annotations-2.10.3.jar",
+          "jmeter-bzm-commons>=0.2.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.6/jmeter-bzm-commons-0.2.1.jar",
+          "json>=20190722": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.6/json-20190722.jar",
+          "maven-artifact>=3.8.4": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.6/maven-artifact-3.8.4.jar"
+        },
+        "depends": [
+          "bzm-repositories"
+        ]
       }
     }
   },

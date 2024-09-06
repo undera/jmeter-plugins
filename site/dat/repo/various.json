@@ -2146,7 +2146,7 @@
 	        "depends":["jmeter-core"]
 		},
 		"1.2.0": {
-			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.0.0/jmeter-plugins-tukeyoutlierdetector-1.2.0.jar",
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-tukeyoutlierdetector-1.2.0.jar",
 			"changes": "Lib updates.",
 			"libs": {
 				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",

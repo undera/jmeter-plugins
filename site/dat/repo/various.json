@@ -2011,11 +2011,36 @@
     }
   },
   {
+	"id": "rbourga-jmeter-plugins-apdexcalculator",
+  	"name": "Apdex Score Calculation",
+  	"description": "Calculates the Apdex score of Samplers for a given Satisfied Threshold.",
+  	"screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/v1.2.0/QualityAnalysis/Apdex/wiki/images/Screenshot.png",
+  	"helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/APDEX-Score-Calculator",
+  	"vendor": "Robert Bourgault du Coudray",
+  	"markerClass": "com.github.rbourga.jmeter.apdex.logic.ApdexLogic",
+  	"componentClasses": [
+		"com.github.rbourga.jmeter.apdex.gui.ApdexGui",
+  		"kg.apc.cmdtools.ApdexTool"
+  	],
+  	"versions": {
+		"1.2.0": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-apdexcalculator-1.2.0.jar",
+  			"changes": "Initial release - replaces Apdex & Coefficient of Variation plugin.",
+  			"libs": {
+  				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+  				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-comm-1.2.0.jar",
+  				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar"
+  			},
+        	"depends":["jmeter-core"]
+ 		}
+  	}
+  },
+  {
 	"id": "rbourga-jmeter-plugins-apdexcovcalculator",
-	"name": "Apdex & Coefficient of Variation",
-	"description": "Calculates the Apdex score of Samplers for a given Satisfied Threshold as well as their Coefficient of Variation.",
-    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/main/QualityAnalysis/ApdexCov/wiki/images/Screenshot.png",
-    "helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/APDEX-Score-and-Coefficient-of-Variation-Calculator",
+	"name": "Apdex & Coefficient of Variation (Deprecated)",
+	"description": "[Deprecated in favor of Apdex Score Calculation] Calculates the Apdex score of Samplers for a given Satisfied Threshold as well as their Coefficient of Variation.",
+    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/v1.2.0/QualityAnalysis/Apdex/wiki/images/Screenshot.png",
+    "helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/APDEX-Score-Calculator",
     "vendor": "Robert Bourgault du Coudray",
     "markerClass": "com.github.rbourga.jmeter.apdexcov.logic.ApdexCoVLogic",
     "componentClasses": [
@@ -2039,7 +2064,7 @@
 	"id": "rbourga-jmeter-plugins-cohendeffectsize",
 	"name": "Cohen's d Results Comparison",
 	"description": "Measures the magnitude of the difference between two test results using Cohen's d.",
-    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/main/ResultsComparison/CohenDEffectSize/wiki/images/Screenshot.png",
+    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/v1.2.0/ResultsComparison/CohenDEffectSize/wiki/images/Screenshot.png",
     "helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/Results-Comparison",
     "vendor": "Robert Bourgault du Coudray",
     "markerClass": "com.github.rbourga.jmeter.effectsize.logic.CohenDEffectSizeLogic",
@@ -2057,14 +2082,51 @@
 				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.10.0/commons-csv-1.10.0.jar"
 			},
 	        "depends":["jmeter-core"]
+		},
+		"1.2.0": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-cohendeffectsize-1.2.0.jar",
+			"changes": "Lib updates.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-comm-1.2.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar"
+			},
+		    "depends":["jmeter-core"]
 		}
 	}
+  },
+  {
+	"id": "jmeter-plugins-modalitycovcheck",
+  	"name": "Coefficient of Variation and Modality Check",
+  	"description": "Checks for multimodality and the level of variation of the test results.",
+  	"screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/v1.2.0/QualityAnalysis/MultimodalityCov/wiki/images/Screenshot.png",
+  	"helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/Modality-and-Coefficient-of-Variation",
+  	"vendor": "Robert Bourgault du Coudray",
+  	"markerClass": "com.github.rbourga.jmeter.multimodalitycov.logic.MultimodalityCoVLogic",
+  	"componentClasses": [
+		"com.github.rbourga.jmeter.multimodalitycov.gui.MultimodalityCoVGui",
+		"com.github.rbourga.jmeter.multimodalitycov.maths.MValueCalculator",
+  		"kg.apc.cmdtools.ModalityCoVTool"
+  	],
+  	"versions": {
+		"1.2.0": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-modalitycovcheck-1.2.0.jar",
+  			"changes": "Initial release.",
+  			"libs": {
+  				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+  				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-comm-1.2.0.jar",
+  				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar",
+				"jfreechart": "https://repo1.maven.org/maven2/org/jfree/jfreechart/1.5.5/jfreechart-1.5.5.jar"
+  			},
+        	"depends":["jmeter-core"]
+  		}
+  	}
   },
   {
 	"id": "rbourga-jmeter-plugins-tukeyoutlierdetector",
 	"name": "Upper Outlier Removal",
 	"description": "Detects outliers in the right tail using Tukey's fences and removes them.",
-    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/main/OutlierDetection/TukeyRightTailOutlierDetector/wiki/images/Screenshot.png",
+    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/v1.2.0/OutlierDetection/TukeyRightTailOutlierDetector/wiki/images/Screenshot.png",
     "helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/Right-Tail-Outlier-Detection",
     "vendor": "Robert Bourgault du Coudray",
     "markerClass": "com.github.rbourga.jmeter.tukeyoutlierdetector.logic.TukeyOutlierDetectorLogic",
@@ -2082,6 +2144,16 @@
 				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.10.0/commons-csv-1.10.0.jar"
 			},
 	        "depends":["jmeter-core"]
+		},
+		"1.2.0": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.0.0/jmeter-plugins-tukeyoutlierdetector-1.2.0.jar",
+			"changes": "Lib updates.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-comm-1.2.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar"
+			},
+		    "depends":["jmeter-core"]
 		}
 	}
   },

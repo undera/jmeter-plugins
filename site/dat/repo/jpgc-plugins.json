@@ -50,34 +50,6 @@
       "kg.apc.jmeter.threads.UltimateThreadGroupGui"
     ],
     "versions": {
-      "2.5": {
-        "changes": "fixed stop test after hold limit",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.5/jmeter-plugins-casutg-2.5.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.6": {
-        "changes": "fixed start next thread loop",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.6/jmeter-plugins-casutg-2.6.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.7": {
-        "changes": "CPU/Mem usage optimization (by pmouawad)",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.7/jmeter-plugins-casutg-2.7.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.8": {
-        "changes": "Fix remote testing problems, fix ATG stopping",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.8/jmeter-plugins-casutg-2.8.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
       "2.9": {
         "changes": "Support JMeter's way of prefixing threads for distributed testing",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.9/jmeter-plugins-casutg-2.9.jar",
@@ -175,26 +147,6 @@
       "kg.apc.jmeter.modifiers.DummySubPostProcessorGui"
     ],
     "versions": {
-      "0.1": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.1/jmeter-plugins-dummy-0.1.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "0.2": {
-        "changes": "Introduce encoding for multibyte data",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.2/jmeter-plugins-dummy-0.2.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "0.3": {
-        "changes": "Add URL and SampleResult class fields to UI, add Dummy Subsample Postprocessor",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.3/jmeter-plugins-dummy-0.3.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
       "0.4": {
         "changes": "Fix serialization",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.4/jmeter-plugins-dummy-0.4.jar",
@@ -339,12 +291,6 @@
       "kg.apc.jmeter.vizualizers.JMXMonGui"
     ],
     "versions": {
-      "0.1": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jmxmon/0.1/jmeter-plugins-jmxmon-0.1.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
       "0.2": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jmxmon/0.2/jmeter-plugins-jmxmon-0.2.jar",
         "libs": {
@@ -379,43 +325,6 @@
       "com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.gui.JSONPathExtractorGui"
     ],
     "versions": {
-      "2.0": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.0/jmeter-plugins-json-2.0.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.1": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.1/jmeter-plugins-json-2.1.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.2": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.2/jmeter-plugins-json-2.2.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.3": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.3/jmeter-plugins-json-2.3.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.4": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.4/jmeter-plugins-json-2.4.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.5": {
-        "changes": "Fix encoding for multibyte data in JSONPath Assertion",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.5/jmeter-plugins-json-2.5.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
       "2.6": {
         "changes": "Fix case of asserting array against array",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.6/jmeter-plugins-json-2.6.jar",
@@ -496,13 +405,6 @@
       "kg.apc.jmeter.vizualizers.PerfMonGui"
     ],
     "versions": {
-      "2.0": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-perfmon/2.0/jmeter-plugins-perfmon-2.0.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
-          "perfmon": "https://search.maven.org/remotecontent?filepath=kg/apc/perfmon/2.2.2/perfmon-2.2.2.jar"
-        }
-      },
       "2.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-perfmon/2.1/jmeter-plugins-perfmon-2.1.jar",
         "libs": {
@@ -527,18 +429,6 @@
       "kg.apc.jmeter.control.sampler.SetVariablesActionGui"
     ],
     "versions": {
-      "0.2": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-prmctl/0.2/jmeter-plugins-prmctl-0.2.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "0.3": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-prmctl/0.3/jmeter-plugins-prmctl-0.3.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
       "0.4": {
         "changes": "Added Set Variables Action",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-prmctl/0.4/jmeter-plugins-prmctl-0.4.jar",
@@ -612,6 +502,15 @@
           "jedis": "https://search.maven.org/remotecontent?filepath=redis/clients/jedis/3.6.3/jedis-3.6.3.jar",
           "commons-pool2": "https://search.maven.org/remotecontent?filepath=org/apache/commons/commons-pool2/2.9.0/commons-pool2-2.9.0.jar"
         }
+      },
+      "0.7": {
+        "changes": "Fix JedisException when test ends",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-redis/0.7/jmeter-plugins-redis-0.7.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+          "jedis": "https://search.maven.org/remotecontent?filepath=redis/clients/jedis/3.6.3/jedis-3.6.3.jar",
+          "commons-pool2": "https://search.maven.org/remotecontent?filepath=org/apache/commons/commons-pool2/2.9.0/commons-pool2-2.9.0.jar"
+        }
       }
     }
   },
@@ -628,40 +527,6 @@
       "kg.apc.jmeter.timers.VariableThroughputTimerGui"
     ],
     "versions": {
-      "2.0": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-tst/2.0/jmeter-plugins-tst-2.0.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.1": {
-        "changes": "Added __tstFeeback() function to integrate with Concurrency Thread Group",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-tst/2.1/jmeter-plugins-tst-2.1.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
-        }
-      },
-      "2.2": {
-        "changes": "Expose overall schedule data as JMeter properties",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-tst/2.2/jmeter-plugins-tst-2.2.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
-        }
-      },
-      "2.3": {
-        "changes": "Improve stopping threads",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-tst/2.3/jmeter-plugins-tst-2.3.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
-        }
-      },
-      "2.4": {
-        "changes": "Fix performance problem with notifyAll() used",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-tst/2.4/jmeter-plugins-tst-2.4.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
-        }
-      },
       "2.5": {
         "changes": "Fix negative values from TSTFeedback function",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-tst/2.5/jmeter-plugins-tst-2.5.jar",
@@ -691,20 +556,6 @@
       "kg.apc.jmeter.samplers.UDPSamplerGui"
     ],
     "versions": {
-      "0.1": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-udp/0.1/jmeter-plugins-udp-0.1.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
-          "jmeter-plugins-common-io": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common-io/0.2/jmeter-plugins-common-io-0.2.jar"
-        }
-      },
-      "0.2": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-udp/0.2/jmeter-plugins-udp-0.2.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
-          "jmeter-plugins-common-io": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common-io/0.2/jmeter-plugins-common-io-0.2.jar"
-        }
-      },
       "0.3": {
         "changes": "Fixed bind to local address/port",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-udp/0.3/jmeter-plugins-udp-0.3.jar",
@@ -1400,6 +1251,59 @@
       "4.13.0.0": {
         "changes": "Update to Selenium 4.13.0: last version of WebDriver with Java 8 support.",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/4.13.0.0/jmeter-plugins-webdriver-4.13.0.0.jar",
+        "libs": {
+          "async-http-client": "https://search.maven.org/remotecontent?filepath=org/asynchttpclient/async-http-client/2.12.3/async-http-client-2.12.3.jar",
+          "async-http-client-netty-utils": "https://search.maven.org/remotecontent?filepath=org/asynchttpclient/async-http-client-netty-utils/2.12.3/async-http-client-netty-utils-2.12.3.jar",
+          "commons-exec": "https://search.maven.org/remotecontent?filepath=org/apache/commons/commons-exec/1.3/commons-exec-1.3.jar",
+          "failsafe": "https://search.maven.org/remotecontent?filepath=dev/failsafe/failsafe/3.3.2/failsafe-3.3.2.jar",
+          "guava": "https://search.maven.org/remotecontent?filepath=com/google/guava/guava/32.1.3-jre/guava-32.1.3-jre.jar",
+          "htmlunit": "https://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/htmlunit/2.70.0/htmlunit-2.70.0.jar",
+          "htmlunit-core-js": "https://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/htmlunit-core-js/2.70.0/htmlunit-core-js-2.70.0.jar",
+          "htmlunit-cssparser": "https://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/htmlunit-cssparser/1.14.0/htmlunit-cssparser-1.14.0.jar",
+          "htmlunit-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/htmlunit-driver/4.13.0/htmlunit-driver-4.13.0.jar",
+          "htmlunit-xpath": "https://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/htmlunit-xpath/2.70.0/htmlunit-xpath-2.70.0.jar",
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+          "neko-htmlunit": "https://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/neko-htmlunit/2.70.0/neko-htmlunit-2.70.0.jar",
+          "netty-buffer": "https://search.maven.org/remotecontent?filepath=io/netty/netty-buffer/4.1.100.Final/netty-buffer-4.1.100.Final.jar",
+          "netty-codec": "https://search.maven.org/remotecontent?filepath=io/netty/netty-codec/4.1.100.Final/netty-codec-4.1.100.Final.jar",
+          "netty-codec-http": "https://search.maven.org/remotecontent?filepath=io/netty/netty-codec-http/4.1.100.Final/netty-codec-http-4.1.100.Final.jar",
+          "netty-common": "https://search.maven.org/remotecontent?filepath=io/netty/netty-common/4.1.100.Final/netty-common-4.1.100.Final.jar",
+          "netty-handler": "https://search.maven.org/remotecontent?filepath=io/netty/netty-handler/4.1.100.Final/netty-handler-4.1.100.Final.jar",
+          "netty-reactive-streams": "https://search.maven.org/remotecontent?filepath=com/typesafe/netty/netty-reactive-streams/2.0.10/netty-reactive-streams-2.0.10.jar",
+          "netty-resolver": "https://search.maven.org/remotecontent?filepath=io/netty/netty-resolver/4.1.100.Final/netty-resolver-4.1.100.Final.jar",
+          "netty-transport": "https://search.maven.org/remotecontent?filepath=io/netty/netty-transport/4.1.100.Final/netty-transport-4.1.100.Final.jar",
+          "okhttp": "https://search.maven.org/remotecontent?filepath=com/squareup/okhttp3/okhttp/4.12.0/okhttp-4.12.0.jar",
+          "okio-jvm": "https://search.maven.org/remotecontent?filepath=com/squareup/okio/okio-jvm/3.6.0/okio-jvm-3.6.0.jar",
+          "opentelemetry-api": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-api/1.31.0/opentelemetry-api-1.31.0.jar",
+          "opentelemetry-api-events": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-api-events/1.31.0-alpha/opentelemetry-api-events-1.31.0-alpha.jar",
+          "opentelemetry-context": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-context/1.31.0/opentelemetry-context-1.31.0.jar",
+          "opentelemetry-exporter-common": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-exporter-common/1.31.0/opentelemetry-exporter-common-1.31.0.jar",
+          "opentelemetry-exporter-otlp": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-exporter-otlp/1.31.0/opentelemetry-exporter-otlp-1.31.0.jar",
+          "opentelemetry-exporter-otlp-common": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-exporter-otlp-common/1.31.0/opentelemetry-exporter-otlp-common-1.31.0.jar",
+          "opentelemetry-sdk": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-sdk/1.31.0/opentelemetry-sdk-1.31.0.jar",
+          "opentelemetry-sdk-common": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-sdk-common/1.31.0/opentelemetry-sdk-common-1.31.0.jar",
+          "opentelemetry-sdk-extension-autoconfigure": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-sdk-extension-autoconfigure/1.31.0/opentelemetry-sdk-extension-autoconfigure-1.31.0.jar",
+          "opentelemetry-sdk-extension-autoconfigure-spi": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-sdk-extension-autoconfigure-spi/1.31.0/opentelemetry-sdk-extension-autoconfigure-spi-1.31.0.jar",
+          "opentelemetry-sdk-logs": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-sdk-logs/1.31.0/opentelemetry-sdk-logs-1.31.0.jar",
+          "opentelemetry-sdk-metrics": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-sdk-metrics/1.31.0/opentelemetry-sdk-metrics-1.31.0.jar",
+          "opentelemetry-sdk-trace": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-sdk-trace/1.31.0/opentelemetry-sdk-trace-1.31.0.jar",
+          "opentelemetry-semconv": "https://search.maven.org/remotecontent?filepath=io/opentelemetry/opentelemetry-semconv/1.30.1-alpha/opentelemetry-semconv-1.30.1-alpha.jar",
+          "selenium-api": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-api/4.13.0/selenium-api-4.13.0.jar",
+          "selenium-chrome-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-chrome-driver/4.13.0/selenium-chrome-driver-4.13.0.jar",
+          "selenium-chromium-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-chromium-driver/4.13.0/selenium-chromium-driver-4.13.0.jar",
+          "selenium-edge-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-edge-driver/4.13.0/selenium-edge-driver-4.13.0.jar",
+          "selenium-firefox-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-firefox-driver/4.13.0/selenium-firefox-driver-4.13.0.jar",
+          "selenium-http": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-http/4.13.0/selenium-http-4.13.0.jar",
+          "selenium-ie-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-ie-driver/4.13.0/selenium-ie-driver-4.13.0.jar",
+          "selenium-json": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-json/4.13.0/selenium-json-4.13.0.jar",
+          "selenium-os": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-os/4.13.0/selenium-os-4.13.0.jar",
+          "selenium-remote-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-remote-driver/4.13.0/selenium-remote-driver-4.13.0.jar",
+          "selenium-support": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-support/4.13.0/selenium-support-4.13.0.jar"
+        }
+      },
+      "4.13.0.1": {
+        "changes": "Make FTP and SOCKS proxies optional, set startTime in more situations",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/4.13.0.1/jmeter-plugins-webdriver-4.13.0.1.jar",
         "libs": {
           "async-http-client": "https://search.maven.org/remotecontent?filepath=org/asynchttpclient/async-http-client/2.12.3/async-http-client-2.12.3.jar",
           "async-http-client-netty-utils": "https://search.maven.org/remotecontent?filepath=org/asynchttpclient/async-http-client-netty-utils/2.12.3/async-http-client-netty-utils-2.12.3.jar",

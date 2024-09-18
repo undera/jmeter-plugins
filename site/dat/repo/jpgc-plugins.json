@@ -123,9 +123,7 @@
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dbmon/0.1/jmeter-plugins-dbmon-0.1.jar",
-        "depends": [
-          "jmeter-jdbc"
-        ],
+        "depends": ["jmeter-jdbc"],
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
         }
@@ -266,9 +264,7 @@
     "versions": {
       "0.2": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jms/0.2/jmeter-plugins-jms-0.2.jar",
-        "depends": [
-          "jmeter-java"
-        ],
+        "depends": ["jmeter-java"],
         "libs": {
           "qpid-common": "https://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-common/0.20/qpid-common-0.20.jar",
           "qpid-client": "https://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-client/0.20/qpid-client-0.20.jar",
@@ -331,7 +327,7 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
           "json-path": "https://search.maven.org/remotecontent?filepath=com/jayway/jsonpath/json-path/2.4.0/json-path-2.4.0.jar",
-          "json-lib": "https://search.maven.org/remotecontent?filepath=net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
+          "json-lib": "https://repo1.maven.org/maven2/net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
           "json-smart": "https://search.maven.org/remotecontent?filepath=net/minidev/json-smart/2.3/json-smart-2.3.jar",
           "asm": "https://search.maven.org/remotecontent?filepath=net/minidev/asm/1.0.2/asm-1.0.2.jar"
         }
@@ -342,7 +338,7 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
           "json-path": "https://search.maven.org/remotecontent?filepath=com/jayway/jsonpath/json-path/2.4.0/json-path-2.4.0.jar",
-          "json-lib": "https://search.maven.org/remotecontent?filepath=net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
+          "json-lib": "https://repo1.maven.org/maven2/net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
           "json-smart": "https://search.maven.org/remotecontent?filepath=net/minidev/json-smart/2.3/json-smart-2.3.jar",
           "asm": "https://search.maven.org/remotecontent?filepath=net/minidev/asm/1.0.2/asm-1.0.2.jar",
           "snakeyaml": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.21/snakeyaml-1.21.jar"
@@ -382,9 +378,7 @@
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-oauth/0.1/jmeter-plugins-oauth-0.1.jar",
-        "depends": [
-          "jmeter-http"
-        ],
+        "depends": ["jmeter-http"],
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
           "commons-lang": "https://search.maven.org/remotecontent?filepath=commons-lang/commons-lang/2.6/commons-lang-2.6.jar"
@@ -446,9 +440,7 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/RedisDataSet/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.config.redis.RedisDataSet",
-    "componentClasses": [
-      "kg.apc.jmeter.config.redis.RedisDataSet"
-    ],
+    "componentClasses": ["kg.apc.jmeter.config.redis.RedisDataSet"],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-redis/0.1/jmeter-plugins-redis-0.1.jar",

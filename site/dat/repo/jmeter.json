@@ -420,7 +420,7 @@
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_components/%1$s/ApacheJMeter_components-%1$s.jar",
         "libs": {
           "json-path": "http://search.maven.org/remotecontent?filepath=com/jayway/jsonpath/json-path/2.4.0/json-path-2.4.0.jar",
-          "json-lib": "http://search.maven.org/remotecontent?filepath=net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
+          "json-lib": "https://repo1.maven.org/maven2/net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
           "json-smart": "http://search.maven.org/remotecontent?filepath=net/minidev/json-smart/2.3/json-smart-2.3.jar",
           "asm": "http://search.maven.org/remotecontent?filepath=net/minidev/asm/1.0.2/asm-1.0.2.jar"
         }

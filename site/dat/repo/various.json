@@ -1988,6 +1988,10 @@
 	"5.2": {
           "changes": "Correct extract parameters for mime type 'form-urlencoded' ended with charset likes 'application/x-www-form-urlencoded; charset=xxx'",
           "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v5.2/har-convertor-jmeter-plugin-5.2-jar-with-dependencies.jar"
+        },
+	"6.0": {
+          "changes": "Add View Result Tree to view the recording xml file",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v6.0/har-convertor-jmeter-plugin-6.0-jar-with-dependencies.jar"
         }
       }
    },

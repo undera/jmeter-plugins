@@ -19,9 +19,3 @@ dependency-reduced-pom.xml
 .settings/
 upload
 /editor
-plugins/csl/bin/pom.xml
-plugins/csl/bin/src/main/java/kg/apc/jmeter/reporters/ConsoleStatusLogger$JMeterLoggerOutputStream.class
-plugins/csl/bin/src/main/java/kg/apc/jmeter/reporters/ConsoleStatusLogger.class
-plugins/csl/bin/src/main/java/kg/apc/jmeter/reporters/ConsoleStatusLoggerGui.class
-plugins/csl/bin/src/test/java/kg/apc/jmeter/reporters/ConsoleStatusLoggerGuiTest.class
-plugins/csl/bin/src/test/java/kg/apc/jmeter/reporters/ConsoleStatusLoggerTest.class

@@ -1464,6 +1464,7 @@
           }
         },
         "1.3": {
+          "changes": "Fixes serilizer and deserializer issues",
           "depends": [
             "jmeter-core"
           ],

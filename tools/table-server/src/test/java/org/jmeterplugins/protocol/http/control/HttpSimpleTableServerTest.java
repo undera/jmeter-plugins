@@ -301,6 +301,187 @@ public class HttpSimpleTableServerTest {
         assertTrue(0 < result.length()
                 && result
                 .startsWith("<html><title>OK</title>"));
+
+        // FIND CMD
+        // ADD (POST) for FIND tests
+        Map<String, String> urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("LINE", "RED");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("LINE", "GREEN");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("LINE", "BLUE");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("LINE", "A123B");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","SUBSTRING");
+        urlParametersFind.put("LINE", "GREE");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>GREEN</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","EQUALS");
+        urlParametersFind.put("LINE", "BLUE");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>BLUE</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","REGEX_FIND");
+        urlParametersFind.put("LINE", "(BLUE|RED)");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>RED</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","REGEX_FIND");
+        urlParametersFind.put("LINE", "\\d\\d\\d");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>A123B</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","REGEX_FIND");
+        urlParametersFind.put("LINE", "\\d\\d\\d)");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>KO</title>" + CRLF + "<body>Error : Regex compile error !</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","REGEX_MATCH");
+        urlParametersFind.put("LINE", "[A-Z]\\d{3}.*");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>A123B</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","REGEX_MATCH");
+        urlParametersFind.put("LINE", ".*?U.*");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>BLUE</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","SUBSTRING");
+        urlParametersFind.put("LINE", "");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>KO</title>" + CRLF + "<body>Error : Cant't find empty line !</body>" + CRLF
+                + "</html>", result);
+
+        /** READMULTI **/
+        String filemaneReadMulti = "months.txt";
+        Map<String, String> urlParametersReadMulti = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMulti.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMulti.put("NB_LINES","2");
+        urlParametersReadMulti.put("READ_MODE", "FIRST");
+        urlParametersReadMulti.put("KEEP", "TRUE");
+        result = sendHttpPost(obj, "/sts/READMULTI", urlParametersReadMulti);
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : " + filemaneReadMulti + " not loaded yet !</body>" + CRLF
+                + "</html>", result);
+
+        Map<String, String> urlParametersReadMultiAdd = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("LINE", "January");
+        urlParametersReadMultiAdd.put("ADD_MODE","LAST");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersReadMultiAdd);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        urlParametersReadMultiAdd = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("LINE", "February");
+        urlParametersReadMultiAdd.put("ADD_MODE","LAST");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersReadMultiAdd);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        urlParametersReadMultiAdd = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("LINE", "March");
+        urlParametersReadMultiAdd.put("ADD_MODE","LAST");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersReadMultiAdd);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        urlParametersReadMultiAdd = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("LINE", "April");
+        urlParametersReadMultiAdd.put("ADD_MODE","LAST");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersReadMultiAdd);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        urlParametersReadMultiAdd = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("LINE", "May");
+        urlParametersReadMultiAdd.put("ADD_MODE","LAST");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersReadMultiAdd);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        urlParametersReadMultiAdd = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("LINE", "June");
+        urlParametersReadMultiAdd.put("ADD_MODE","LAST");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersReadMultiAdd);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        // read 2 first lines
+        urlParametersReadMulti = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMulti.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMulti.put("NB_LINES","2");
+        urlParametersReadMulti.put("READ_MODE", "FIRST");
+        urlParametersReadMulti.put("KEEP", "TRUE");
+        result = sendHttpPost(obj, "/sts/READMULTI", urlParametersReadMulti);
+        //System.out.println("Resultat READDMULTI = " + CRLF + result);
+        assertEquals("<html><title>OK</title>" + CRLF +
+                "<body>"+ CRLF +
+                "January<br />"+ CRLF +
+                "February<br />"+ CRLF +
+                "</body>"+ CRLF +
+                "</html>"
+                , result);
+
+        // try to read to many lines
+        urlParametersReadMulti = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMulti.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMulti.put("NB_LINES","200");
+        urlParametersReadMulti.put("READ_MODE", "FIRST");
+        urlParametersReadMulti.put("KEEP", "TRUE");
+        result = sendHttpPost(obj, "/sts/READMULTI", urlParametersReadMulti);
+        //System.out.println("Resultat READDMULTI = " + CRLF + result);
+        assertEquals("<html><title>KO</title>" + CRLF +
+                "<body>Error : Number lines to read greater than file size, 200 greater than 6 !</body>"
+                        + CRLF + "</html>"
+                , result);
+
     }
 
 

@@ -9,13 +9,6 @@
     "markerClass": "kg.apc.cmdtools.ReporterTool",
     "installerClass": "kg.apc.cmdtools.CMDInstaller",
     "versions": {
-      "2.0": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmd/2.0/jmeter-plugins-cmd-2.0.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
-        }
-      },
       "2.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmd/2.1/jmeter-plugins-cmd-2.1.jar",
         "libs": {
@@ -234,7 +227,7 @@
   {
     "id": "jpgc-sts",
     "name": "HTTP Simple Table Server",
-    "description": "The main idea is to use a tiny http server in JMeter Plugins to manage the dataset files with simple commands to get / add rows of data in files.",
+    "description": "The main idea is to use a tiny http server in JMeter Plugins to manage the dataset files with simple commands to get / add / find rows of data in files.",
     "screenshotUrl": "https://jmeter-plugins.org/img/wiki/http_simple_table_server.png",
     "helpUrl": "https://jmeter-plugins.org/wiki/HttpSimpleTableServer/",
     "vendor": "JMeter-Plugins.org",
@@ -273,6 +266,20 @@
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-table-server/3.1/jmeter-plugins-table-server-3.1.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
+        }
+      },
+      "4.0": {
+        "changes": "Add command FIND, find a string in the file, FIND_MODE=SUBSTRING (Default), EQUALS, REGEX_FIND, REGEX_MATCH",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-table-server/4.0/jmeter-plugins-table-server-4.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
+        }
+      },
+      "5.0": {
+        "changes": "Add command READMULTI, Read multi lines in one request, parameter NB_LINES : number of lines to read",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-table-server/5.0/jmeter-plugins-table-server-5.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
         }
       }
     }

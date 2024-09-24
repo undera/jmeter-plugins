@@ -18,18 +18,6 @@
 
 package kg.apc.jmeter.config.redis;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.security.GeneralSecurityException;
-import java.util.ResourceBundle;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLParameters;
-import javax.net.ssl.SSLSocketFactory;
-
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
@@ -44,36 +32,138 @@ import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.util.JsseSSLManager;
 import org.apache.jmeter.util.SSLManager;
-import org.slf4j.LoggerFactory;
 import org.apache.jorphan.util.JMeterStopThreadException;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.slf4j.Logger;
-
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
+import redis.clients.jedis.args.ListDirection;
 import redis.clients.jedis.exceptions.JedisDataException;
+
+import javax.net.ssl.*;
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.security.GeneralSecurityException;
+import java.util.ResourceBundle;
 
 /**
  * Redis DataSet using a Redis Set or List.
+ *
  * @since 2.11
  */
-public class RedisDataSet extends ConfigTestElement 
-    implements TestBean, LoopIterationListener, NoConfigMerge, TestStateListener {
+public class RedisDataSet extends ConfigTestElement
+        implements TestBean, LoopIterationListener, NoConfigMerge, TestStateListener {
 
-    public enum RedisDataType {
-        REDIS_DATA_TYPE_LIST((byte)0),
-        REDIS_DATA_TYPE_SET((byte)1);
 
-        private byte value;
-        RedisDataType(byte value) { this.value = value; }
-        public int getValue() { return value; }
+    private interface PollingStrategy {
+        String getDataFromConnection(Jedis conn, String key) throws JedisDataException;
     }
 
     /**
-     * 
+     * Pops an element from a redis list from right (LIFO)
      */
+    private class PopFromListStrategy implements PollingStrategy {
+        @Override
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException {
+            log.debug("Executing lpop against redis list");
+            return conn.lpop(key);
+        }
+    }
+
+    private class QueueStrategy implements PollingStrategy {
+        @Override
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException {
+            log.debug("Executing lmove against redis list");
+            return conn.lmove(key, key, ListDirection.RIGHT, ListDirection.LEFT);
+        }
+    }
+
+    private class PopFromSetStrategy implements PollingStrategy {
+        @Override
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException {
+            log.debug("Executing spop against redis set");
+            return conn.spop(key);
+        }
+    }
+
+    private class CopyFromSetStrategy implements PollingStrategy {
+        @Override
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException {
+            log.debug("Executing srandmember against redis set");
+            return conn.srandmember(key);
+        }
+    }
+
+    // backwards compatible (Redis versions below 6.2)
+    private class PopAndPushBackListStrategy implements PollingStrategy {
+        @Override
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException {
+            log.debug("Executing lpop against redis list");
+            String line = conn.lpop(key);
+            log.debug("Executing rpush against redis list");
+            conn.rpush(key, line);
+            return line;
+        }
+    }
+
+    private class PopAndPushBackSetStrategy implements PollingStrategy {
+        @Override
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException {
+            log.debug("Executing spop against redis set");
+            String line = conn.spop(key);
+            log.debug("Executign sadd against redis set");
+            conn.sadd(key, line);
+            return line;
+        }
+    }
+
+    public enum RedisDataType {
+        REDIS_DATA_TYPE_LIST((byte) 0),
+        REDIS_DATA_TYPE_SET((byte) 1);
+
+        private final byte value;
+
+        RedisDataType(byte value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+    private PollingStrategy selectPollingStrategy() {
+
+        switch (redisDataType) {
+            case REDIS_DATA_TYPE_SET:
+                if (!getRecycleDataOnUse()) {
+                    return new PopFromSetStrategy();
+                } else {
+                    if (getPropertyAsBoolean("plugins.redis.legacy", false)) {
+                        return new PopAndPushBackSetStrategy();
+                    }
+                    return new CopyFromSetStrategy();
+                }
+            case REDIS_DATA_TYPE_LIST:
+                if (!getRecycleDataOnUse()) {
+                    return new PopFromListStrategy();
+                } else {
+                    if (getPropertyAsBoolean("plugins.redis.legacy", false)) {
+                        return new PopAndPushBackListStrategy();
+                    }
+                    return new QueueStrategy();
+                }
+            default:
+                log.error("Redis configuration not supported!");
+                break;
+        }
+        return null;
+    }
+
     private static final long serialVersionUID = 7383500755324202605L;
 
     private static final Logger log = LoggerFactory.getLogger(RedisDataSet.class);
@@ -114,77 +204,42 @@ public class RedisDataSet extends ConfigTestElement
     private long minEvictableIdleTimeMillis;
     private long softMinEvictableIdleTimeMillis;
     private transient String[] vars;
-    
+
     private transient JedisPool pool;
 
+    private PollingStrategy pollingStrategy;
 
-    private String getDataFromConnection(Jedis conn, String key) {
-        String line = null;
-
-        try {
-            if (redisDataType == RedisDataType.REDIS_DATA_TYPE_LIST) {
-                log.debug("Executing lpop against redis list");
-                // Get data from list's head
-                line = conn.lpop(key);
-            } else if (redisDataType.equals(RedisDataType.REDIS_DATA_TYPE_SET)) {
-                log.debug("Executing spop against redis set");
-                line = conn.spop(key);
-            } else {
-                log.warn("Unexpected redis datatype: {0}".format(key));
-            }
-        } catch (JedisDataException jde) {
-            log.error("Exception when retrieving data from Redis: " + jde);
-        }
-
-        return line;
-    }
-
-    private void addDataToConnection(Jedis conn, String key, String data) {
-        try {
-            if (redisDataType == RedisDataType.REDIS_DATA_TYPE_LIST) {
-                log.debug("Executing rpush against redis list");
-                // Add data string to list's tail
-                conn.rpush(redisKey, data);
-            } else if (redisDataType == RedisDataType.REDIS_DATA_TYPE_SET) {
-                log.debug("Executing sadd against redis set");
-                conn.sadd(key, data);
-            } else {
-                log.warn("Unexpected redis datatype: {0}".format(key));
-            }
-        } catch (JedisDataException jde) {
-            log.error("Exception when adding data to Redis: " + jde);
-        }
-    }
 
     @Override
     public void iterationStart(LoopIterationEvent event) {
         Jedis connection = null;
+        if (null == pollingStrategy) {
+            pollingStrategy = selectPollingStrategy();
+        }
         try {
             connection = pool.getResource();
-
+            String line = null;
             // Get data from list's head
-            String line = getDataFromConnection(connection, redisKey);
-
-            if(line == null) { // i.e. no more data (nil)
+            try {
+                line = pollingStrategy.getDataFromConnection(connection, redisKey);
+            } catch (JedisDataException jde) {
+                log.error("Failed to retrieve data from redis key {}", redisKey);
+            }
+            if (null == line) {
                 throw new JMeterStopThreadException("End of redis data detected");
             }
-
-            if (getRecycleDataOnUse()) {
-                addDataToConnection(connection, redisKey, line);
-            }
-
             final String names = variableNames;
             if (vars == null) {
-                vars = JOrphanUtils.split(names, ","); 
+                vars = JOrphanUtils.split(names, ",");
             }
-            
+
             final JMeterContext context = getThreadContext();
             JMeterVariables threadVars = context.getVariables();
             String[] values = JOrphanUtils.split(line, delimiter, false);
             for (int a = 0; a < vars.length && a < values.length; a++) {
                 threadVars.put(vars[a], values[a]);
             }
-            
+
         } finally {
             pool.returnResource(connection);
         }
@@ -192,27 +247,31 @@ public class RedisDataSet extends ConfigTestElement
 
     @Override
     public void testEnded() {
-        testEnded(""); 
+        testEnded("");
     }
 
     @Override
     public void testEnded(String host) {
+        int idleConn = pool.getNumIdle();
+        for (int i = 0; i < idleConn; i++) {
+            pool.getResource();
+        }
         pool.destroy();
     }
 
     @Override
     public void testStarted() {
-        testStarted(""); 
+        testStarted("");
     }
 
     @Override
     public Object clone() {
-        RedisDataSet clonedElement = (RedisDataSet)super.clone();
+        RedisDataSet clonedElement = (RedisDataSet) super.clone();
         clonedElement.pool = this.pool;
         return clonedElement;
 
     }
-    
+
     /**
      * Override the setProperty method in order to convert
      * the original String calcMode property.
@@ -230,12 +289,12 @@ public class RedisDataSet extends ConfigTestElement
                 try {
                     final BeanInfo beanInfo = Introspector.getBeanInfo(this.getClass());
                     final ResourceBundle rb = (ResourceBundle) beanInfo.getBeanDescriptor().getValue(GenericTestBeanCustomizer.RESOURCE_BUNDLE);
-                    for(Enum<RedisDataType> e : RedisDataType.values()) {
+                    for (Enum<RedisDataType> e : RedisDataType.values()) {
                         final String propName = e.toString();
                         if (objectValue.equals(rb.getObject(propName))) {
                             final int tmpType = e.ordinal();
                             if (log.isDebugEnabled()) {
-                                log.debug("Converted " + pn + "=" + objectValue + " to data type=" + tmpType  + " using Locale: " + rb.getLocale());
+                                log.debug("Converted " + pn + "=" + objectValue + " to data type=" + tmpType + " using Locale: " + rb.getLocale());
                             }
                             super.setProperty(pn, tmpType);
                             return;
@@ -249,7 +308,7 @@ public class RedisDataSet extends ConfigTestElement
         }
         super.setProperty(property);
     }
-    
+
     @Override
     public void testStarted(String distributedHost) {
         JedisPoolConfig config = new JedisPoolConfig();
@@ -267,19 +326,19 @@ public class RedisDataSet extends ConfigTestElement
         config.setSoftMinEvictableIdleTimeMillis(getSoftMinEvictableIdleTimeMillis());
 
         int port = Protocol.DEFAULT_PORT;
-        if(!JOrphanUtils.isBlank(this.port)) {
+        if (!JOrphanUtils.isBlank(this.port)) {
             port = Integer.parseInt(this.port);
         }
         int timeout = Protocol.DEFAULT_TIMEOUT;
-        if(!JOrphanUtils.isBlank(this.timeout)) {
+        if (!JOrphanUtils.isBlank(this.timeout)) {
             timeout = Integer.parseInt(this.timeout);
         }
         int database = Protocol.DEFAULT_DATABASE;
-        if(!JOrphanUtils.isBlank(this.database)) {
+        if (!JOrphanUtils.isBlank(this.database)) {
             database = Integer.parseInt(this.database);
         }
         String password = null;
-        if(!JOrphanUtils.isBlank(this.password)) {
+        if (!JOrphanUtils.isBlank(this.password)) {
             password = this.password;
         }
         SSLSocketFactory sslSocketFactory = null;
@@ -288,15 +347,16 @@ public class RedisDataSet extends ConfigTestElement
         if (this.ssl) {
             SSLManager sslManager = SSLManager.getInstance();
             try {
-                SSLContext sslContext = ((JsseSSLManager)sslManager).getContext();
+                SSLContext sslContext = ((JsseSSLManager) sslManager).getContext();
                 sslSocketFactory = sslContext.getSocketFactory();
                 sslParameters = sslContext.getDefaultSSLParameters();
                 hostnameVerifier = HttpsURLConnection.getDefaultHostnameVerifier();
-            }catch(GeneralSecurityException ex) {
+            } catch (GeneralSecurityException ex) {
                 throw new IllegalStateException("Unable to get SSLContext from SSLManager", ex);
             }
         }
         this.pool = new JedisPool(config, this.host, port, timeout, password, database, this.ssl, sslSocketFactory, sslParameters, hostnameVerifier);
+
     }
 
     /**
@@ -594,34 +654,18 @@ public class RedisDataSet extends ConfigTestElement
         this.softMinEvictableIdleTimeMillis = softMinEvictableIdleTimeMillis;
     }
 
-    /**
-     *
-     * @return
-     */
     public boolean getRecycleDataOnUse() {
         return recycleDataOnUse;
     }
 
-    /**
-     *
-     * @param recycleDataOnUse
-     */
     public void setRecycleDataOnUse(boolean recycleDataOnUse) {
         this.recycleDataOnUse = recycleDataOnUse;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getRedisDataType() {
         return redisDataType.ordinal();
     }
 
-    /**
-     *
-     * @param dataType
-     */
     public void setRedisDataType(int dataType) {
         try {
             this.redisDataType = RedisDataType.values()[dataType];

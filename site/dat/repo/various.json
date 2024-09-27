@@ -2009,6 +2009,21 @@
         }
       }
    },
+   {
+      "id": "vdn-pacing-jmeter-plugin",
+      "name": "vdn@github - pacing-jmeter-plugin",
+      "description": "Add Pacing to JMeter, compute a pause for the pacing duration since thread start iteration or since start time in a variable",
+      "helpUrl": "https://github.com/vdaburon/pacing-jmeter-plugin",
+      "screenshotUrl": "https://github.com/vdaburon/pacing-jmeter-plugin/raw/main/doc/pacing_logo.png",
+      "vendor": "Vincent DABURON",
+      "markerClass": "io.github.vdaburon.jmeterplugins.pacing.PacingStart",
+      "versions": {
+        "1.0": {
+          "changes": "First Version, add Pacing Start Sampler and Pacing Pause Sampler",
+          "downloadUrl": "https://github.com/vdaburon/pacing-jmeter-plugin/releases/download/v1.0/pacing-jmeter-plugin-1.0.jar"
+        }
+      }
+  },
   {
     "id": "jwt-preProcessor",
     "name": "JWT PreProcessor",

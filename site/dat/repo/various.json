@@ -2137,7 +2137,18 @@
 				"jfreechart": "https://repo1.maven.org/maven2/org/jfree/jfreechart/1.5.5/jfreechart-1.5.5.jar"
   			},
         	"depends":["jmeter-core"]
-  		}
+  		},
+		"1.2.1": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.1/jmeter-plugins-modalitycovcheck-1.2.1.jar",
+			"changes": "Reduction of false positives by ensuring that the bin size is at least as large as the computed value.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-comm-1.2.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.12.0/commons-csv-1.12.0.jar",
+				"jfreechart": "https://repo1.maven.org/maven2/org/jfree/jfreechart/1.5.5/jfreechart-1.5.5.jar"
+			},
+			"depends":["jmeter-core"]
+		}
   	}
   },
   {

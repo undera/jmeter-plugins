@@ -207,6 +207,26 @@
     }
   },
   {
+    "id": "tilln-cors-plugin",
+    "name": "CORS Pre-Processor",
+    "description": "CORS Pre-Processor makes preflight requests for cross-origin HTTP requests if required, based on request method and headers, and mimics a browser's preflight cache to avoid unnecessary requests.",
+    "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-cors-plugin/main/docs/cors-preprocessor.png",
+    "helpUrl": "https://github.com/tilln/jmeter-cors-plugin",
+    "vendor": "Till Neunast",
+    "markerClass": "nz.co.breakpoint.jmeter.modifiers.CorsPreProcessor",
+    "componentClasses": [
+      "nz.co.breakpoint.jmeter.modifiers.CorsPreProcessor"
+    ],
+    "versions": {
+      "1.0": {
+        "downloadUrl": "https://github.com/tilln/jmeter-cors-plugin/releases/download/1.0/jmeter-cors-plugin-1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
+  },
+  {
     "id": "tilln-formman",
     "name": "HTTP Form Manager",
     "description": "This plugin makes JMeter behave a little more like a browser: form fields are automatically populated with preselected values.<br><ul><li>No more manual correlation of hidden inputs, such as session variables.</li><li>Just correlate parameters that actually relate to user input.</li></ul>",
@@ -1442,6 +1462,20 @@
             "snappy-java": "https://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.8.4/snappy-java-1.1.8.4.jar",
             "zstd-jni-1.5.2-1": "https://repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.2-1/zstd-jni-1.5.2-1.jar"
           }
+        },
+        "1.3": {
+          "changes": "Fixes serilizer and deserializer issues",
+          "depends": [
+            "jmeter-core"
+          ],
+          "downloadUrl": "https://github.com/rollno748/di-kafkameter/releases/download/1.3/di-kafkameter-1.3.jar",
+          "libs": {
+            "kafka-clients": "https://repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.3.1/kafka-clients-3.3.1.jar",
+            "guava": "https://repo1.maven.org/maven2/com/google/guava/guava/31.1-jre/guava-31.1-jre.jar",
+            "lz4-java": "https://repo1.maven.org/maven2/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar",
+            "snappy-java": "https://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.8.4/snappy-java-1.1.8.4.jar",
+            "zstd-jni-1.5.2-1": "https://repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.2-1/zstd-jni-1.5.2-1.jar"
+          }
         }
     }
   },
@@ -1968,9 +2002,28 @@
 	"5.2": {
           "changes": "Correct extract parameters for mime type 'form-urlencoded' ended with charset likes 'application/x-www-form-urlencoded; charset=xxx'",
           "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v5.2/har-convertor-jmeter-plugin-5.2-jar-with-dependencies.jar"
+        },
+	"6.0": {
+          "changes": "Add View Result Tree to view the recording xml file",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v6.0/har-convertor-jmeter-plugin-6.0-jar-with-dependencies.jar"
         }
       }
    },
+   {
+      "id": "vdn-pacing-jmeter-plugin",
+      "name": "vdn@github - pacing-jmeter-plugin",
+      "description": "Add Pacing to JMeter, compute a pause for the pacing duration since thread start iteration or since start time in a variable",
+      "helpUrl": "https://github.com/vdaburon/pacing-jmeter-plugin",
+      "screenshotUrl": "https://github.com/vdaburon/pacing-jmeter-plugin/raw/main/doc/pacing_logo.png",
+      "vendor": "Vincent DABURON",
+      "markerClass": "io.github.vdaburon.jmeterplugins.pacing.PacingStart",
+      "versions": {
+        "1.0": {
+          "changes": "First Version, add Pacing Start Sampler and Pacing Pause Sampler",
+          "downloadUrl": "https://github.com/vdaburon/pacing-jmeter-plugin/releases/download/v1.0/pacing-jmeter-plugin-1.0.jar"
+        }
+      }
+  },
   {
     "id": "jwt-preProcessor",
     "name": "JWT PreProcessor",
@@ -1991,11 +2044,36 @@
     }
   },
   {
+	"id": "rbourga-jmeter-plugins-apdexcalculator",
+  	"name": "Apdex Score Calculation",
+  	"description": "Calculates the Apdex score of Samplers for a given Satisfied Threshold.",
+  	"screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/v1.2.0/QualityAnalysis/Apdex/wiki/images/Screenshot.png",
+  	"helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/APDEX-Score-Calculator",
+  	"vendor": "Robert Bourgault du Coudray",
+  	"markerClass": "com.github.rbourga.jmeter.apdex.logic.ApdexLogic",
+  	"componentClasses": [
+		"com.github.rbourga.jmeter.apdex.gui.ApdexGui",
+  		"kg.apc.cmdtools.ApdexTool"
+  	],
+  	"versions": {
+		"1.2.0": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-apdexcalculator-1.2.0.jar",
+  			"changes": "Initial release - replaces Apdex & Coefficient of Variation plugin.",
+  			"libs": {
+  				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+  				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-comm-1.2.0.jar",
+  				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar"
+  			},
+        	"depends":["jmeter-core"]
+ 		}
+  	}
+  },
+  {
 	"id": "rbourga-jmeter-plugins-apdexcovcalculator",
-	"name": "Apdex & Coefficient of Variation",
-	"description": "Calculates the Apdex score of Samplers for a given Satisfied Threshold as well as their Coefficient of Variation.",
-    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/main/QualityAnalysis/ApdexCov/wiki/images/Screenshot.png",
-    "helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/APDEX-Score-and-Coefficient-of-Variation-Calculator",
+	"name": "Apdex & Coefficient of Variation (Deprecated)",
+	"description": "[Deprecated in favor of Apdex Score Calculation] Calculates the Apdex score of Samplers for a given Satisfied Threshold as well as their Coefficient of Variation.",
+    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/v1.2.0/QualityAnalysis/Apdex/wiki/images/Screenshot.png",
+    "helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/APDEX-Score-Calculator",
     "vendor": "Robert Bourgault du Coudray",
     "markerClass": "com.github.rbourga.jmeter.apdexcov.logic.ApdexCoVLogic",
     "componentClasses": [
@@ -2019,7 +2097,7 @@
 	"id": "rbourga-jmeter-plugins-cohendeffectsize",
 	"name": "Cohen's d Results Comparison",
 	"description": "Measures the magnitude of the difference between two test results using Cohen's d.",
-    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/main/ResultsComparison/CohenDEffectSize/wiki/images/Screenshot.png",
+    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/v1.2.0/ResultsComparison/CohenDEffectSize/wiki/images/Screenshot.png",
     "helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/Results-Comparison",
     "vendor": "Robert Bourgault du Coudray",
     "markerClass": "com.github.rbourga.jmeter.effectsize.logic.CohenDEffectSizeLogic",
@@ -2037,14 +2115,62 @@
 				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.10.0/commons-csv-1.10.0.jar"
 			},
 	        "depends":["jmeter-core"]
+		},
+		"1.2.0": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-cohendeffectsize-1.2.0.jar",
+			"changes": "Lib updates.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-comm-1.2.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar"
+			},
+		    "depends":["jmeter-core"]
 		}
 	}
+  },
+  {
+	"id": "jmeter-plugins-modalitycovcheck",
+  	"name": "Coefficient of Variation and Modality Check",
+  	"description": "Checks for multimodality and the level of variation of the test results.",
+  	"screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/v1.2.0/QualityAnalysis/MultimodalityCov/wiki/images/Screenshot.png",
+  	"helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/Modality-and-Coefficient-of-Variation",
+  	"vendor": "Robert Bourgault du Coudray",
+  	"markerClass": "com.github.rbourga.jmeter.multimodalitycov.logic.MultimodalityCoVLogic",
+  	"componentClasses": [
+		"com.github.rbourga.jmeter.multimodalitycov.gui.MultimodalityCoVGui",
+		"com.github.rbourga.jmeter.multimodalitycov.maths.MValueCalculator",
+  		"kg.apc.cmdtools.ModalityCoVTool"
+  	],
+  	"versions": {
+		"1.2.0": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-modalitycovcheck-1.2.0.jar",
+  			"changes": "Initial release.",
+  			"libs": {
+  				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+  				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-comm-1.2.0.jar",
+  				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar",
+				"jfreechart": "https://repo1.maven.org/maven2/org/jfree/jfreechart/1.5.5/jfreechart-1.5.5.jar"
+  			},
+        	"depends":["jmeter-core"]
+  		},
+		"1.2.1": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.1/jmeter-plugins-modalitycovcheck-1.2.1.jar",
+			"changes": "Reduction of false positives by ensuring that the bin size is at least as large as the computed value.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-comm-1.2.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.12.0/commons-csv-1.12.0.jar",
+				"jfreechart": "https://repo1.maven.org/maven2/org/jfree/jfreechart/1.5.5/jfreechart-1.5.5.jar"
+			},
+			"depends":["jmeter-core"]
+		}
+  	}
   },
   {
 	"id": "rbourga-jmeter-plugins-tukeyoutlierdetector",
 	"name": "Upper Outlier Removal",
 	"description": "Detects outliers in the right tail using Tukey's fences and removes them.",
-    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/main/OutlierDetection/TukeyRightTailOutlierDetector/wiki/images/Screenshot.png",
+    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/v1.2.0/OutlierDetection/TukeyRightTailOutlierDetector/wiki/images/Screenshot.png",
     "helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/Right-Tail-Outlier-Detection",
     "vendor": "Robert Bourgault du Coudray",
     "markerClass": "com.github.rbourga.jmeter.tukeyoutlierdetector.logic.TukeyOutlierDetectorLogic",
@@ -2062,6 +2188,16 @@
 				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.10.0/commons-csv-1.10.0.jar"
 			},
 	        "depends":["jmeter-core"]
+		},
+		"1.2.0": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-tukeyoutlierdetector-1.2.0.jar",
+			"changes": "Lib updates.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-comm-1.2.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar"
+			},
+		    "depends":["jmeter-core"]
 		}
 	}
   },

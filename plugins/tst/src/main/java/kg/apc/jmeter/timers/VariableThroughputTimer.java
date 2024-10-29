@@ -85,7 +85,7 @@ public class VariableThroughputTimer
      */
     public synchronized long delay() {
         while (true) {
-            long curTimeMs = System.currentTimeMillis();
+            long curTimeMs = System.nanoTime() / 1_000_000;
             long millisSinceLastSecond = curTimeMs % 1000;
             long nowInMsRoundedAtSec = curTimeMs - millisSinceLastSecond;
             checkNextSecond(nowInMsRoundedAtSec);

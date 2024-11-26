@@ -869,6 +869,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "9.1.6": {
+        "changes": "Enhancements and bug fixes, release notes at https://www.ubik-ingenierie.com/blog/ubikloadpack-video-streaming-plugin-9-1-6",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.1.6/ubik-jmeter-videostreaming-plugin-9.1.6.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "9.1.5": {
         "changes": "Enhancements and bug fixes, release notes at https://www.ubik-ingenierie.com/blog/ubikloadpack-video-streaming-plugin-9-1-5",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.1.5/ubik-jmeter-videostreaming-plugin-9.1.5.jar",

@@ -2075,33 +2075,23 @@
   				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar"
   			},
         	"depends":["jmeter-core"]
- 		}
-  	}
-  },
-  {
-	"id": "rbourga-jmeter-plugins-apdexcovcalculator",
-	"name": "Apdex & Coefficient of Variation (Deprecated)",
-	"description": "[Deprecated in favor of Apdex Score Calculation] Calculates the Apdex score of Samplers for a given Satisfied Threshold as well as their Coefficient of Variation.",
-    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/v1.2.0/QualityAnalysis/Apdex/wiki/images/Screenshot.png",
-    "helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/APDEX-Score-Calculator",
-    "vendor": "Robert Bourgault du Coudray",
-    "markerClass": "com.github.rbourga.jmeter.apdexcov.logic.ApdexCoVLogic",
-    "componentClasses": [
-		"com.github.rbourga.jmeter.apdexcov.gui.ApdexCoVGui",
-		"kg.apc.cmdtools.ApdexCoVTool"
-	],
-    "versions": {
-		"1.0.0": {
-			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.0.0/jmeter-plugins-apdexcovcalculator-1.0.0.jar",
-			"changes": "Initial release - replaces Apdex Score Calculator plugin.",
+ 		},
+		"1.2.2": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-apdexcalculator-1.2.2.jar",
+			"changes": "Library updates.",
 			"libs": {
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.12.0/commons-csv-1.12.0.jar",
+				"commons-io": "https://repo1.maven.org/maven2/commons-io/commons-io/2.18.0/commons-io-2.18.0.jar",
+				"commons-math4-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-core/4.0-beta1/commons-math4-core-4.0-beta1.jar",
+				"commons-math4-legacy": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy/4.0-beta1/commons-math4-legacy-4.0-beta1.jar",
+				"commons-math4-legacy-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-core/4.0-beta1/commons-math4-legacy-core-4.0-beta1.jar",
+				"commons-math4-legacy-exception": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-exception/4.0-beta1/commons-math4-legacy-exception-4.0-beta1.jar",
+				"commons-numbers-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-numbers-core/1.2/commons-numbers-core-1.2.jar",
 				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
-				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.0.0/jmeter-plugins-comm-1.0.0.jar",
-				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.10.0/commons-csv-1.10.0.jar"
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-comm-1.2.2.jar"
 			},
-	        "depends":["jmeter-core"]
+			"depends":["jmeter-core"]
 		}
-	}
   },
   {
 	"id": "rbourga-jmeter-plugins-cohendeffectsize",
@@ -2135,8 +2125,23 @@
 				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar"
 			},
 		    "depends":["jmeter-core"]
+		},
+		"1.2.2": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-cohendeffectsize-1.2.2.jar",
+			"changes": "Library updates.",
+			"libs": {
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.12.0/commons-csv-1.12.0.jar",
+				"commons-io": "https://repo1.maven.org/maven2/commons-io/commons-io/2.18.0/commons-io-2.18.0.jar",
+				"commons-math4-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-core/4.0-beta1/commons-math4-core-4.0-beta1.jar",
+				"commons-math4-legacy": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy/4.0-beta1/commons-math4-legacy-4.0-beta1.jar",
+				"commons-math4-legacy-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-core/4.0-beta1/commons-math4-legacy-core-4.0-beta1.jar",
+				"commons-math4-legacy-exception": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-exception/4.0-beta1/commons-math4-legacy-exception-4.0-beta1.jar",
+				"commons-numbers-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-numbers-core/1.2/commons-numbers-core-1.2.jar",
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-comm-1.2.2.jar"
+			},
+			"depends":["jmeter-core"]
 		}
-	}
   },
   {
 	"id": "jmeter-plugins-modalitycovcheck",
@@ -2171,6 +2176,23 @@
 				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.0/jmeter-plugins-comm-1.2.0.jar",
 				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.12.0/commons-csv-1.12.0.jar",
 				"jfreechart": "https://repo1.maven.org/maven2/org/jfree/jfreechart/1.5.5/jfreechart-1.5.5.jar"
+			},
+			"depends":["jmeter-core"]
+		},
+		"1.2.2": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-modalitycovcheck-1.2.2.jar",
+			"changes": "Library updates.",
+			"libs": {
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.12.0/commons-csv-1.12.0.jar",
+				"commons-io": "https://repo1.maven.org/maven2/commons-io/commons-io/2.18.0/commons-io-2.18.0.jar",
+				"commons-math4-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-core/4.0-beta1/commons-math4-core-4.0-beta1.jar",
+				"commons-math4-legacy": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy/4.0-beta1/commons-math4-legacy-4.0-beta1.jar",
+				"commons-math4-legacy-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-core/4.0-beta1/commons-math4-legacy-core-4.0-beta1.jar",
+				"commons-math4-legacy-exception": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-exception/4.0-beta1/commons-math4-legacy-exception-4.0-beta1.jar",
+				"commons-numbers-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-numbers-core/1.2/commons-numbers-core-1.2.jar",
+				"jfreechart": "https://repo1.maven.org/maven2/org/jfree/jfreechart/1.5.5/jfreechart-1.5.5.jar",
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-comm-1.2.2.jar"
 			},
 			"depends":["jmeter-core"]
 		}
@@ -2208,8 +2230,23 @@
 				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar"
 			},
 		    "depends":["jmeter-core"]
+		},
+		"1.2.2": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-tukeyoutlierdetector-1.2.2.jar",
+			"changes": "Trimming saved in two separate files: 1. clean results with successful & failed samplers 2. successful samplers only.",
+			"libs": {
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.12.0/commons-csv-1.12.0.jar",
+				"commons-io": "https://repo1.maven.org/maven2/commons-io/commons-io/2.18.0/commons-io-2.18.0.jar",
+				"commons-math4-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-core/4.0-beta1/commons-math4-core-4.0-beta1.jar",
+				"commons-math4-legacy": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy/4.0-beta1/commons-math4-legacy-4.0-beta1.jar",
+				"commons-math4-legacy-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-core/4.0-beta1/commons-math4-legacy-core-4.0-beta1.jar",
+				"commons-math4-legacy-exception": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-exception/4.0-beta1/commons-math4-legacy-exception-4.0-beta1.jar",
+				"commons-numbers-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-numbers-core/1.2/commons-numbers-core-1.2.jar",
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-comm-1.2.2.jar"
+			},
+			"depends":["jmeter-core"]
 		}
-	}
   },
   {
     "id": "jmeter-har-import",

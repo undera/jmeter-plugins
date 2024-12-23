@@ -2092,6 +2092,7 @@
 			},
 			"depends":["jmeter-core"]
 		}
+	}
   },
   {
 	"id": "rbourga-jmeter-plugins-cohendeffectsize",
@@ -2142,6 +2143,7 @@
 			},
 			"depends":["jmeter-core"]
 		}
+	}
   },
   {
 	"id": "jmeter-plugins-modalitycovcheck",
@@ -2247,6 +2249,7 @@
 			},
 			"depends":["jmeter-core"]
 		}
+	}
   },
   {
     "id": "jmeter-har-import",

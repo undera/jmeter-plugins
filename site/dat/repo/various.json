@@ -1189,6 +1189,16 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2": {
+        "changes": "Supports batching settings for publisher",
+        "downloadUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler/releases/download/1.2/jmeter-pubsub-sampler-1.2.jar",
+        "libs": {
+           "gson": "https://repo1.maven.org/maven2/com/google/code/gson/gson/2.11.0/gson-2.11.0.jar"
+        },
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

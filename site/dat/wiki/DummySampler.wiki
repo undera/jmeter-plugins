@@ -4,7 +4,7 @@
 
 
 Dummy Sampler is the most obedient of the JMeter samplers:
-it generates sample just with the values that was defined fot it.
+it generates sample just with the values that was defined for it.
 It is extremely convenient when you need to debug
 a [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#BeanShell_PostProcessor BeanShell Post-Processor]
 or [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#Regular_Expression_Extractor RegExp Extractor]

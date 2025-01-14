@@ -1994,6 +1994,10 @@
         "1.0": {
           "changes": "First version for jmeter-plugin repo",
           "downloadUrl": "https://github.com/vdaburon/elastic-apm-jmeter-plugin/releases/download/Version1.0/elastic-apm-jmeter-plugin-1.0-jar-with-dependencies.jar"
+        },
+	"2.0": {
+          "changes": "Add button 'MODIFY SCRIPT AND LOAD NEW SCRIPT' and choose only a jmx file not a directory",
+          "downloadUrl": "https://github.com/vdaburon/elastic-apm-jmeter-plugin/releases/download/Version2.0/elastic-apm-jmeter-plugin-2.0-jar-with-dependencies.jar"
         }
       }
     },

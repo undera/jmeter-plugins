@@ -2002,7 +2002,7 @@
       "name": "vdn@github - har-convertor-jmeter-tool",
       "description": "Convert a HAR file to a JMeter Script and a Record XML file.",
       "helpUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin",
-      "screenshotUrl": "https://raw.githubusercontent.com/vdaburon/har-convertor-jmeter-plugin/main/doc/images/har_convertor_tool_gui.png",
+      "screenshotUrl": "https://raw.githubusercontent.com/vdaburon/har-convertor-jmeter-plugin/main/doc/images/browsers_har_convertor_script_record.png",
       "vendor": "Vincent DABURON",
       "markerClass": "io.github.vdaburon.jmeterplugins.har.HarConvertorInstaller",
       "installerClass": "io.github.vdaburon.jmeterplugins.har.HarConvertorInstaller",

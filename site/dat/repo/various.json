@@ -2048,6 +2048,22 @@
         }
       }
   },
+ {
+      "id": "vdn-otel-apm-tool",
+      "name": "vdn@github - otel-apm-tool",
+      "description": "Manage the integration of OpenTelemetry from Elastic Application Performance Monitoring in a JMeter script.",
+      "helpUrl": "https://github.com/vdaburon/otel-apm-jmeter-plugin",
+      "screenshotUrl": "https://github.com/vdaburon/otel-apm-jmeter-plugin/raw/main/doc/images/otel_elastic_apm_integration_tool_gui.png",
+      "vendor": "Vincent DABURON",
+      "markerClass": "io.github.vdaburon.jmeterplugins.otelapm.OtelApmIntegrateInstaller",
+      "installerClass": "io.github.vdaburon.jmeterplugins.otelapm.OtelApmIntegrateInstaller",
+      "versions": {
+        "1.0": {
+          "changes": "First Version, for jmeter-plugins repo",
+          "downloadUrl": "https://github.com/vdaburon/otel-apm-jmeter-plugin/releases/download/v1.0/otel-apm-jmeter-plugin-1.0-jar-with-dependencies.jar"
+        }
+      }
+  },	
   {
     "id": "jwt-preProcessor",
     "name": "JWT PreProcessor",

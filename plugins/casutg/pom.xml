@@ -8,8 +8,8 @@
     <artifactId>jmeter-plugins-casutg</artifactId>
     <version>3.0</version>
 
-    <name>Concurrency Thread Group</name>
-    <description>Concurrency Thread Group</description>
+    <name>Custom Thread Groups</name>
+    <description>Custom Thread Groups</description>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>

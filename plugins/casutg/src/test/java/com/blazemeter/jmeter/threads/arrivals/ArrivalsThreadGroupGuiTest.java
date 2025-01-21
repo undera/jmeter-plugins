@@ -2,6 +2,7 @@ package com.blazemeter.jmeter.threads.arrivals;
 
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,6 +16,9 @@ public class ArrivalsThreadGroupGuiTest {
     @BeforeClass
     public static void setUpClass() throws IOException {
         TestJMeterUtils.createJmeterEnv();
+        // Workaround for new JMeters
+        JMeterUtils.setProperty("saveservice_properties", JMeterUtils.getJMeterHome() + "/ss.props");
+        JMeterUtils.setProperty("upgrade_properties", JMeterUtils.getJMeterHome() + "/ss.props");
     }
 
     @Test

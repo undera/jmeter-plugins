@@ -5,6 +5,7 @@ import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.threads.ListenerNotifier;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -19,6 +20,9 @@ public class FreeFormArrivalsThreadStarterTest {
     @BeforeClass
     public static void setUp() throws Exception {
         TestJMeterUtils.createJmeterEnv();
+        // Workaround for new JMeters
+        JMeterUtils.setProperty("saveservice_properties", JMeterUtils.getJMeterHome() + "/ss.props");
+        JMeterUtils.setProperty("upgrade_properties", JMeterUtils.getJMeterHome() + "/ss.props");
     }
 
     @Test

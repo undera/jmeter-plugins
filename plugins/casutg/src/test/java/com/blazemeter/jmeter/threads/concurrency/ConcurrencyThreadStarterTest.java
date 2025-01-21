@@ -2,6 +2,7 @@ package com.blazemeter.jmeter.threads.concurrency;
 
 import com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroupTest;
 import kg.apc.emulators.TestJMeterUtils;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -12,6 +13,9 @@ public class ConcurrencyThreadStarterTest {
     @BeforeClass
     public static void setUpClass() {
         TestJMeterUtils.createJmeterEnv();
+        // Workaround for new JMeters
+        JMeterUtils.setProperty("saveservice_properties", JMeterUtils.getJMeterHome() + "/ss.props");
+        JMeterUtils.setProperty("upgrade_properties", JMeterUtils.getJMeterHome() + "/ss.props");
     }
 
     @Test(timeout = 1000)

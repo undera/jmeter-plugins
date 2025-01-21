@@ -1,6 +1,7 @@
 package com.blazemeter.jmeter.threads.arrivals;
 
 import kg.apc.emulators.TestJMeterUtils;
+import org.apache.jmeter.util.JMeterUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,6 +13,9 @@ public class FreeFormArrivalsThreadGroupGuiTest {
     @BeforeClass
     public static void setUpClass() throws IOException {
         TestJMeterUtils.createJmeterEnv();
+        // Workaround for new JMeters
+        JMeterUtils.setProperty("saveservice_properties", JMeterUtils.getJMeterHome() + "/ss.props");
+        JMeterUtils.setProperty("upgrade_properties", JMeterUtils.getJMeterHome() + "/ss.props");
     }
 
     @Test

@@ -25,6 +25,7 @@ import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.threads.ListenerNotifier;
 import org.apache.jmeter.threads.TestCompiler;
 import org.apache.jmeter.timers.ConstantTimer;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -38,6 +39,9 @@ public class ConcurrencyThreadGroupTest {
     public static void setUpClass() throws Exception {
         ArrivalsThreadGroupTest.setUpClass();
         TestJMeterUtils.createJmeterEnv();
+        // Workaround for new JMeters
+        JMeterUtils.setProperty("saveservice_properties", JMeterUtils.getJMeterHome() + "/ss.props");
+        JMeterUtils.setProperty("upgrade_properties", JMeterUtils.getJMeterHome() + "/ss.props");
     }
 
     @Test

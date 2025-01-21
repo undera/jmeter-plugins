@@ -2,6 +2,7 @@ package kg.apc.jmeter.threads;
 
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,6 +25,9 @@ public class SteppingThreadGroupGuiTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
+        // Workaround for new JMeters
+        JMeterUtils.setProperty("saveservice_properties", JMeterUtils.getJMeterHome() + "/ss.props");
+        JMeterUtils.setProperty("upgrade_properties", JMeterUtils.getJMeterHome() + "/ss.props");
     }
 
     /**

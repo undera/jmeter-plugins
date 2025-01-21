@@ -3,6 +3,7 @@ package com.blazemeter.jmeter.threads.arrivals;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.sampler.TestAction;
 import org.apache.jmeter.threads.AbstractThreadGroup;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,6 +18,9 @@ public class ArrivalsThreadGroupTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
+        // Workaround for new JMeters
+        JMeterUtils.setProperty("saveservice_properties", JMeterUtils.getJMeterHome() + "/ss.props");
+        JMeterUtils.setProperty("upgrade_properties", JMeterUtils.getJMeterHome() + "/ss.props");
     }
 
     public static ListedHashTree getListedHashTree(AbstractThreadGroup atg, boolean stopThread) {

@@ -1,5 +1,6 @@
 package kg.apc.jmeter.threads;
 
+import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.slf4j.Logger;
 
 import org.apache.jmeter.threads.JMeterThread;
@@ -20,6 +21,11 @@ public class SteppingThreadGroup
 
     public SteppingThreadGroup() {
         super();
+    }
+
+    @Override
+    public JMeterThread addNewThread(int i, StandardJMeterEngine standardJMeterEngine) {
+        return null;
     }
 
     @Override

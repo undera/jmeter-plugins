@@ -53,6 +53,11 @@ public class ConcurrencyThreadGroup extends AbstractDynamicThreadGroup {
     }
 
     @Override
+    public JMeterThread addNewThread(int i, StandardJMeterEngine standardJMeterEngine) {
+        return null;
+    }
+
+    @Override
     public boolean isLimitReached() {
         return !running || !threadStarter.isAlive();
     }

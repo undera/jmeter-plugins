@@ -26,6 +26,7 @@ public abstract class AbstractDynamicThreadGroupModel extends AbstractThreadGrou
     public static final String RAMP_UP = "RampUp";
     public static final String STEPS = "Steps";
     public static final String ITERATIONS = "Iterations";
+    public static final String SAME_USER = "same_user_on_next_iteration";
     public static final String HOLD = "Hold";
     protected transient Set<DynamicThread> threads = Collections.newSetFromMap(new ConcurrentHashMap<DynamicThread, Boolean>());
     protected final ResultCollector logFile = new FlushingResultCollector();
@@ -173,8 +174,16 @@ public abstract class AbstractDynamicThreadGroupModel extends AbstractThreadGrou
         return getPropertyAsString(ITERATIONS);
     }
 
+    public Boolean getSameUser() {
+        return getPropertyAsBoolean(SAME_USER, true);
+    }
+
     public void setIterationsLimit(String val) {
         setProperty(ITERATIONS, val);
+    }
+
+    public void setSameUser(Boolean val) {
+        setProperty(SAME_USER, val);
     }
 
     private void readObject(ObjectInputStream in)

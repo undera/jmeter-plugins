@@ -123,6 +123,12 @@ public abstract class AbstractSimpleThreadGroup extends AbstractThreadGroup {
     }
 
     @Override
+    public JMeterThread addNewThread(int i, StandardJMeterEngine standardJMeterEngine) {
+        // TODO: Will not be implemented as the semantics of the API is unclear
+        return null;
+    }
+
+    @Override
     public void threadFinished(JMeterThread thread) {
         log.debug("Ending thread " + thread.getThreadName());
         allThreads.remove(thread);

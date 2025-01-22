@@ -12,6 +12,7 @@ import java.util.Enumeration;
 public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements ParamsPanel {
     protected JTextField logFile = new JTextField();
     protected JTextField iterations = new JTextField();
+    private final JCheckBox sameUserBox = new JCheckBox();
     protected JTextField concurrLimit = new JTextField();
     protected ButtonGroup unitGroup = new ButtonGroup();
     protected JRadioButton unitSeconds = new JRadioButton("seconds");
@@ -28,6 +29,7 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements Pa
         add("Time Unit: ", groupPanel);
 
         add("Thread Iterations Limit: ", iterations);
+        add("Same User On Each Iteration", sameUserBox);
         add("Log Threads Status into File: ", logFile);
 
         if (showConcurrencyLimit) {
@@ -38,6 +40,7 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements Pa
     public void modelToUI(AbstractDynamicThreadGroup tg) {
         logFile.setText(tg.getLogFilename());
         iterations.setText(tg.getIterationsLimit());
+        sameUserBox.setSelected(tg.getSameUser());
         concurrLimit.setText("1000");
         unitMinutes.setSelected(true);
         if (tg instanceof ArrivalsThreadGroup) {
@@ -57,6 +60,7 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements Pa
     public void UItoModel(AbstractDynamicThreadGroup tg, JMeterVariableEvaluator evaluator) {
         tg.setLogFilename(evaluator.evaluate(logFile.getText()));
         tg.setIterationsLimit(evaluator.evaluate(iterations.getText()));
+        tg.setSameUser(sameUserBox.isSelected());
         if (unitGroup.getSelection() != null) {
             tg.setUnit(unitGroup.getSelection().getActionCommand());
         }
@@ -70,6 +74,7 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements Pa
     public void clearUI() {
         logFile.setText("");
         iterations.setText("");
+        sameUserBox.setSelected(true);
         concurrLimit.setText("1000");
         unitMinutes.setSelected(true);
     }

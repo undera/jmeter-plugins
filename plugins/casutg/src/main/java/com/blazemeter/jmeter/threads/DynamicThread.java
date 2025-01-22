@@ -14,6 +14,9 @@ public class DynamicThread extends JMeterThread {
         super(test, monitor, note, isSameUserOnNextIteration);
     }
 
+    public DynamicThread(HashTree test, JMeterThreadMonitor monitor, ListenerNotifier note) {
+        super(test, monitor, note);
+    }
     public void setOSThread(Thread OSThread) {
         this.osThread = OSThread;
     }

@@ -16,6 +16,10 @@ import org.slf4j.Logger;
 
 public abstract class AbstractThreadStarter extends Thread {
     private static final Logger log = LoggerFactory.getLogger(AbstractThreadStarter.class);
+    private static final String[] jmeterVersion =
+        JMeterUtils.getJMeterVersion().split(" ")[0].split("\\.", 3);
+    private static final int JMETER_VERSION_MAJOR = Integer.parseInt(jmeterVersion[0]);
+    private static final int JMETER_VERSION_MINOR = Integer.parseInt(jmeterVersion[1]);
     protected final ListenerNotifier notifier;
     protected final ListedHashTree threadGroupTree;
     protected final StandardJMeterEngine engine;
@@ -59,7 +63,13 @@ public abstract class AbstractThreadStarter extends Thread {
         boolean onErrorStopTestNow = owner.getOnErrorStopTestNow();
         boolean onErrorStopThread = owner.getOnErrorStopThread();
         boolean onErrorStartNextLoop = owner.getOnErrorStartNextLoop();
-        final DynamicThread jmeterThread = new DynamicThread(treeClone, this.owner, notifier, owner.getSameUser());
+        DynamicThread jmeterThread;
+        if (JMETER_VERSION_MAJOR >= 5 && JMETER_VERSION_MINOR >=2) {
+            jmeterThread =
+                new DynamicThread(treeClone, this.owner, notifier, owner.getSameUser());
+        } else {
+            jmeterThread = new DynamicThread(treeClone, this.owner, notifier);
+        }
         jmeterThread.setThreadNum((int) threadIndex);
         jmeterThread.setThreadGroup(this.owner);
         jmeterThread.setInitialContext(context);

@@ -39,9 +39,6 @@ public class ConcurrencyThreadGroupTest {
     public static void setUpClass() throws Exception {
         ArrivalsThreadGroupTest.setUpClass();
         TestJMeterUtils.createJmeterEnv();
-        // Workaround for new JMeters
-        JMeterUtils.setProperty("saveservice_properties", JMeterUtils.getJMeterHome() + "/ss.props");
-        JMeterUtils.setProperty("upgrade_properties", JMeterUtils.getJMeterHome() + "/ss.props");
     }
 
     @Test

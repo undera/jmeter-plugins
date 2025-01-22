@@ -13,9 +13,6 @@ public class FreeFormArrivalsThreadGroupGuiTest {
     @BeforeClass
     public static void setUpClass() throws IOException {
         TestJMeterUtils.createJmeterEnv();
-        // Workaround for new JMeters
-        JMeterUtils.setProperty("saveservice_properties", JMeterUtils.getJMeterHome() + "/ss.props");
-        JMeterUtils.setProperty("upgrade_properties", JMeterUtils.getJMeterHome() + "/ss.props");
     }
 
     @Test

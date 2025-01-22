@@ -18,9 +18,6 @@ public class ArrivalsThreadGroupTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
-        // Workaround for new JMeters
-        JMeterUtils.setProperty("saveservice_properties", JMeterUtils.getJMeterHome() + "/ss.props");
-        JMeterUtils.setProperty("upgrade_properties", JMeterUtils.getJMeterHome() + "/ss.props");
     }
 
     public static ListedHashTree getListedHashTree(AbstractThreadGroup atg, boolean stopThread) {

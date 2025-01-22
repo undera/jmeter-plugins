@@ -5,7 +5,6 @@ import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.threads.ListenerNotifier;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;

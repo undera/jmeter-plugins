@@ -13,5 +13,4 @@ public class AbstractSimpleThreadGroupImpl extends AbstractSimpleThreadGroup {
     public Map<JMeterThread, Thread> getAllThreads() {
         return this.allThreads;
     }
-
 }

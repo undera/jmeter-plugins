@@ -175,7 +175,7 @@ public abstract class AbstractDynamicThreadGroupModel extends AbstractThreadGrou
     }
 
     public Boolean getSameUser() {
-        return getPropertyAsBoolean(SAME_USER);
+        return getPropertyAsBoolean(SAME_USER, true);
     }
 
     public void setIterationsLimit(String val) {

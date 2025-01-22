@@ -2,7 +2,6 @@ package com.blazemeter.jmeter.threads.concurrency;
 
 import com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroupTest;
 import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.junit.BeforeClass;
 import org.junit.Test;

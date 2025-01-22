@@ -1,6 +1,5 @@
 package kg.apc.jmeter.threads;
 
-import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.slf4j.Logger;
 
 import org.apache.jmeter.threads.JMeterThread;

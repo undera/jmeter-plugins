@@ -52,7 +52,6 @@ public class ConcurrencyThreadGroup extends AbstractDynamicThreadGroup {
         return (int) Math.round(getTargetLevelAsDouble());
     }
 
-
     @Override
     public boolean isLimitReached() {
         return !running || !threadStarter.isAlive();

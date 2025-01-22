@@ -3,7 +3,6 @@ package com.blazemeter.jmeter.threads.arrivals;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.sampler.TestAction;
 import org.apache.jmeter.threads.AbstractThreadGroup;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.junit.BeforeClass;
 import org.junit.Test;

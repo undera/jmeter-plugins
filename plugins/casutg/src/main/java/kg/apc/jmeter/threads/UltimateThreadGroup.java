@@ -1,7 +1,6 @@
 package kg.apc.jmeter.threads;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
-import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.testelement.property.CollectionProperty;

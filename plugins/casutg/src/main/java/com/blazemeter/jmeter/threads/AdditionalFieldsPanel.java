@@ -29,7 +29,7 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements Pa
         add("Time Unit: ", groupPanel);
 
         add("Thread Iterations Limit: ", iterations);
-        add("Same user on each iteration", sameUserBox);
+        add("Same User On Each Iteration", sameUserBox);
         add("Log Threads Status into File: ", logFile);
 
         if (showConcurrencyLimit) {

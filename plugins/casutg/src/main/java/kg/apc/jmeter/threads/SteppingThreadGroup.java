@@ -24,11 +24,6 @@ public class SteppingThreadGroup
     }
 
     @Override
-    public JMeterThread addNewThread(int i, StandardJMeterEngine standardJMeterEngine) {
-        return null;
-    }
-
-    @Override
     protected void scheduleThread(JMeterThread thread, long tgStartTime) {
 
         int inUserCount = getInUserCountAsInt();

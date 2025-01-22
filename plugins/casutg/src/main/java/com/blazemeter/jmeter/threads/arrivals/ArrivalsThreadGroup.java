@@ -38,11 +38,6 @@ public class ArrivalsThreadGroup extends AbstractDynamicThreadGroup {
         }
     }
 
-    @Override
-    public JMeterThread addNewThread(int i, StandardJMeterEngine standardJMeterEngine) {
-        return null;
-    }
-
     public int getNumThreads() {
         return threads.size();
     }

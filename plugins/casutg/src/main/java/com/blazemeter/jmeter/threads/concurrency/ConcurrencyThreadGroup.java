@@ -52,10 +52,6 @@ public class ConcurrencyThreadGroup extends AbstractDynamicThreadGroup {
         return (int) Math.round(getTargetLevelAsDouble());
     }
 
-    @Override
-    public JMeterThread addNewThread(int i, StandardJMeterEngine standardJMeterEngine) {
-        return null;
-    }
 
     @Override
     public boolean isLimitReached() {

@@ -15,8 +15,4 @@ public class AbstractSimpleThreadGroupImpl extends AbstractSimpleThreadGroup {
         return this.allThreads;
     }
 
-    @Override
-    public JMeterThread addNewThread(int i, StandardJMeterEngine standardJMeterEngine) {
-        return null;
-    }
 }

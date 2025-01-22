@@ -161,11 +161,6 @@ public class UltimateThreadGroup
     }
 
     @Override
-    public JMeterThread addNewThread(int i, StandardJMeterEngine standardJMeterEngine) {
-        return null;
-    }
-
-    @Override
     public void testStarted() {
         JMeterProperty data = getData();
         if (!(data instanceof NullProperty)) {

@@ -2318,6 +2318,10 @@
       "0.2.5": {
         "changes": "Fix issue with empty/null Cookie values. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.5/jmeter-har-import-plugin-v0.2.5.jar"
+      },
+      "0.2.6": {
+        "changes": "Fix issue with data URIs. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.6/jmeter-har-import-plugin-v0.2.6.jar"
       }
     }
   },

@@ -2341,6 +2341,13 @@
       "dg.jmeter.plugins.templater.RunThroughTree"
     ],
     "versions": {
+			"1.2": {
+        "changes": "searchOut[1] and searchOut[2] now accept variables<br>rename-config.yaml should now be in the same directory as jmx",
+        "downloadUrl": "https://github.com/DanilGolikov/JmeterNamesTemplater/releases/download/v1.2/jmeter-plugins-names-templater-1.2.jar",
+        "libs": {
+          "snakeyaml": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar"
+        }
+      },
       "1.1": {
         "changes": "The yaml config file is used for templates",
         "downloadUrl": "https://github.com/DanilGolikov/JmeterNamesTemplater/releases/download/v1.1-yaml/jmeter-plugins-names-templater-1.1.jar",

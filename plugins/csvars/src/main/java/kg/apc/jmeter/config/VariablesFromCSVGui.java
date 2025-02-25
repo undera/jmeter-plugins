@@ -191,7 +191,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         variablePrefix.setText("");
         fileName.setText("");
         checkInfo.setText("");
-        separator.setText(",");
+        separator.setText(";");
         skipLines.setText("0");
         storeSysProp.setSelected(false);
     }

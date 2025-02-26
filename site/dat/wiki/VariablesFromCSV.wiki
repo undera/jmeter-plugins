@@ -2,15 +2,15 @@
 
 <span class=''>[/?search=jpgc-csvars <i class='fa fa-download'></i> Download]</span>
 
-This Config item allows you to load variable values from CSV file. Variable names and values taken from CSV file, name from first column, value from second column, respectively. In the `CSV File:` window, you can specify the absolute path to your csv file. However, to make your test plans more portable, you can also use dynamic path by evaluating ${} expressions.
+This Config item allows you to load variable values from CSV file. Variable names and values taken from CSV file, name from first column, value from second column, respectively. In the <i>CSV File:</i> window, you can specify the absolute path to your csv file. However, to make your test plans more portable, you can also use dynamic path by evaluating ${} expressions.
 
 == Tutorial ==
 Let's create a text file <i>c:\temp\testvariables.csv</i> with following content:
 
-`
+```
 First_Variable,here comes value 1
 Second_Variable,and here value 2
-`
+```
 
 1. To use the absolute path, let's create test plan with <i>Variables From CSV File</i>, <i>Thread Group</i>, <i>Debug Sampler</i> and <i>View Results Tree</i>. Then configure <i>Variables From CSV File</i>, specify the absolute path to <i>testvariables.csv</i>, optional variable prefix `MyVar_` and column separator ','. Now your plan should look like this:
 
@@ -18,9 +18,9 @@ Second_Variable,and here value 2
 
 Save this test plan to <i>c:\temp\test1.jmx</i>.
 
-Now, run the test, go to <i>View Results Tree</i> and click on _Debug Sampler</i>, then click on <i>Response data</i> tab. You'll see that your variables from <i>testvariables.csv</i> are defined in JMeter, e.g.:
+Now, run the test, go to <i>View Results Tree</i> and click on <i>Debug Sampler</i>, then click on <i>Response data</i> tab. You'll see that your variables from <i>testvariables.csv</i> are defined in JMeter, e.g.:
 
-`
+```
 JMeterVariables:
 MyVar_First_Variable=here comes value 1
 MyVar_Second_Variable=and here value 2
@@ -30,12 +30,12 @@ START.HMS=153028
 START.MS=1264671028968
 START.YMD=20100128
 TESTSTART.MS=1264671163750
-`
+```
 
 2. To use dynamic path you should specify expressions enclosed in ${}, e.g.:
 
-`${__groovy(import org.apache.jmeter.services.FileServer; FileServer.getFileServer().getBaseDir();,)}${__groovy(File.separator;,)}resources${__groovy(File.separator;,)}properties.csv`
+```${__groovy(import org.apache.jmeter.services.FileServer; FileServer.getFileServer().getBaseDir();,)}${__groovy(File.separator;,)}resources${__groovy(File.separator;,)}properties.csv```
 
-This expression dynamically resolves the path (like <i>D:\JAVA_pet_projects\resources\properties.csv</i>) relative to the directory of the current .jmx file.
+This expression dynamically resolves the path (like <i>D:\JAVA_pet_projects\resources\properties.csv</i>) relative to the directory of the current <i>.jmx</i> file.
 
 [/site/img/wiki/varsfromcsv2.png]

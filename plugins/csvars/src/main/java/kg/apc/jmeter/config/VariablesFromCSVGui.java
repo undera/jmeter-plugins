@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -12,12 +11,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JFileChooser;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import kg.apc.jmeter.gui.IntegerInputVerifier;
-import org.apache.jmeter.services.FileServer;
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.testelement.TestElement;
 import org.slf4j.Logger;
@@ -123,25 +121,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
 
-        browseButton.addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser();
-
-            try {
-                String baseDir = FileServer.getFileServer().getBaseDir();
-                if (baseDir != null && !baseDir.isEmpty()) {
-                    fileChooser.setCurrentDirectory(new java.io.File(baseDir));
-                }
-            } catch (Exception ex) {
-                fileChooser.setCurrentDirectory(new java.io.File("."));
-                log.error("Error getting base directory: " + ex.getMessage());
-            }
-
-            int result = fileChooser.showOpenDialog(VariablesFromCSVGui.this);
-            if (result == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-                fileName.setText(selectedFile.getAbsolutePath());
-            }
-        });
+        browseButton.addActionListener(new BrowseAction(fileName));
 
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel(" Variable prefix: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 1, variablePrefix = new JTextField(20));

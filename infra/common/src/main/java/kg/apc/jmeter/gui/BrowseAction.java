@@ -2,7 +2,8 @@ package kg.apc.jmeter.gui;
 
 import org.apache.jmeter.services.FileServer;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
+import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;

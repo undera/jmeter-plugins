@@ -1,9 +1,11 @@
 package kg.apc.jmeter.gui;
 
+import org.apache.jmeter.services.FileServer;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFileChooser;
-import javax.swing.JTextField;
+import java.io.File;
 import org.apache.jmeter.gui.GuiPackage;
 
 public class BrowseAction implements ActionListener {
@@ -13,34 +15,36 @@ public class BrowseAction implements ActionListener {
     private String lastPath = ".";
 
     public BrowseAction(JTextField filename) {
-        control = filename;
+        this.control = filename;
     }
 
     public BrowseAction(JTextField filename, boolean isDirectoryBrowse) {
-        control = filename;
+        this.control = filename;
         this.isDirectoryBrowse = isDirectoryBrowse;
     }
 
-   @Override
+    @Override
     public void actionPerformed(ActionEvent e) {
         JFileChooser chooser = getFileChooser();
-        if (chooser != null) {
-            if(GuiPackage.getInstance() != null) {
-                int returnVal = chooser.showOpenDialog(GuiPackage.getInstance().getMainFrame());
-                if(returnVal == JFileChooser.APPROVE_OPTION) {
-                   control.setText(chooser.getSelectedFile().getPath());
-                }
-                lastPath = chooser.getCurrentDirectory().getPath();
+        if (chooser != null && GuiPackage.getInstance() != null) {
+            int returnVal = chooser.showOpenDialog(GuiPackage.getInstance().getMainFrame());
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                control.setText(chooser.getSelectedFile().getPath());
             }
+            lastPath = chooser.getCurrentDirectory().getPath();
         }
     }
 
     protected JFileChooser getFileChooser() {
-        JFileChooser ret = new JFileChooser(lastPath);
-        if(isDirectoryBrowse) {
+        String baseDir = FileServer.getFileServer().getBaseDir();
+        File initialDirectory = baseDir != null && !baseDir.isEmpty()
+                ? new File(baseDir)
+                : new File(lastPath);
+
+        JFileChooser ret = new JFileChooser(initialDirectory);
+        if (isDirectoryBrowse) {
             ret.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         }
-
         return ret;
     }
 }

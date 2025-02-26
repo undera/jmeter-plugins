@@ -18,17 +18,21 @@ import kg.apc.jmeter.gui.GuiBuilderHelper;
 import kg.apc.jmeter.gui.IntegerInputVerifier;
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.testelement.TestElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class VariablesFromCSVGui extends AbstractConfigGui {
 
     public static final String WIKIPAGE = "VariablesFromCSV";
+
+    private static final Logger log = LoggerFactory.getLogger(VariablesFromCSVGui.class);
 
     private JTextField fileName;
     private JTextField variablePrefix;
     private JTextField separator;
     private JTextField skipLines;
     private JCheckBox storeSysProp;
-    
+
     private JButton browseButton;
     private JButton checkButton;
     private JTextArea checkInfo;
@@ -39,10 +43,12 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         initFields();
     }
 
+
     @Override
     public String getStaticLabel() {
         return JMeterPluginsUtils.prefixLabel("Variables From CSV File");
     }
+
 
     @Override
     public String getLabelResource() {
@@ -53,7 +59,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
     public void configure(TestElement element) {
         super.configure(element);
         if (element instanceof VariablesFromCSV) {
-            VariablesFromCSV varsCsv = (VariablesFromCSV)element;
+            VariablesFromCSV varsCsv = (VariablesFromCSV) element;
             fileName.setText(varsCsv.getFileName());
             variablePrefix.setText(varsCsv.getVariablePrefix());
             separator.setText(varsCsv.getSeparator());
@@ -107,6 +113,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
 
         addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("CSV File: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 0, fileName = new JTextField(20));
+        fileName.setToolTipText("You can use expressions like ${__groovy(...)} for dynamic paths.");
         addToPanel(mainPanel, labelConstraints, 2, 0, browseButton = new JButton("Browse..."));
 
         GuiBuilderHelper.strechItemToComponent(fileName, browseButton);

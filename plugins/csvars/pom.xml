@@ -6,7 +6,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-csvars</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
 
     <name>Variables from CSV</name>
     <description>Variables from CSV</description>
@@ -33,14 +33,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
-            <version>0.3</version>
+            <version>0.7</version>
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
@@ -58,6 +58,12 @@
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-emulators</artifactId>
             <version>0.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-nop</artifactId>
+                </exclusion>
+            </exclusions>
             <scope>test</scope>
         </dependency>
     </dependencies>

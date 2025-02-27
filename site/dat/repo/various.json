@@ -2034,6 +2034,10 @@
 	"6.1": {
           "changes": "Correct a NullPointerException when creating the Recording XML file.",
           "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v6.1/har-convertor-jmeter-plugin-6.1-jar-with-dependencies.jar"
+        },
+	"7.0": {
+          "changes": "Add manage the websocket connection and messages with 'WebSocket Samplers by Peter Doornbosch', add checkbox for boolean parameter 'ws_with_pdoornbosch' .",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v7.0/har-convertor-jmeter-plugin-7.0-jar-with-dependencies.jar"
         }
       }
    },

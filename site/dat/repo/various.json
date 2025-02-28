@@ -223,6 +223,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+        "1.1": {
+          "changes": "Bug fixes (#2)",
+          "downloadUrl": "https://github.com/tilln/jmeter-cors-plugin/releases/download/1.1/jmeter-cors-plugin-1.1.jar",
+          "depends": [
+            "jmeter-core"
+          ]
       }
     }
   },

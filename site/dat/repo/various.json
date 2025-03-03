@@ -2386,5 +2386,30 @@
         "downloadUrl": "https://github.com/DanilGolikov/UtilityJmeterFunctions/releases/download/v1.1.3/jmeter-plugins-utility-functions-1.1.3.jar"
       }
     }
-  }
+  },
+  {
+    "id": "feather-wand-jmeter-ai-agent",
+    "name": "Feather Wand - JMeter AI Agent",
+    "description": "Add AI Agent to JMeter",
+    "screenshotUrl": "https://raw.githubusercontent.com/QAInsights/jmeter-ai/main/images/Feather-Wand-AI-Agent-JMeter.png",
+    "helpUrl": "https://github.com/QAInsights/jmeter-ai",
+    "vendor": "QAInsights.com",
+    "markerClass": "org.qainsights.jmeter.ai.gui.AI",
+    "componentClasses": [
+      "org.qainsights.jmeter.ai.gui.AI",
+      "org.qainsights.jmeter.ai.gui.AiChatPanel",
+      "org.qainsights.jmeter.ai.gui.AiMenuCreator",
+      "org.qainsights.jmeter.ai.gui.AiMenuItem",
+      "org.qainsights.jmeter.ai.gui.ComponentFinder"
+    ],
+    "versions": {
+      "0.0.1": {
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v0.0.1/jmeter-agent-1.0.1-jar-with-dependencies.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      }
+    }
+  },
 ]

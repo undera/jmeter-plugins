@@ -323,6 +323,21 @@
           "HdrHistogram>=2.1.12": "https://search.maven.org/remotecontent?filepath=org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar",
           "javatuples": "https://search.maven.org/remotecontent?filepath=org/javatuples/javatuples/1.2/javatuples-1.2.jar"
         }
+      },
+      "1.4": {
+        "changes": "<ul><li>Upgrade to jPOS v2.1.10</li><li>Automatic ARQC padding</li><li>Bug fixes: #77</li></ul>",
+        "downloadUrl": "https://github.com/tilln/jmeter-iso8583/releases/download/1.4/jmeter-iso8583-1.4.jar",
+        "libs": {
+          "jpos>=2.1.10": "https://search.maven.org/remotecontent?filepath=org/jpos/jpos/2.1.10/jpos-2.1.10.jar",
+          "bcprov-lts8on>=2.73.6": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcprov-lts8on/2.73.6/bcprov-lts8on-2.73.6.jar",
+          "bcpg-lts8on>=2.73.6": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcpg-lts8on/2.73.6/bcpg-lts8on-2.73.6.jar",
+          "jdom2>=2.0.6.1": "https://search.maven.org/remotecontent?filepath=org/jdom/jdom2/2.0.6.1/jdom2-2.0.6.1.jar",
+          "org.osgi.core": "https://search.maven.org/remotecontent?filepath=org/osgi/org.osgi.core/6.0.0/org.osgi.core-6.0.0.jar",
+          "commons-cli": "https://search.maven.org/remotecontent?filepath=commons-cli/commons-cli/1.4/commons-cli-1.4.jar",
+          "snakeyaml>=2.0": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/2.0/snakeyaml-2.0.jar",
+          "HdrHistogram>=2.1.12": "https://search.maven.org/remotecontent?filepath=org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar",
+          "javatuples": "https://search.maven.org/remotecontent?filepath=org/javatuples/javatuples/1.2/javatuples-1.2.jar"
+        }
       }
     }
   },

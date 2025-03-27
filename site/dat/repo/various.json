@@ -2060,6 +2060,10 @@
 	"7.0": {
           "changes": "Add manage the websocket connection and messages with 'WebSocket Samplers by Peter Doornbosch', add checkbox for boolean parameter 'ws_with_pdoornbosch' .",
           "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v7.0/har-convertor-jmeter-plugin-7.0-jar-with-dependencies.jar"
+        },
+	"7.1": {
+          "changes": "Remove request headers from HTTP/2, these headers start with ':' likes ':authority' or ':scheme', don't create HttpSampler for url 'data:'",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v7.1/har-convertor-jmeter-plugin-7.1-jar-with-dependencies.jar"
         }
       }
    },

@@ -2444,6 +2444,11 @@
         "changes": "Say hello to these new features:<br><ul><li>OpenAI integration</li><li>`wrap` your HTTP elements inside Transaction Controllers</li></ul>",
         "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.6/jmeter-agent-1.0.6-jar-with-dependencies.jar",
         "depends": ["jmeter-core", "jmeter-components"]
+      },
+      "1.0.7": {
+        "changes": "Say hello to these new features:<br><ul><li>@usage command to get tokens usage for Anthropic and OpenAI</li></ul>",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.7/jmeter-agent-1.0.7-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
       }
     }
   }

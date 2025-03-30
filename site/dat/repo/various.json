@@ -2060,6 +2060,10 @@
 	"7.0": {
           "changes": "Add manage the websocket connection and messages with 'WebSocket Samplers by Peter Doornbosch', add checkbox for boolean parameter 'ws_with_pdoornbosch' .",
           "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v7.0/har-convertor-jmeter-plugin-7.0-jar-with-dependencies.jar"
+        },
+	"7.1": {
+          "changes": "Remove request headers from HTTP/2, these headers start with ':' likes ':authority' or ':scheme', don't create HttpSampler for url 'data:'",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v7.1/har-convertor-jmeter-plugin-7.1-jar-with-dependencies.jar"
         }
       }
    },
@@ -2443,6 +2447,11 @@
       "1.0.6": {
         "changes": "Say hello to these new features:<br><ul><li>OpenAI integration</li><li>`wrap` your HTTP elements inside Transaction Controllers</li></ul>",
         "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.6/jmeter-agent-1.0.6-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
+      },
+      "1.0.7": {
+        "changes": "Say hello to these new features:<br><ul><li>@usage command to get tokens usage for Anthropic and OpenAI</li></ul>",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.7/jmeter-agent-1.0.7-jar-with-dependencies.jar",
         "depends": ["jmeter-core", "jmeter-components"]
       }
     }

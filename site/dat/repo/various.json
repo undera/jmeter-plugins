@@ -2453,7 +2453,11 @@
         "changes": "Say hello to these new features:<br><ul><li>@usage command to get tokens usage for Anthropic and OpenAI</li></ul>",
         "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.7/jmeter-agent-1.0.7-jar-with-dependencies.jar",
         "depends": ["jmeter-core", "jmeter-components"]
-      }
+      },
+      "1.0.8": {
+        "changes": "Nothing but bug fixes and polished logs",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.8/jmeter-agent-1.0.8-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
     }
   }
 ]

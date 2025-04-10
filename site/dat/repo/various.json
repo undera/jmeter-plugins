@@ -2352,6 +2352,10 @@
       "0.2.6": {
         "changes": "Fix issue with data URIs. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.6/jmeter-har-import-plugin-v0.2.6.jar"
+      },
+      "1.0.0": {
+        "changes": "Fix issue with data URIs. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.0.0/jmeter-har-import-plugin-v1.0.0.jar"
       }
     }
   },

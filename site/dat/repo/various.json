@@ -2352,6 +2352,10 @@
       "0.2.6": {
         "changes": "Fix issue with data URIs. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.6/jmeter-har-import-plugin-v0.2.6.jar"
+      },
+      "1.0.0": {
+        "changes": "Fix issue with data URIs. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.0.0/jmeter-har-import-plugin-v1.0.0.jar"
       }
     }
   },
@@ -2458,7 +2462,12 @@
         "changes": "Nothing but bug fixes and polished logs",
         "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.8/jmeter-agent-1.0.8-jar-with-dependencies.jar",
         "depends": ["jmeter-core", "jmeter-components"]
-    }
+      },
+      "1.0.9": {
+        "changes": "Say hello to these new features:<br><ul><li>Refactor your code right inside JSR223 elements by right-clicking.</li><li>Minor fixes and enhancements</li></ul>",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.9/jmeter-agent-1.0.9-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
+      }
     }
   }
 ]

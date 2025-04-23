@@ -5,40 +5,47 @@ import com.blazemeter.jmeter.threads.DynamicThread;
 import com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroup;
 import com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup;
 import org.apache.jmeter.control.GenericController;
+import org.apache.jmeter.control.IteratingController;
 import org.apache.jmeter.control.NextIsNullException;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterThread;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
-public class VirtualUserController extends GenericController {
+public class VirtualUserController extends GenericController implements IteratingController {
     private static final Logger log = LoggerFactory.getLogger(VirtualUserController.class);
     private boolean hasArrived = false;
     protected AbstractDynamicThreadGroup owner;
-
+    private boolean breakLoop;
     private long iterationNo = 0;
 
     @Override
     public Sampler next() {
-        if (owner.isLimitReached()) {
-            setDone(true);
-        } else if (!hasArrived) {
-            if (owner.isLimitReached()) {
-                throw new IllegalStateException("Should not have more iterations");
-            }
-            hasArrived = true;
-            iterationNo++;
-            if (owner instanceof ArrivalsThreadGroup) {
-                getOwnerAsArrivals().arrivalFact(JMeterContextService.getContext().getThread(), iterationNo);
-                if (!owner.isRunning()) {
-                    setDone(true);
-                    return null;
+        updateIterationIndex(owner.getName(), (int) iterationNo);
+        try {
+            if (breakLoop || owner.isLimitReached()) {
+                setDone(true);
+            } else if (!hasArrived) {
+                if (owner.isLimitReached()) {
+                    throw new IllegalStateException("Should not have more iterations");
+                }
+                hasArrived = true;
+                incrementLoopCount();
+                updateIterationIndex(owner.getName(), (int) iterationNo);
+                if (owner instanceof ArrivalsThreadGroup) {
+                    getOwnerAsArrivals().arrivalFact(JMeterContextService.getContext().getThread(), iterationNo);
+                    if (!owner.isRunning()) {
+                        setDone(true);
+                        return null;
+                    }
                 }
             }
+            return super.next();
+        } finally {
+            updateIterationIndex(owner.getName(), (int) iterationNo);
         }
-
-        return super.next();
     }
 
     private boolean moveToPool(JMeterThread thread) {
@@ -55,6 +62,12 @@ public class VirtualUserController extends GenericController {
     protected void reInitialize() {
         super.reInitialize();
         hasArrived = false;
+    }
+
+    @Override
+    protected void setDone(boolean done) {
+        resetBreakLoop();
+        super.setDone(done);
     }
 
     @Override
@@ -87,8 +100,21 @@ public class VirtualUserController extends GenericController {
         }
     }
 
+    protected void incrementLoopCount() {
+        iterationNo++;
+    }
+
+    protected void resetLoopCount() {
+        iterationNo = 0;
+    }
+
     public void setOwner(AbstractDynamicThreadGroup owner) {
         this.owner = owner;
+    }
+
+    @Override
+    protected int getIterCount() {
+        return (int) (iterationNo + 1);
     }
 
     public void startNextLoop() {
@@ -104,7 +130,37 @@ public class VirtualUserController extends GenericController {
         }
     }
 
+    @Override
+    public void breakLoop() {
+        breakLoop = true;
+        setFirst(true);
+        resetCurrent();
+        resetLoopCount();
+        recoverRunningVersion();
+    }
+
+    private void resetBreakLoop() {
+        if(breakLoop) {
+            breakLoop = false;
+        }
+    }
+
     private ArrivalsThreadGroup getOwnerAsArrivals() {
         return (ArrivalsThreadGroup) owner;
+    }
+
+    @Override
+    public void removed() {
+        super.removed();
+    }
+
+    @Override
+    public void iterationStart(LoopIterationEvent loopIterationEvent) {
+        if (log.isDebugEnabled()) {
+            log.debug("iterationStart called on {} with source {} and iteration {}", owner.getName(),
+                loopIterationEvent.getSource(), loopIterationEvent.getIteration());
+        }
+        reInitialize();
+        resetLoopCount();
     }
 }

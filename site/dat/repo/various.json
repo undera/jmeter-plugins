@@ -2354,12 +2354,16 @@
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.6/jmeter-har-import-plugin-v0.2.6.jar"
       },
       "1.0.0": {
-        "changes": "Fix issue with data URIs. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "changes": "Java 17 upgrade. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.0.0/jmeter-har-import-plugin-v1.0.0.jar"
       },
       "1.0.1": {
-        "changes": "Fix issue with data URIs. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "changes": "New HAR reader version for long numbers. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.0.1/jmeter-har-import-plugin-v1.0.1.jar"
+      },
+      "1.1.0": {
+        "changes": "Loading indicator added. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.1.0/jmeter-har-import-plugin-v1.1.0.jar"
       }
     }
   },

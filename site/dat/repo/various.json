@@ -1968,6 +1968,10 @@
         "1.4": {
           "changes": "Version for jmeter-plugins-manager repo",
           "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/releases/download/v1.4/junit-reporter-kpi-from-jmeter-dashboard-stats-1.4-jar-with-dependencies.jar"
+        },
+	"1.5": {
+          "changes": "Version 1.5 Change page title, define unique table css class to avoid conflict, update libraries.",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/releases/download/v1.5/junit-reporter-kpi-from-jmeter-dashboard-stats-1.5-jar-with-dependencies.jar"
         }
       }
     },
@@ -1984,6 +1988,10 @@
         "1.5": {
           "changes": "First version for jmeter-plugin repo",
           "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/releases/download/V1.5/junit-reporter-kpi-from-jmeter-report-csv-1.5-jar-with-dependencies.jar"
+        },
+	"1.7": {
+          "changes": "Version 1.7 Define unique table css class to avoid conflict, update libraries.",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/releases/download/v1.7/junit-reporter-kpi-from-jmeter-report-csv-1.7-jar-with-dependencies.jar"
         }
       }
     },
@@ -2000,6 +2008,10 @@
         "1.2": {
           "changes": "First version for jmeter-plugin repo",
           "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/releases/download/V1.2/junit-reporter-kpi-compare-jmeter-report-csv-1.2-jar-with-dependencies.jar"
+        },
+	"1.4": {
+          "changes": "Version 1.4 Change page title, define unique table css class to avoid conflict, update libraries.",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/releases/download/v1.4/junit-reporter-kpi-compare-jmeter-report-csv-1.4-jar-with-dependencies.jar"
         }
       }
     },

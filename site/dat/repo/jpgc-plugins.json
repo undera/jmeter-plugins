@@ -77,6 +77,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
         }
+      },
+      "3.1.1": {
+        "changes": "Minor fix related to IteratingController support and reported starting index",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/3.1.1/jmeter-plugins-casutg-3.1.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
+        }
       }
     }
   },

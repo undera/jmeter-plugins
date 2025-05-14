@@ -23,7 +23,7 @@ public class VirtualUserController extends GenericController implements Iteratin
 
     @Override
     public Sampler next() {
-        updateIterationIndex(owner.getName(), (int) iterationNo);
+        updateIterationIndex();
         try {
             if (breakLoop || owner.isLimitReached()) {
                 setDone(true);
@@ -33,7 +33,7 @@ public class VirtualUserController extends GenericController implements Iteratin
                 }
                 hasArrived = true;
                 incrementLoopCount();
-                updateIterationIndex(owner.getName(), (int) iterationNo);
+                updateIterationIndex();
                 if (owner instanceof ArrivalsThreadGroup) {
                     getOwnerAsArrivals().arrivalFact(JMeterContextService.getContext().getThread(), iterationNo);
                     if (!owner.isRunning()) {
@@ -44,8 +44,14 @@ public class VirtualUserController extends GenericController implements Iteratin
             }
             return super.next();
         } finally {
-            updateIterationIndex(owner.getName(), (int) iterationNo);
+            updateIterationIndex();
         }
+    }
+
+    private void updateIterationIndex() {
+        // This controller increment prior sample and ThreadGroup controllers do the opposite
+        // We subtract one to JMeter IterationIndex to be aligned with TG (start with 0)
+        updateIterationIndex(owner.getName(), getIterCount() - 1);
     }
 
     private boolean moveToPool(JMeterThread thread) {
@@ -114,7 +120,7 @@ public class VirtualUserController extends GenericController implements Iteratin
 
     @Override
     protected int getIterCount() {
-        return (int) (iterationNo + 1);
+        return (int) (iterationNo);
     }
 
     public void startNextLoop() {

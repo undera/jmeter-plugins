@@ -631,6 +631,25 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "3.2.1": {
+        "changes": "BlazeMeter rebranding",
+        "downloadUrl": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/jmeter-bzm-hls-3.2.1.jar",
+        "libs": {
+          "hlsparserj>=1.0.1": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/hlsparserj-1.0.1.jar",
+          "jackson-annotations>=2.11.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/jackson-annotations-2.11.0.jar",
+          "jackson-core>=2.10.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/jackson-core-2.10.0.jar",
+          "jackson-databind>=2.11.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/jackson-databind-2.11.0.jar",
+          "jackson-dataformat-xml>=2.10.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/jackson-dataformat-xml-2.10.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/jackson-module-jaxb-annotations-2.10.0.jar",
+          "jaxb-api>=2.3.1": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/jaxb-api-2.3.1.jar",
+          "mpd-tools-release-0.8>=jdk8": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/mpd-tools-release-0.8-jdk8.jar",
+          "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/stax2-api-4.2.jar",
+          "woodstox-core>=6.0.1": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/woodstox-core-6.0.1.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

@@ -645,7 +645,8 @@
           "jaxb-api>=2.3.1": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/jaxb-api-2.3.1.jar",
           "mpd-tools>=release-0.8-jdk8": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/mpd-tools-release-0.8-jdk8.jar",
           "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/stax2-api-4.2.jar",
-          "woodstox-core>=6.0.1": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/woodstox-core-6.0.1.jar"
+          "woodstox-core>=6.0.1": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/woodstox-core-6.0.1.jar",
+          "jmeter-bzm-commons>=0.2.3": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.2.1/jmeter-bzm-commons-0.2.3.jar"
         },
         "depends": [
           "jmeter-http"

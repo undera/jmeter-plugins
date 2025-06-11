@@ -57,6 +57,13 @@
         "libs": {
           "cmdrunner>=2.3": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
         }
+      },
+      "1.11": {
+        "changes": "Fix one CVE via beanutils, bump up to Java 1.8",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.11/jmeter-plugins-manager-1.11.jar",
+        "libs": {
+          "cmdrunner>=2.3": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
+        }
       }
     }
   }

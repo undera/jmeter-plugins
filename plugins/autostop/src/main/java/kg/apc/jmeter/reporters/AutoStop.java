@@ -131,10 +131,10 @@ public class AutoStop
             }
 
             if(testValuePercentileRespTime > 0) {
-                log.info(testPercentileValue+"Percentile Response >"+testValuePercentileRespTime+"until"+testValuePercentileRespTimeSec+"currentValue"+percentileResponseTime);
-                log.info(testActualValue+">>"+testExpectedValue+">>"+skipIter+">>"+testValueCustomSec);
+                log.debug(testPercentileValue+"Percentile Response >"+testValuePercentileRespTime+"until"+testValuePercentileRespTimeSec+"currentValue"+percentileResponseTime);
+                log.debug(testActualValue+">>"+testExpectedValue+">>"+skipIter+">>"+testValueCustomSec);
                 if(percentileResponseTime > testValuePercentileRespTime) {
-                    log.info((sec - percentileRespTimeExceededStart)+" "+getPercentileResponseTimeSecsAsInt());
+                    log.dubeg((sec - percentileRespTimeExceededStart)+" "+getPercentileResponseTimeSecsAsInt());
                     if (sec - percentileRespTimeExceededStart >= testValuePercentileRespTimeSec) {
                         log.info(testPercentileValue+"Percentile Response more than " + getPercentileResponseTime() + " for " + getPercentileResponseTimeSecs() + "s. Auto-shutdown test...");
                         stopTest();

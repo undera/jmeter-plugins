@@ -83,8 +83,6 @@ public class AutoStop
 
     @Override
     public void sampleOccurred(SampleEvent se) {
-        SampleResult sr = se.getResult();
-        statCalc.addSample(sr);
         long sec = System.currentTimeMillis() / 1000;
 
         if (curSec != sec) {
@@ -131,10 +129,12 @@ public class AutoStop
             }
 
             if(testValuePercentileRespTime > 0) {
-                log.debug(testPercentileValue+"Percentile Response >"+testValuePercentileRespTime+"until"+testValuePercentileRespTimeSec+"currentValue"+percentileResponseTime);
-                log.debug(testActualValue+">>"+testExpectedValue+">>"+skipIter+">>"+testValueCustomSec);
+                SampleResult sr = se.getResult();
+                statCalc.addSample(sr);
+                // log.debug(testPercentileValue+"Percentile Response >"+testValuePercentileRespTime+"until"+testValuePercentileRespTimeSec+"currentValue"+percentileResponseTime);
+                // log.debug(testActualValue+">>"+testExpectedValue+">>"+skipIter+">>"+testValueCustomSec);
                 if(percentileResponseTime > testValuePercentileRespTime) {
-                    log.dubeg((sec - percentileRespTimeExceededStart)+" "+getPercentileResponseTimeSecsAsInt());
+                    //log.debug((sec - percentileRespTimeExceededStart)+" "+getPercentileResponseTimeSecsAsInt());
                     if (sec - percentileRespTimeExceededStart >= testValuePercentileRespTimeSec) {
                         log.info(testPercentileValue+"Percentile Response more than " + getPercentileResponseTime() + " for " + getPercentileResponseTimeSecs() + "s. Auto-shutdown test...");
                         stopTest();

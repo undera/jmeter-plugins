@@ -29,7 +29,7 @@
         "changes": "added autostop criteria based on response time percentile",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-autostop/0.3/jmeter-plugins-autostop-0.3.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.8/jmeter-plugins-cmn-jmeter-0.7.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.8/jmeter-plugins-cmn-jmeter-0.8.jar"
         }
       }
     }

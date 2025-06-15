@@ -3,7 +3,7 @@
     "id": "jpgc-autostop",
     "name": "Auto-Stop Listener",
     "description": "Ability to stop test based on runtime KPIs",
-    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/AutoStop1.png",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/AutoStop2.png",
     "helpUrl": "https://jmeter-plugins.org/wiki/AutoStop/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.reporters.AutoStop",
@@ -23,6 +23,13 @@
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-autostop/0.2/jmeter-plugins-autostop-0.2.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
+        }
+      },
+      "0.3": {
+        "changes": "added autostop criteria based on response time percentile",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-autostop/0.3/jmeter-plugins-autostop-0.3.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.8/jmeter-plugins-cmn-jmeter-0.8.jar"
         }
       }
     }

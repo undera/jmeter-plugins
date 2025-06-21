@@ -732,6 +732,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.3": {
+        "changes": "Added support for deflate/uncompress websocket messages (RFC 7692). ",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.3/jmeter-websocket-samplers-1.3.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

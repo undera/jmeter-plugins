@@ -49,8 +49,8 @@ public abstract class TestJMeterUtils {
         threadGroup.setName("test thread group");
         JMeterContextService.getContext().setThreadGroup(threadGroup);
         JMeterUtils.setProperty("sample_variables", "TEST1,TEST2,TEST3"); // for Flexible File Writer Test
-        JMeterUtils.setProperty("saveservice_properties", "/ss.props");
-        JMeterUtils.setProperty("upgrade_properties", "/ss.props");
+        JMeterUtils.setProperty("saveservice_properties", JMeterUtils.getJMeterHome() + "/ss.props");
+        JMeterUtils.setProperty("upgrade_properties", JMeterUtils.getJMeterHome() + "/ss.props");
         JMeterUtils.setProperty("sampleresult.default.encoding", StandardCharsets.UTF_8.name()); // enable multibyte
     }
 

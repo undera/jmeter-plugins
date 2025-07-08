@@ -223,6 +223,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+        "1.1": {
+          "changes": "Bug fixes (#2)",
+          "downloadUrl": "https://github.com/tilln/jmeter-cors-plugin/releases/download/1.1/jmeter-cors-plugin-1.1.jar",
+          "depends": [
+            "jmeter-core"
+          ]
       }
     }
   },
@@ -313,6 +320,21 @@
           "org.osgi.core": "https://search.maven.org/remotecontent?filepath=org/osgi/org.osgi.core/6.0.0/org.osgi.core-6.0.0.jar",
           "commons-cli": "https://search.maven.org/remotecontent?filepath=commons-cli/commons-cli/1.4/commons-cli-1.4.jar",
           "snakeyaml>=1.33": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.33/snakeyaml-1.33.jar",
+          "HdrHistogram>=2.1.12": "https://search.maven.org/remotecontent?filepath=org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar",
+          "javatuples": "https://search.maven.org/remotecontent?filepath=org/javatuples/javatuples/1.2/javatuples-1.2.jar"
+        }
+      },
+      "1.4": {
+        "changes": "<ul><li>Upgrade to jPOS v2.1.10</li><li>Automatic ARQC padding</li><li>Bug fixes: #77</li></ul>",
+        "downloadUrl": "https://github.com/tilln/jmeter-iso8583/releases/download/1.4/jmeter-iso8583-1.4.jar",
+        "libs": {
+          "jpos>=2.1.10": "https://search.maven.org/remotecontent?filepath=org/jpos/jpos/2.1.10/jpos-2.1.10.jar",
+          "bcprov-lts8on>=2.73.6": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcprov-lts8on/2.73.6/bcprov-lts8on-2.73.6.jar",
+          "bcpg-lts8on>=2.73.6": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcpg-lts8on/2.73.6/bcpg-lts8on-2.73.6.jar",
+          "jdom2>=2.0.6.1": "https://search.maven.org/remotecontent?filepath=org/jdom/jdom2/2.0.6.1/jdom2-2.0.6.1.jar",
+          "org.osgi.core": "https://search.maven.org/remotecontent?filepath=org/osgi/org.osgi.core/6.0.0/org.osgi.core-6.0.0.jar",
+          "commons-cli": "https://search.maven.org/remotecontent?filepath=commons-cli/commons-cli/1.4/commons-cli-1.4.jar",
+          "snakeyaml>=2.0": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/2.0/snakeyaml-2.0.jar",
           "HdrHistogram>=2.1.12": "https://search.maven.org/remotecontent?filepath=org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar",
           "javatuples": "https://search.maven.org/remotecontent?filepath=org/javatuples/javatuples/1.2/javatuples-1.2.jar"
         }
@@ -710,6 +732,20 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.3": {
+        "changes": "Added support for deflate/uncompress websocket messages (RFC 7692). ",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.3/jmeter-websocket-samplers-1.3.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.3.1": {
+        "changes": "Fixed bug (ClassCastException when reading unexpected frame in request-response sampler)",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.3.1/jmeter-websocket-samplers-1.3.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },
@@ -869,6 +905,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "10.1.1": {
+        "changes": "Major release introducing support for HLS nPVR and audio-only streams, full release notes at https://www.ubik-ingenierie.com/blog/ubikloadpack-video-streaming-plugin-10-1-1/",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/10.1.1/ubik-jmeter-videostreaming-plugin-10.1.1.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "10.0.0": {
         "changes": "Major release introducing support for Ad Insertion and Java Virtual Threads, release notes at https://www.ubik-ingenierie.com/blog/ubikloadpack-video-streaming-plugin-10-0-0/",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/10.0.0/ubik-jmeter-videostreaming-plugin-10.0.0.jar",
@@ -1501,12 +1542,12 @@
   },
   {
     "componentClasses": [
-        "com.di.jmeter.config.ExtendedCsvDataSet"
+        "com.di.jmeter.config.ExtendedCsvDataSetConfig"
     ],
     "description": "Jmeter plugin to effectively manage CSV dataset like other enterprise industry standard tools. <ul><li>Simply add a \"Config Element \" and Set the appropriate options</li><li><a href=\"https://rollno748.medium.com/extended-csv-dataset-config-for-jmeter-17b1d8bda6b8\">Usage Guide</a></li><li><a href=\"https://rollno748.github.io/\">Author Details</a></li></ul>",
     "helpUrl": "https://github.com/rollno748/Extended-csv-dataset-config#readme",
     "id": "extended-csv-dataset-config",
-    "markerClass": "com.di.jmeter.config.ExtendedCsvDataSet",
+    "markerClass": "com.di.jmeter.config.ExtendedCsvDataSetConfig",
     "name": "Extended CSV dataset config",
     "screenshotUrl": "https://raw.githubusercontent.com/rollno748/Extended-csv-dataset-config/master/images/ExtendedCsvDataSetConfig.png",
     "vendor": "DigitalInsight-NCR",
@@ -1946,6 +1987,10 @@
         "1.4": {
           "changes": "Version for jmeter-plugins-manager repo",
           "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/releases/download/v1.4/junit-reporter-kpi-from-jmeter-dashboard-stats-1.4-jar-with-dependencies.jar"
+        },
+	"1.5": {
+          "changes": "Version 1.5 Change page title, define unique table css class to avoid conflict, update libraries.",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/releases/download/v1.5/junit-reporter-kpi-from-jmeter-dashboard-stats-1.5-jar-with-dependencies.jar"
         }
       }
     },
@@ -1962,6 +2007,10 @@
         "1.5": {
           "changes": "First version for jmeter-plugin repo",
           "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/releases/download/V1.5/junit-reporter-kpi-from-jmeter-report-csv-1.5-jar-with-dependencies.jar"
+        },
+	"1.7": {
+          "changes": "Version 1.7 Define unique table css class to avoid conflict, update libraries.",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/releases/download/v1.7/junit-reporter-kpi-from-jmeter-report-csv-1.7-jar-with-dependencies.jar"
         }
       }
     },
@@ -1978,6 +2027,10 @@
         "1.2": {
           "changes": "First version for jmeter-plugin repo",
           "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/releases/download/V1.2/junit-reporter-kpi-compare-jmeter-report-csv-1.2-jar-with-dependencies.jar"
+        },
+	"1.4": {
+          "changes": "Version 1.4 Change page title, define unique table css class to avoid conflict, update libraries.",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/releases/download/v1.4/junit-reporter-kpi-compare-jmeter-report-csv-1.4-jar-with-dependencies.jar"
         }
       }
     },
@@ -1994,6 +2047,10 @@
         "1.0": {
           "changes": "First version for jmeter-plugin repo",
           "downloadUrl": "https://github.com/vdaburon/elastic-apm-jmeter-plugin/releases/download/Version1.0/elastic-apm-jmeter-plugin-1.0-jar-with-dependencies.jar"
+        },
+	"2.0": {
+          "changes": "Add button 'MODIFY SCRIPT AND LOAD NEW SCRIPT' and choose only a jmx file not a directory",
+          "downloadUrl": "https://github.com/vdaburon/elastic-apm-jmeter-plugin/releases/download/Version2.0/elastic-apm-jmeter-plugin-2.0-jar-with-dependencies.jar"
         }
       }
     },
@@ -2002,7 +2059,7 @@
       "name": "vdn@github - har-convertor-jmeter-tool",
       "description": "Convert a HAR file to a JMeter Script and a Record XML file.",
       "helpUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin",
-      "screenshotUrl": "https://raw.githubusercontent.com/vdaburon/har-convertor-jmeter-plugin/main/doc/images/har_convertor_tool_gui.png",
+      "screenshotUrl": "https://raw.githubusercontent.com/vdaburon/har-convertor-jmeter-plugin/main/doc/images/browsers_har_convertor_script_record.png",
       "vendor": "Vincent DABURON",
       "markerClass": "io.github.vdaburon.jmeterplugins.har.HarConvertorInstaller",
       "installerClass": "io.github.vdaburon.jmeterplugins.har.HarConvertorInstaller",
@@ -2026,6 +2083,18 @@
 	"6.0": {
           "changes": "Add View Result Tree to view the recording xml file",
           "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v6.0/har-convertor-jmeter-plugin-6.0-jar-with-dependencies.jar"
+        },
+	"6.1": {
+          "changes": "Correct a NullPointerException when creating the Recording XML file.",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v6.1/har-convertor-jmeter-plugin-6.1-jar-with-dependencies.jar"
+        },
+	"7.0": {
+          "changes": "Add manage the websocket connection and messages with 'WebSocket Samplers by Peter Doornbosch', add checkbox for boolean parameter 'ws_with_pdoornbosch' .",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v7.0/har-convertor-jmeter-plugin-7.0-jar-with-dependencies.jar"
+        },
+	"7.1": {
+          "changes": "Remove request headers from HTTP/2, these headers start with ':' likes ':authority' or ':scheme', don't create HttpSampler for url 'data:'",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v7.1/har-convertor-jmeter-plugin-7.1-jar-with-dependencies.jar"
         }
       }
    },
@@ -2044,6 +2113,22 @@
         }
       }
   },
+ {
+      "id": "vdn-otel-apm-tool",
+      "name": "vdn@github - otel-apm-tool",
+      "description": "Manage the integration of OpenTelemetry from Elastic Application Performance Monitoring in a JMeter script.",
+      "helpUrl": "https://github.com/vdaburon/otel-apm-jmeter-plugin",
+      "screenshotUrl": "https://github.com/vdaburon/otel-apm-jmeter-plugin/raw/main/doc/images/otel_elastic_apm_integration_tool_gui.png",
+      "vendor": "Vincent DABURON",
+      "markerClass": "io.github.vdaburon.jmeterplugins.otelapm.OtelApmIntegrateInstaller",
+      "installerClass": "io.github.vdaburon.jmeterplugins.otelapm.OtelApmIntegrateInstaller",
+      "versions": {
+        "1.0": {
+          "changes": "First Version, for jmeter-plugins repo",
+          "downloadUrl": "https://github.com/vdaburon/otel-apm-jmeter-plugin/releases/download/v1.0/otel-apm-jmeter-plugin-1.0-jar-with-dependencies.jar"
+        }
+      }
+  },	
   {
     "id": "jwt-preProcessor",
     "name": "JWT PreProcessor",
@@ -2090,8 +2175,7 @@
 			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-apdexcalculator-1.2.2.jar",
 			"changes": "Library updates.",
 			"libs": {
-				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.12.0/commons-csv-1.12.0.jar",
-				"commons-io": "https://repo1.maven.org/maven2/commons-io/commons-io/2.18.0/commons-io-2.18.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar",
 				"commons-math4-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-core/4.0-beta1/commons-math4-core-4.0-beta1.jar",
 				"commons-math4-legacy": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy/4.0-beta1/commons-math4-legacy-4.0-beta1.jar",
 				"commons-math4-legacy-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-core/4.0-beta1/commons-math4-legacy-core-4.0-beta1.jar",
@@ -2141,8 +2225,7 @@
 			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-cohendeffectsize-1.2.2.jar",
 			"changes": "Library updates.",
 			"libs": {
-				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.12.0/commons-csv-1.12.0.jar",
-				"commons-io": "https://repo1.maven.org/maven2/commons-io/commons-io/2.18.0/commons-io-2.18.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar",
 				"commons-math4-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-core/4.0-beta1/commons-math4-core-4.0-beta1.jar",
 				"commons-math4-legacy": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy/4.0-beta1/commons-math4-legacy-4.0-beta1.jar",
 				"commons-math4-legacy-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-core/4.0-beta1/commons-math4-legacy-core-4.0-beta1.jar",
@@ -2195,8 +2278,7 @@
 			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-modalitycovcheck-1.2.2.jar",
 			"changes": "Library updates.",
 			"libs": {
-				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.12.0/commons-csv-1.12.0.jar",
-				"commons-io": "https://repo1.maven.org/maven2/commons-io/commons-io/2.18.0/commons-io-2.18.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar",
 				"commons-math4-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-core/4.0-beta1/commons-math4-core-4.0-beta1.jar",
 				"commons-math4-legacy": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy/4.0-beta1/commons-math4-legacy-4.0-beta1.jar",
 				"commons-math4-legacy-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-core/4.0-beta1/commons-math4-legacy-core-4.0-beta1.jar",
@@ -2247,8 +2329,7 @@
 			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-tukeyoutlierdetector-1.2.2.jar",
 			"changes": "Trimming saved in two separate files: 1. clean results with successful & failed samplers 2. successful samplers only.",
 			"libs": {
-				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.12.0/commons-csv-1.12.0.jar",
-				"commons-io": "https://repo1.maven.org/maven2/commons-io/commons-io/2.18.0/commons-io-2.18.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar",
 				"commons-math4-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-core/4.0-beta1/commons-math4-core-4.0-beta1.jar",
 				"commons-math4-legacy": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy/4.0-beta1/commons-math4-legacy-4.0-beta1.jar",
 				"commons-math4-legacy-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-core/4.0-beta1/commons-math4-legacy-core-4.0-beta1.jar",
@@ -2298,12 +2379,28 @@
       "0.2.5": {
         "changes": "Fix issue with empty/null Cookie values. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.5/jmeter-har-import-plugin-v0.2.5.jar"
+      },
+      "0.2.6": {
+        "changes": "Fix issue with data URIs. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.6/jmeter-har-import-plugin-v0.2.6.jar"
+      },
+      "1.0.0": {
+        "changes": "Java 17 upgrade. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.0.0/jmeter-har-import-plugin-v1.0.0.jar"
+      },
+      "1.0.1": {
+        "changes": "New HAR reader version for long numbers. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.0.1/jmeter-har-import-plugin-v1.0.1.jar"
+      },
+      "1.1.0": {
+        "changes": "Loading indicator added. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.1.0/jmeter-har-import-plugin-v1.1.0.jar"
       }
     }
   },
   {
     "id": "JmeterNamesTemplater",
-    "name": "JMeter Names Templater",
+    "name": "DG - JMeter Names Templater",
     "description": "Jmeter Names Templater is a plugin for Jmeter that allows you to set naming templates for elements and rename them based on a described configuration file.",
 	  "screenshotUrl": "https://raw.githubusercontent.com/DanilGolikov/JmeterNamesTemplater/master/JMX%20Examples/ex1/ex1_config.png",
     "vendor": "Daniil Golikov",
@@ -2317,6 +2414,13 @@
       "dg.jmeter.plugins.templater.RunThroughTree"
     ],
     "versions": {
+	    "1.2": {
+        "changes": "searchOut[1] and searchOut[2] now accept variables<br>rename-config.yaml should now be in the same directory as jmx",
+        "downloadUrl": "https://github.com/DanilGolikov/JmeterNamesTemplater/releases/download/v1.2/jmeter-plugins-names-templater-1.2.jar",
+        "libs": {
+          "snakeyaml": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar"
+        }
+      },
       "1.1": {
         "changes": "The yaml config file is used for templates",
         "downloadUrl": "https://github.com/DanilGolikov/JmeterNamesTemplater/releases/download/v1.1-yaml/jmeter-plugins-names-templater-1.1.jar",
@@ -2328,7 +2432,7 @@
   },
   {
     "id": "UtilityJmeterFunctions",
-    "name": "Utility Jmeter Functions",
+    "name": "DG - Utility Jmeter Functions",
     "description": "This plugin adds utility jmeter functions (like ${__...}). List of functions:<br>forEachArray<br>generateEmail<br>generateInnLegal<br>generateInnNatural<br>generateOgrn<br>generatePhoneNumber<br>generatePinCode<br>generateSnils<br>jsonPathFromVar<br>globalCounter<br>randomStringLiteral<br>samplerComment<br>timeRandom",
     "screenshotUrl": "https://raw.githubusercontent.com/DanilGolikov/UtilityJmeterFunctions/master/README_GIFs/allFunc.png",
     "vendor": "Daniil Golikov",
@@ -2342,6 +2446,71 @@
       "1.1.3": {
         "changes": "Adds utility jmeter functions (like ${__...})",
         "downloadUrl": "https://github.com/DanilGolikov/UtilityJmeterFunctions/releases/download/v1.1.3/jmeter-plugins-utility-functions-1.1.3.jar"
+      }
+    }
+  },
+  {
+    "id": "feather-wand-jmeter-ai-agent",
+    "name": "Feather Wand - JMeter AI Agent",
+    "description": "Add AI Agent to JMeter",
+    "screenshotUrl": "https://raw.githubusercontent.com/QAInsights/jmeter-ai/main/images/Feather-Wand-AI-Agent-JMeter.png",
+    "helpUrl": "https://github.com/QAInsights/jmeter-ai",
+    "vendor": "QAInsights.com",
+    "markerClass": "org.qainsights.jmeter.ai.gui.AI",
+    "componentClasses": [
+      "org.qainsights.jmeter.ai.gui.AI",
+      "org.qainsights.jmeter.ai.gui.AiChatPanel",
+      "org.qainsights.jmeter.ai.gui.AiMenuCreator",
+      "org.qainsights.jmeter.ai.gui.AiMenuItem",
+      "org.qainsights.jmeter.ai.gui.ComponentFinder"
+    ],
+    "versions": {
+      "0.0.1": {
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v0.0.1/jmeter-agent-1.0.1-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
+      },
+      "1.0.2": {
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.2/jmeter-agent-1.0.2-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
+      },
+      "1.0.3": {
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.3/jmeter-agent-1.0.3-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
+      },
+      "1.0.4": {
+        "changes": "Add navigation buttons to the chat panel",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.4/jmeter-agent-1.0.4-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
+      },
+      "1.0.5": {
+        "changes": "Say hello to these new features: <br> <ul><li>Navigation buttons</li><li>AI driven element renaming using @lint command</li><li>Refactor your Groovy scripts using @code command<li><li>Minor fixes and enhancements</li></ul>",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.5/jmeter-agent-1.0.5-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
+      },
+      "1.0.6": {
+        "changes": "Say hello to these new features:<br><ul><li>OpenAI integration</li><li>`wrap` your HTTP elements inside Transaction Controllers</li></ul>",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.6/jmeter-agent-1.0.6-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
+      },
+      "1.0.7": {
+        "changes": "Say hello to these new features:<br><ul><li>@usage command to get tokens usage for Anthropic and OpenAI</li></ul>",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.7/jmeter-agent-1.0.7-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
+      },
+      "1.0.8": {
+        "changes": "Nothing but bug fixes and polished logs",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.8/jmeter-agent-1.0.8-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
+      },
+      "1.0.9": {
+        "changes": "Say hello to these new features:<br><ul><li>Refactor your code right inside JSR223 elements by right-clicking.</li><li>Minor fixes and enhancements</li></ul>",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.9/jmeter-agent-1.0.9-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
+      },
+      "1.0.10": {
+        "changes": "Say hello to these new features:<br><ul><li>Intellisense in the chat panel for `@` commands.</li><li>Display version information in the chat panel.</li></ul>",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.10/jmeter-agent-1.0.10-jar-with-dependencies.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
       }
     }
   }

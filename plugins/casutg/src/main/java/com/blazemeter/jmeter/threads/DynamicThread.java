@@ -9,8 +9,9 @@ public class DynamicThread extends JMeterThread {
     private Thread osThread;
     private boolean stopping = false;
 
-    public DynamicThread(HashTree test, JMeterThreadMonitor monitor, ListenerNotifier note) {
-        super(test, monitor, note);
+    public DynamicThread(HashTree test, JMeterThreadMonitor monitor, ListenerNotifier note,
+                         Boolean isSameUserOnNextIteration) {
+        super(test, monitor, note, isSameUserOnNextIteration);
     }
 
     public void setOSThread(Thread OSThread) {

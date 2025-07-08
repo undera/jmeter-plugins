@@ -8,11 +8,24 @@ import org.apache.jmeter.reporters.AbstractListenerElement;
 import org.apache.jmeter.samplers.Remoteable;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleListener;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestStateListener;
+import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
+import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jmeter.visualizers.SamplingStatCalculator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
+
+import org.apache.jmeter.engine.util.CompoundVariable;
+import org.apache.jmeter.threads.JMeterVariables;
+import org.apache.jmeter.functions.AbstractFunction;
+
+
+
 
 import java.io.Serializable;
 import java.net.DatagramPacket;
@@ -32,13 +45,20 @@ public class AutoStop
     private final static String ERROR_RATE_SECS = "error_rate_length";
     private final static String RESPONSE_LATENCY = "avg_response_latency";
     private final static String RESPONSE_LATENCY_SECS = "avg_response_latency_length";
+    private final static String PERCENTILE_RESPONSE_TIME = "percentile_response_time";
+    private final static String PERCENTILE_RESPONSE_TIME_SECS ="percentile_response_time_secs";
+    private final static String PERCENTILE_VALUE = "percentile_value";
+    private final static String CUSTOM_VALIDATION_DURATION = "custom_validation_duration";
     private long curSec = 0L;
     private GraphPanelChartAverageElement avgRespTime = new GraphPanelChartAverageElement();
     private GraphPanelChartAverageElement avgRespLatency = new GraphPanelChartAverageElement();
     private GraphPanelChartAverageElement errorRate = new GraphPanelChartAverageElement();
+    SamplingStatCalculator statCalc = new SamplingStatCalculator();
     private long respTimeExceededStart = 0;
     private long errRateExceededStart = 0;
     private long respLatencyExceededStart = 0;
+    private long percentileRespTimeExceededStart = 0;
+    private long customValidationExceededStart = 0;
     private int stopTries = 0;
     //optimization: not convert String to number for each sample
     private int testValueRespTime = 0;
@@ -47,6 +67,15 @@ public class AutoStop
     private int testValueRespLatencySec = 0;
     private float testValueError = 0;
     private int testValueErrorSec = 0;
+    private int testValuePercentileRespTime = 0;
+    private int testValuePercentileRespTimeSec = 0;
+    private float testPercentileValue = 0;
+    private int percentileResponseTime = 0;
+    private String testExpectedValue = "true";
+    private String testActualValue = "false";
+    private int testValueCustomSec = 180;
+    private boolean skipIter = false;
+
 
     public AutoStop() {
         super();
@@ -74,7 +103,7 @@ public class AutoStop
             if (testValueRespLatency > 0) {
                 //log.debug("Avg resp time: "+avgRespTime.getValue());
                 if (avgRespLatency.getValue() > testValueRespLatency) {
-                    //log.debug((sec - respTimeExceededStart)+" "+getResponseTimeSecsAsInt());
+                    //log.debug((sec - respTimeExceededStart)+" "+getResponseLatencySecsAsInt());
                     if (sec - respLatencyExceededStart >= testValueRespLatencySec) {
                         log.info("Average Latency Time is more than " + getResponseLatency() + " for " + getResponseLatencySecs() + "s. Auto-shutdown test...");
                         System.out.println("AutoStop - Average Latency Time is more than " + getResponseLatency() + " for " + getResponseLatencySecs() + "s. Auto-shutdown test...");
@@ -99,10 +128,27 @@ public class AutoStop
                 }
             }
 
+            if(testValuePercentileRespTime > 0) {
+                SampleResult sr = se.getResult();
+                statCalc.addSample(sr);
+                // log.debug(testPercentileValue+"Percentile Response >"+testValuePercentileRespTime+"until"+testValuePercentileRespTimeSec+"currentValue"+percentileResponseTime);
+                // log.debug(testActualValue+">>"+testExpectedValue+">>"+skipIter+">>"+testValueCustomSec);
+                if(percentileResponseTime > testValuePercentileRespTime) {
+                    //log.debug((sec - percentileRespTimeExceededStart)+" "+getPercentileResponseTimeSecsAsInt());
+                    if (sec - percentileRespTimeExceededStart >= testValuePercentileRespTimeSec) {
+                        log.info(testPercentileValue+"Percentile Response more than " + getPercentileResponseTime() + " for " + getPercentileResponseTimeSecs() + "s. Auto-shutdown test...");
+                        stopTest();
+                    }
+                } else {
+                    percentileRespTimeExceededStart = sec;
+                }
+            }
+
             curSec = sec;
             avgRespTime = new GraphPanelChartAverageElement();
             avgRespLatency = new GraphPanelChartAverageElement();
             errorRate = new GraphPanelChartAverageElement();
+            percentileResponseTime = statCalc.getPercentPoint(testPercentileValue).intValue();
         }
 
         avgRespTime.add(se.getResult().getTime());
@@ -130,6 +176,8 @@ public class AutoStop
         errRateExceededStart = 0;
         respTimeExceededStart = 0;
         respLatencyExceededStart = 0;
+        percentileRespTimeExceededStart = 0;
+        customValidationExceededStart = 0;
 
         //init test values
         testValueError = getErrorRateAsFloat();
@@ -138,6 +186,11 @@ public class AutoStop
         testValueRespLatencySec = getResponseLatencySecsAsInt();
         testValueRespTime = getResponseTimeAsInt();
         testValueRespTimeSec = getResponseTimeSecsAsInt();
+        testValuePercentileRespTime = getPercentileResponseTimeAsInt();
+        testValuePercentileRespTimeSec = getPercentileResponseTimeSecsAsInt();
+        testPercentileValue = getPercentileValueAsFloat();
+        testValueCustomSec = getCustomValidationDurationAsInt();
+
     }
 
     @Override
@@ -152,6 +205,14 @@ public class AutoStop
     @Override
     public void testEnded(String string) {
     }
+
+    void setPercentileResponseTime(String text) { setProperty(PERCENTILE_RESPONSE_TIME, text); }
+
+    void setPercentileResponseTimeSecs(String text) { setProperty(PERCENTILE_RESPONSE_TIME_SECS, text); }
+
+    void setPercentileValue(String text) { setProperty(PERCENTILE_VALUE, text); }
+
+    void setCustomValidationDuration(String text) { setProperty(CUSTOM_VALIDATION_DURATION, text); }
 
     void setResponseTime(String text) {
         setProperty(RESPONSE_TIME, text);
@@ -177,6 +238,14 @@ public class AutoStop
         setProperty(ERROR_RATE_SECS, text);
     }
 
+    String getPercentileResponseTime() { return getPropertyAsString(PERCENTILE_RESPONSE_TIME); }
+
+    String getPercentileResponseTimeSecs() { return getPropertyAsString(PERCENTILE_RESPONSE_TIME_SECS); }
+
+    String getPercentileValue() { return getPropertyAsString(PERCENTILE_VALUE); }
+
+    String getCustomValidationDuration() { return getPropertyAsString(CUSTOM_VALIDATION_DURATION); }
+
     String getResponseTime() {
         return getPropertyAsString(RESPONSE_TIME);
     }
@@ -199,6 +268,50 @@ public class AutoStop
 
     String getErrorRateSecs() {
         return getPropertyAsString(ERROR_RATE_SECS);
+    }
+
+    private int getPercentileResponseTimeAsInt() {
+        int res = 0;
+        try {
+            res = Integer.parseInt(getPercentileResponseTime());
+        } catch (NumberFormatException e) {
+            log.error("Wrong response time: " + getPercentileResponseTime(), e);
+            setPercentileResponseTime("0");
+        }
+        return res;
+    }
+
+    private int getPercentileResponseTimeSecsAsInt() {
+        int res = 0;
+        try {
+            res = Integer.parseInt(getPercentileResponseTimeSecs());
+        } catch (NumberFormatException e) {
+            log.error("Wrong response time period: " + getPercentileResponseTimeSecs(), e);
+            setPercentileResponseTimeSecs("1");
+        }
+        return res > 0 ? res : 1;
+    }
+
+    private int getCustomValidationDurationAsInt() {
+        int res = 0;
+        try {
+            res = Integer.parseInt(getCustomValidationDuration());
+        } catch (NumberFormatException e) {
+            log.error("Wrong time period: " + getCustomValidationDuration(), e);
+            setCustomValidationDuration("1");
+        }
+        return res > 0 ? res : 1;
+    }
+
+    private float getPercentileValueAsFloat() {
+        float res = 0;
+        try {
+            res = Float.parseFloat(getPercentileValue()) / 100;
+        } catch (NumberFormatException e) {
+            log.error("Wrong Percentile Value: " + getPercentileValue(), e);
+            setPercentileValue("1");
+        }
+        return res > 0 ? res : 1;
     }
 
     private int getResponseTimeAsInt() {

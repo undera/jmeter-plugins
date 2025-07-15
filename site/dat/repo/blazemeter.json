@@ -3,7 +3,7 @@
     "id": "blazemeter-debugger",
     "name": "BlazeMeter Step-by-step Debugger",
     "description": "This plugin enables step-by-step debugging of JMeter scripts",
-    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-debugger/master/src/main/resources/com/blazemeter/jmeter/debugger/logo.png",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-bzm-commons/refs/heads/master/src/main/resources/light-theme/blazemeter-by-perforce-logo.png",
     "helpUrl": "https://github.com/Blazemeter/jmeter-debugger",
     "vendor": "BlazeMeter.com",
     "markerClass": "com.blazemeter.jmeter.debugger.engine.Debugger",

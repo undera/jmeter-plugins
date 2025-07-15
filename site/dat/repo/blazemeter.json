@@ -3,7 +3,7 @@
     "id": "blazemeter-debugger",
     "name": "BlazeMeter Step-by-step Debugger",
     "description": "This plugin enables step-by-step debugging of JMeter scripts",
-    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-debugger/master/src/main/resources/com/blazemeter/jmeter/debugger/logo.png",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-bzm-commons/refs/heads/master/src/main/resources/light-theme/blazemeter-by-perforce-logo.png",
     "helpUrl": "https://github.com/Blazemeter/jmeter-debugger",
     "vendor": "BlazeMeter.com",
     "markerClass": "com.blazemeter.jmeter.debugger.engine.Debugger",
@@ -43,6 +43,16 @@
       "0.6": {
         "changes": "Fix variables in assertions",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.6/jmeter-debugger-0.6.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "0.6.1": {
+        "changes": "BlazeMeter rebranding",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.6.1/jmeter-debugger-0.6.1.jar",
+        "libs": {
+          "jmeter-bzm-commons>=0.2.4": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.6.1/jmeter-bzm-commons-0.2.4.jar"
+        },
         "depends": [
           "jmeter-core"
         ]

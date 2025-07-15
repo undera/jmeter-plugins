@@ -46,6 +46,16 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "0.6.1": {
+        "changes": "BlazeMeter rebranding",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.6.1/jmeter-debugger-0.6.1.jar",
+        "libs": {
+          "jmeter-bzm-commons>=0.2.4": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.6.1/jmeter-bzm-commons-0.2.4.jar"
+        },
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

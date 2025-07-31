@@ -905,6 +905,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "10.1.2": {
+        "changes": "Bugfix release",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/10.1.2/ubik-jmeter-videostreaming-plugin-10.1.2.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "10.1.1": {
         "changes": "Major release introducing support for HLS nPVR and audio-only streams, full release notes at https://www.ubik-ingenierie.com/blog/ubikloadpack-video-streaming-plugin-10-1-1/",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/10.1.1/ubik-jmeter-videostreaming-plugin-10.1.1.jar",

@@ -42,6 +42,8 @@ public class AutoStopTest {
         instance.setResponseTime("0");
         instance.setErrorRate("60.6");
         instance.setErrorRateSecs("3");
+        instance.setPercentileValue("90");
+        instance.setPercentileResponseTimeSecs("10");
         instance.sampleOccurred(se);
         for (int n = 0; n < 5; n++) {
             synchronized (this) {
@@ -196,6 +198,51 @@ public class AutoStopTest {
         AutoStop instance = new AutoStop();
         String expResult = "";
         String result = instance.getResponseLatencySecs();
+        assertEquals(expResult, result);
+    }
+
+    public void testSetPercentileResponseTime() {
+        System.out.println("setPercentileResponseTime");
+        String text = "";
+        AutoStop instance = new AutoStop();
+        instance.setPercentileResponseTime(text);
+    }
+
+    public void testSetPercentileResponseTimeSecs() {
+        System.out.println("setPercentileResponseTimeSecs");
+        String text = "";
+        AutoStop instance = new AutoStop();
+        instance.setPercentileResponseTimeSecs(text);
+    }
+
+    public void testSetPercentileValue() {
+        System.out.println("setPercentileValue");
+        String text = "";
+        AutoStop instance = new AutoStop();
+        instance.setPercentileValue(text);
+    }
+
+    public void testGetPercentileResponseTime() {
+        System.out.println("getPercentileResponseTime");
+        AutoStop instance = new AutoStop();
+        String expResult = "";
+        String result = instance.getPercentileResponseTime();
+        assertEquals(expResult, result);
+    }
+
+    public void testGetPercentileResponseTimeSecs() {
+        System.out.println("getPercentileResponseTimeSecs");
+        AutoStop instance = new AutoStop();
+        String expResult = "";
+        String result = instance.getPercentileResponseTimeSecs();
+        assertEquals(expResult, result);
+    }
+
+    public void testGetPercentileValue() {
+        System.out.println("getPercentileValue");
+        AutoStop instance = new AutoStop();
+        String expResult = "";
+        String result = instance.getPercentileValue();
         assertEquals(expResult, result);
     }
 }

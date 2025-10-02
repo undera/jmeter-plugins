@@ -2580,5 +2580,26 @@
         "depends": ["jmeter-core", "jmeter-components"]
       }
     }
+  },
+  {
+    "componentClasses": [
+      "dukhi.a.jmeter.config.UniqueCSVDataSet"
+    ],
+    "description": "This CSV config plugin offers two distinctive features.<ul>1. The ability to provide CSV data only to specified Thread Groups<br>2. The ability to designate the number of data records that can be used in each Thread.<br>&nbsp;&nbsp;&nbsp;&nbsp;(Effect of unique data allocation.)</ul>",
+    "helpUrl": "https://github.com/adukhi/Unique-CSV-DataSet-Config",
+    "id": "unique-csv-data-set-config",
+    "markerClass": "dukhi.a.jmeter.config.UniqueCSVDataSet",
+    "name": "Unique CSV dataset config",
+    "screenshotUrl": "https://raw.githubusercontent.com/adukhi/Unique-CSV-DataSet-Config/refs/heads/main/image/screen.png",
+    "vendor": "HYUNDAI AUTOEVER CORP",
+    "versions": {
+      "0.9": {
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ],
+        "downloadUrl": "https://github.com/adukhi/Unique-CSV-DataSet-Config/releases/download/v0.9.0/unique-csv-data-set-config-0.9.0.jar"
+      }
+    }
   }
 ]

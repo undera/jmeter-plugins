@@ -3,7 +3,7 @@
     "id": "blazemeter-debugger",
     "name": "BlazeMeter Step-by-step Debugger",
     "description": "This plugin enables step-by-step debugging of JMeter scripts",
-    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-debugger/master/src/main/resources/com/blazemeter/jmeter/debugger/logo.png",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-bzm-commons/refs/heads/master/src/main/resources/light-theme/blazemeter-by-perforce-logo.png",
     "helpUrl": "https://github.com/Blazemeter/jmeter-debugger",
     "vendor": "BlazeMeter.com",
     "markerClass": "com.blazemeter.jmeter.debugger.engine.Debugger",
@@ -43,6 +43,16 @@
       "0.6": {
         "changes": "Fix variables in assertions",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.6/jmeter-debugger-0.6.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "0.6.1": {
+        "changes": "BlazeMeter rebranding",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.6.1/jmeter-debugger-0.6.1.jar",
+        "libs": {
+          "jmeter-bzm-commons>=0.2.4": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.6.1/jmeter-bzm-commons-0.2.4.jar"
+        },
         "depends": [
           "jmeter-core"
         ]
@@ -1170,6 +1180,16 @@
           "dm3270-lib>=0.15": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2.2/dm3270-lib-0.15.jar",
           "jVT220>=1.3.2": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.3/jVT220-1.3.2.jar"
         }
+      },
+      "3.3.1": {
+        "changes": "BlazeMeter rebranding",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.3.1/jmeter-bzm-rte-3.3.1.jar",
+        "libs": {
+          "dm3270-lib>=0.15": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.3.1/dm3270-lib-0.15.jar",
+          "jmeter-bzm-commons>=0.2.4": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.3.1/jmeter-bzm-commons-0.2.4.jar",
+          "jVT220>=1.3.2": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.3.1/jVT220-1.3.2.jar",
+          "xtn5250>=3.2.4": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.3.1/xtn5250-3.2.4.jar"
+        }
       }
     }
   },
@@ -1651,6 +1671,15 @@
       },
       "0.7.7": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.7/citrix-jmeter-0.7.7.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components",
+          "jmeter-http"
+        ]
+      },
+      "0.7.8": {
+        "changes": "BlazeMeter rebranding",
+        "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.8/citrix-jmeter-0.7.8.jar",
         "depends": [
           "jmeter-core",
           "jmeter-components",

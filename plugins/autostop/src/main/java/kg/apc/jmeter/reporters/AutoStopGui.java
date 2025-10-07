@@ -1,16 +1,14 @@
 package kg.apc.jmeter.reporters;
 
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class AutoStopGui extends AbstractListenerGui {
 
-    private static final Logger log = LoggerFactory.getLogger(AutoStopGui.class);
     public static final String WIKIPAGE = "AutoStop";
     private JAutoStopPanel autoStopPanel;
 

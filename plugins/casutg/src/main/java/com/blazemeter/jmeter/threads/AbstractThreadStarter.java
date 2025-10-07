@@ -59,7 +59,7 @@ public abstract class AbstractThreadStarter extends Thread {
         boolean onErrorStopTestNow = owner.getOnErrorStopTestNow();
         boolean onErrorStopThread = owner.getOnErrorStopThread();
         boolean onErrorStartNextLoop = owner.getOnErrorStartNextLoop();
-        final DynamicThread jmeterThread = new DynamicThread(treeClone, this.owner, notifier);
+        final DynamicThread jmeterThread = new DynamicThread(treeClone, this.owner, notifier, owner.getSameUser());
         jmeterThread.setThreadNum((int) threadIndex);
         jmeterThread.setThreadGroup(this.owner);
         jmeterThread.setInitialContext(context);

@@ -33,8 +33,8 @@ public class VariableThroughputTimer
     protected static final Class[] columnClasses = new Class[]{
             String.class, String.class, String.class
     };
-    // TODO: eliminate magic property
-    public static final String DATA_PROPERTY = "load_profile";
+
+    public static final String DATA_PROPERTY_POSTFIX = "load_profile";
     public static final int DURATION_FIELD_NO = 2;
     public static final int FROM_FIELD_NO = 0;
     public static final int TO_FIELD_NO = 1;
@@ -66,9 +66,16 @@ public class VariableThroughputTimer
     private double lastStopTry;
     private boolean stopping;
 
+
+    public String getDataProperty() {
+        return dataProperty;
+    }
+
+    private String dataProperty;
+
     public VariableThroughputTimer() {
         super();
-        trySettingLoadFromProperty();
+        setDataProperty();
     }
 
     /**
@@ -78,7 +85,7 @@ public class VariableThroughputTimer
      */
     public synchronized long delay() {
         while (true) {
-            long curTimeMs = System.currentTimeMillis();
+            long curTimeMs = System.nanoTime() / 1_000_000;
             long millisSinceLastSecond = curTimeMs % 1000;
             long nowInMsRoundedAtSec = curTimeMs - millisSinceLastSecond;
             checkNextSecond(nowInMsRoundedAtSec);
@@ -103,6 +110,7 @@ public class VariableThroughputTimer
             cntDelayed--;
         }
         cntSent++;
+
         return 0;
     }
 
@@ -176,6 +184,16 @@ public class VariableThroughputTimer
         return 0;
     }
 
+    public void setDataProperty(){
+        if (!StringUtils.isEmpty(getName()) &&
+            !StringUtils.isEmpty(JMeterUtils.getProperty(getName() + "." + DATA_PROPERTY_POSTFIX))) {
+            dataProperty = getName() + "." + DATA_PROPERTY_POSTFIX;
+        } else {
+            dataProperty = DATA_PROPERTY_POSTFIX;
+        }
+        log.debug("Load property set to {}", dataProperty);
+    }
+
     public void setData(CollectionProperty rows) {
         setProperty(rows);
     }
@@ -184,7 +202,9 @@ public class VariableThroughputTimer
         if (overrideProp != null) {
             return overrideProp;
         }
-        return getProperty(DATA_PROPERTY);
+        log.debug("Loading profile from property {}", dataProperty);
+        setDataProperty();
+        return getProperty(dataProperty);
     }
 
     /**
@@ -233,10 +253,10 @@ public class VariableThroughputTimer
     }
 
     private void trySettingLoadFromProperty() {
-        String loadProp = JMeterUtils.getProperty(DATA_PROPERTY);
-        log.debug("Loading property: {}={}", DATA_PROPERTY, loadProp);
+        String loadProp = JMeterUtils.getProperty(dataProperty);
+        log.debug("Loading property: {}={}", dataProperty, loadProp);
         if (!StringUtils.isEmpty(loadProp)) {
-            log.info("GUI load profile will be ignored as property {} is defined", DATA_PROPERTY);
+            log.debug("GUI load profile will be ignored as property {} is defined", dataProperty);
             PowerTableModel dataModel = new PowerTableModel(VariableThroughputTimer.columnIdentifiers, VariableThroughputTimer.columnClasses);
 
             String[] chunks = loadProp.split("\\)");
@@ -249,8 +269,9 @@ public class VariableThroughputTimer
                 }
             }
 
-            log.info("Setting load profile from property {}: {}", DATA_PROPERTY, loadProp);
-            overrideProp = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
+            log.debug("Setting load profile from property {}: {}", dataProperty, loadProp);
+            log.debug("load profile resolved to", dataModel);
+            overrideProp = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, dataProperty);
         }
     }
 
@@ -326,10 +347,13 @@ public class VariableThroughputTimer
     public void testStarted() {
         stopping = false;
         stopTries = 0;
+        setDataProperty();
+        trySettingLoadFromProperty();
     }
 
     @Override
     public void testStarted(String string) {
+        trySettingLoadFromProperty();
         testStarted();
     }
 
@@ -341,5 +365,12 @@ public class VariableThroughputTimer
     @Override
     public void testEnded(String string) {
         testEnded();
+    }
+
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+        setDataProperty();
+        trySettingLoadFromProperty();
     }
 }

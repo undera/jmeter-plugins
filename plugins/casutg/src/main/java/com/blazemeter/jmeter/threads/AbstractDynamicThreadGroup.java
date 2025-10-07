@@ -35,6 +35,12 @@ public abstract class AbstractDynamicThreadGroup extends AbstractDynamicThreadGr
     protected abstract Thread getThreadStarter(int groupIndex, ListenerNotifier listenerNotifier, ListedHashTree testTree, StandardJMeterEngine engine);
 
     @Override
+    public JMeterThread addNewThread(int i, StandardJMeterEngine standardJMeterEngine) {
+        // TODO: Will not be implemented as the semantics of the API is unclear
+        return null;
+    }
+
+    @Override
     public void threadFinished(JMeterThread jMeterThread) {
         if(log.isDebugEnabled()) {
             log.debug("threadFinished: " + jMeterThread.getThreadName());

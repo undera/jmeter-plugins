@@ -1,40 +1,19 @@
 package kg.apc.jmeter.reporters;
 
 import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.SampleEvent;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
+import org.apache.jmeter.samplers.SampleResult;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class AutoStopTest {
-
-    public AutoStopTest() {
-    }
-
     @BeforeClass
-    public static void setUpClass() throws Exception {
+    public static void setUpClass() {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of sampleOccurred method, of class AutoStop.
-     */
     @Test
     public void testSampleOccurred() throws InterruptedException {
         System.out.println("sampleOccurred");
@@ -54,9 +33,6 @@ public class AutoStopTest {
         }
     }
 
-    /**
-     * Test of sampleOccurred method, of class AutoStop.
-     */
     @Test
     public void testSampleOccurred_error() throws InterruptedException {
         System.out.println("sampleOccurred error");
@@ -66,6 +42,8 @@ public class AutoStopTest {
         instance.setResponseTime("0");
         instance.setErrorRate("60.6");
         instance.setErrorRateSecs("3");
+        instance.setPercentileValue("90");
+        instance.setPercentileResponseTimeSecs("10");
         instance.sampleOccurred(se);
         for (int n = 0; n < 5; n++) {
             synchronized (this) {
@@ -75,9 +53,6 @@ public class AutoStopTest {
         }
     }
 
-    /**
-     * Test of sampleStarted method, of class AutoStop.
-     */
     @Test
     public void testSampleStarted() {
         System.out.println("sampleStarted");
@@ -86,9 +61,6 @@ public class AutoStopTest {
         instance.sampleStarted(se);
     }
 
-    /**
-     * Test of sampleStopped method, of class AutoStop.
-     */
     @Test
     public void testSampleStopped() {
         System.out.println("sampleStopped");
@@ -97,9 +69,6 @@ public class AutoStopTest {
         instance.sampleStopped(se);
     }
 
-    /**
-     * Test of testStarted method, of class AutoStop.
-     */
     @Test
     public void testTestStarted_0args() {
         System.out.println("testStarted");
@@ -107,9 +76,6 @@ public class AutoStopTest {
         instance.testStarted();
     }
 
-    /**
-     * Test of testStarted method, of class AutoStop.
-     */
     @Test
     public void testTestStarted_String() {
         System.out.println("testStarted");
@@ -118,9 +84,6 @@ public class AutoStopTest {
         instance.testStarted(string);
     }
 
-    /**
-     * Test of testEnded method, of class AutoStop.
-     */
     @Test
     public void testTestEnded_0args() {
         System.out.println("testEnded");
@@ -128,9 +91,6 @@ public class AutoStopTest {
         instance.testEnded();
     }
 
-    /**
-     * Test of testEnded method, of class AutoStop.
-     */
     @Test
     public void testTestEnded_String() {
         System.out.println("testEnded");
@@ -139,9 +99,6 @@ public class AutoStopTest {
         instance.testEnded(string);
     }
 
-    /**
-     * Test of setResponseTime method, of class AutoStop.
-     */
     @Test
     public void testSetResponseTime() {
         System.out.println("setResponseTime");
@@ -150,9 +107,6 @@ public class AutoStopTest {
         instance.setResponseTime(text);
     }
 
-    /**
-     * Test of setErrorRate method, of class AutoStop.
-     */
     @Test
     public void testSetErrorRate() {
         System.out.println("setErrorRate");
@@ -161,9 +115,6 @@ public class AutoStopTest {
         instance.setErrorRate(text);
     }
 
-    /**
-     * Test of setResponseTimeSecs method, of class AutoStop.
-     */
     @Test
     public void testSetResponseTimeSecs() {
         System.out.println("setResponseTimeSecs");
@@ -172,9 +123,6 @@ public class AutoStopTest {
         instance.setResponseTimeSecs(text);
     }
 
-    /**
-     * Test of setErrorRateSecs method, of class AutoStop.
-     */
     @Test
     public void testSetErrorRateSecs() {
         System.out.println("setErrorRateSecs");
@@ -183,9 +131,6 @@ public class AutoStopTest {
         instance.setErrorRateSecs(text);
     }
 
-    /**
-     * Test of getResponseTime method, of class AutoStop.
-     */
     @Test
     public void testGetResponseTime() {
         System.out.println("getResponseTime");
@@ -195,9 +140,6 @@ public class AutoStopTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getResponseTimeSecs method, of class AutoStop.
-     */
     @Test
     public void testGetResponseTimeSecs() {
         System.out.println("getResponseTimeSecs");
@@ -207,9 +149,6 @@ public class AutoStopTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getErrorRate method, of class AutoStop.
-     */
     @Test
     public void testGetErrorRate() {
         System.out.println("getErrorRate");
@@ -219,9 +158,6 @@ public class AutoStopTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getErrorRateSecs method, of class AutoStop.
-     */
     @Test
     public void testGetErrorRateSecs() {
         System.out.println("getErrorRateSecs");
@@ -231,9 +167,6 @@ public class AutoStopTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of setResponseLatency method, of class AutoStop.
-     */
     @Test
     public void testSetResponseLatency() {
         System.out.println("setResponseLatency");
@@ -242,9 +175,6 @@ public class AutoStopTest {
         instance.setResponseLatency(text);
     }
 
-    /**
-     * Test of setResponseLatencySecs method, of class AutoStop.
-     */
     @Test
     public void testSetResponseLatencySecs() {
         System.out.println("setResponseLatencySecs");
@@ -253,9 +183,6 @@ public class AutoStopTest {
         instance.setResponseLatencySecs(text);
     }
 
-    /**
-     * Test of getResponseLatency method, of class AutoStop.
-     */
     @Test
     public void testGetResponseLatency() {
         System.out.println("getResponseLatency");
@@ -265,15 +192,57 @@ public class AutoStopTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getResponseLatencySecs method, of class AutoStop.
-     */
     @Test
     public void testGetResponseLatencySecs() {
         System.out.println("getResponseLatencySecs");
         AutoStop instance = new AutoStop();
         String expResult = "";
         String result = instance.getResponseLatencySecs();
+        assertEquals(expResult, result);
+    }
+
+    public void testSetPercentileResponseTime() {
+        System.out.println("setPercentileResponseTime");
+        String text = "";
+        AutoStop instance = new AutoStop();
+        instance.setPercentileResponseTime(text);
+    }
+
+    public void testSetPercentileResponseTimeSecs() {
+        System.out.println("setPercentileResponseTimeSecs");
+        String text = "";
+        AutoStop instance = new AutoStop();
+        instance.setPercentileResponseTimeSecs(text);
+    }
+
+    public void testSetPercentileValue() {
+        System.out.println("setPercentileValue");
+        String text = "";
+        AutoStop instance = new AutoStop();
+        instance.setPercentileValue(text);
+    }
+
+    public void testGetPercentileResponseTime() {
+        System.out.println("getPercentileResponseTime");
+        AutoStop instance = new AutoStop();
+        String expResult = "";
+        String result = instance.getPercentileResponseTime();
+        assertEquals(expResult, result);
+    }
+
+    public void testGetPercentileResponseTimeSecs() {
+        System.out.println("getPercentileResponseTimeSecs");
+        AutoStop instance = new AutoStop();
+        String expResult = "";
+        String result = instance.getPercentileResponseTimeSecs();
+        assertEquals(expResult, result);
+    }
+
+    public void testGetPercentileValue() {
+        System.out.println("getPercentileValue");
+        AutoStop instance = new AutoStop();
+        String expResult = "";
+        String result = instance.getPercentileValue();
         assertEquals(expResult, result);
     }
 }

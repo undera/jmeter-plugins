@@ -1314,6 +1314,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "4.0.0": {
+        "changes": "Update java, gradle and dependencies versions, and support for Localstack with custom endpoints.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v4.0.0/awsmeter-4.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

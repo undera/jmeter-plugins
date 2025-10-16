@@ -2429,46 +2429,50 @@
       "de.qytera.jmeterharimporter.HARImportDialog"
     ],
     "versions": {
-      "0.1.0": {
+      "v0.1.0": {
         "changes": "Initial version for basic GET, POST, PUT, PATCH and DELETE request support. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.1.0/jmeter-har-import-plugin-v0.1.0.jar"
       },
-      "0.2.0": {
+      "v0.2.0": {
         "changes": "Several options for configuration added, e.g. en/disabling timers; host exclusion added; grouping of samplers. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.0/jmeter-har-import-plugin-v0.2.0.jar"
       },
-      "0.2.1": {
+      "v0.2.1": {
         "changes": "New way for adding think time. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.1/jmeter-har-import-plugin-v0.2.1.jar"
       },
-      "0.2.2": {
+      "v0.2.2": {
         "changes": "Fix think time calculation. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.2/jmeter-har-import-plugin-v0.2.2.jar"
       },
-      "0.2.3": {
+      "v0.2.3": {
         "changes": "Fix Java version incompatibility. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.3/jmeter-har-import-plugin-v0.2.3.jar"
       }
       ,
-      "0.2.5": {
+      "v0.2.5": {
         "changes": "Fix issue with empty/null Cookie values. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.5/jmeter-har-import-plugin-v0.2.5.jar"
       },
-      "0.2.6": {
+      "v0.2.6": {
         "changes": "Fix issue with data URIs. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.6/jmeter-har-import-plugin-v0.2.6.jar"
       },
-      "1.0.0": {
+      "v1.0.0": {
         "changes": "Java 17 upgrade. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.0.0/jmeter-har-import-plugin-v1.0.0.jar"
       },
-      "1.0.1": {
+      "v1.0.1": {
         "changes": "New HAR reader version for long numbers. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.0.1/jmeter-har-import-plugin-v1.0.1.jar"
       },
-      "1.1.0": {
+      "v1.1.0": {
         "changes": "Loading indicator added. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.1.0/jmeter-har-import-plugin-v1.1.0.jar"
+      },
+      "v1.1.1": {
+        "changes": "Security and library Updates. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.1.1/jmeter-har-import-plugin-v1.1.1.jar"
       }
     }
   },

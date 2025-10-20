@@ -2469,6 +2469,10 @@
       "1.1.0": {
         "changes": "Loading indicator added. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.1.0/jmeter-har-import-plugin-v1.1.0.jar"
+      },
+      "1.1.2": {
+        "changes": "Security and library Updates. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.1.2/jmeter-har-import-plugin-1.1.2.jar"
       }
     }
   },

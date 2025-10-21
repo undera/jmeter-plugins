@@ -905,6 +905,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "10.1.2": {
+        "changes": "Bugfix release",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/10.1.2/ubik-jmeter-videostreaming-plugin-10.1.2.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "10.1.1": {
         "changes": "Major release introducing support for HLS nPVR and audio-only streams, full release notes at https://www.ubik-ingenierie.com/blog/ubikloadpack-video-streaming-plugin-10-1-1/",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/10.1.1/ubik-jmeter-videostreaming-plugin-10.1.1.jar",
@@ -1306,6 +1311,13 @@
       "3.0.0": {
         "changes": "Add Cognito sampler and bug fix to get aws credentials from JMeter Java Sampler parameters.",
         "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v3.0.0/awsmeter-3.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "4.0.0": {
+        "changes": "Update java, gradle and dependencies versions, and support for Localstack with custom endpoints.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v4.0.0/awsmeter-4.0.0.jar",
         "depends": [
           "jmeter-core"
         ]
@@ -2185,6 +2197,21 @@
 				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-comm-1.2.2.jar"
 			},
 			"depends":["jmeter-core"]
+		},
+		"1.3.1": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.3.1/jmeter-plugins-apdexcalculator-1.3.1.jar",
+			"changes": "Option to specify Apdex rules per transaction.",
+			"libs": {
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar",
+				"commons-math4-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-core/4.0-beta1/commons-math4-core-4.0-beta1.jar",
+				"commons-math4-legacy": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy/4.0-beta1/commons-math4-legacy-4.0-beta1.jar",
+				"commons-math4-legacy-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-core/4.0-beta1/commons-math4-legacy-core-4.0-beta1.jar",
+				"commons-math4-legacy-exception": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-exception/4.0-beta1/commons-math4-legacy-exception-4.0-beta1.jar",
+				"commons-numbers-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-numbers-core/1.2/commons-numbers-core-1.2.jar",
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-comm-1.2.2.jar"
+			},
+			"depends":["jmeter-core"]
 		}
 	}
   },
@@ -2235,11 +2262,26 @@
 				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-comm-1.2.2.jar"
 			},
 			"depends":["jmeter-core"]
+		},
+		"1.2.3": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.3.1/jmeter-plugins-cohendeffectsize-1.2.3.jar",
+			"changes": "Minor bug fixes.",
+			"libs": {
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar",
+				"commons-math4-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-core/4.0-beta1/commons-math4-core-4.0-beta1.jar",
+				"commons-math4-legacy": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy/4.0-beta1/commons-math4-legacy-4.0-beta1.jar",
+				"commons-math4-legacy-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-core/4.0-beta1/commons-math4-legacy-core-4.0-beta1.jar",
+				"commons-math4-legacy-exception": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-exception/4.0-beta1/commons-math4-legacy-exception-4.0-beta1.jar",
+				"commons-numbers-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-numbers-core/1.2/commons-numbers-core-1.2.jar",
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-comm-1.2.2.jar"
+			},
+			"depends":["jmeter-core"]
 		}
 	}
   },
   {
-	"id": "jmeter-plugins-modalitycovcheck",
+	"id": "rbourga-jmeter-plugins-modalitycovcheck",
   	"name": "Coefficient of Variation and Modality Check",
   	"description": "Checks for multimodality and the level of variation of the test results.",
   	"screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/v1.2.0/QualityAnalysis/MultimodalityCov/wiki/images/Screenshot.png",
@@ -2289,7 +2331,24 @@
 				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-comm-1.2.2.jar"
 			},
 			"depends":["jmeter-core"]
+		},
+		"1.2.3": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.3.1/jmeter-plugins-modalitycovcheck-1.2.3.jar",
+			"changes": "Minor bug fixes.",
+			"libs": {
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar",
+				"commons-math4-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-core/4.0-beta1/commons-math4-core-4.0-beta1.jar",
+				"commons-math4-legacy": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy/4.0-beta1/commons-math4-legacy-4.0-beta1.jar",
+				"commons-math4-legacy-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-core/4.0-beta1/commons-math4-legacy-core-4.0-beta1.jar",
+				"commons-math4-legacy-exception": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-exception/4.0-beta1/commons-math4-legacy-exception-4.0-beta1.jar",
+				"commons-numbers-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-numbers-core/1.2/commons-numbers-core-1.2.jar",
+				"jfreechart": "https://repo1.maven.org/maven2/org/jfree/jfreechart/1.5.5/jfreechart-1.5.5.jar",
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-comm-1.2.2.jar"
+			},
+			"depends":["jmeter-core"]
 		}
+		
   	}
   },
   {
@@ -2339,7 +2398,22 @@
 				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-comm-1.2.2.jar"
 			},
 			"depends":["jmeter-core"]
-		}
+		},
+		"1.2.3": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.3.1/jmeter-plugins-tukeyoutlierdetector-1.2.3.jar",
+			"changes": "Minor bug fixes.",
+			"libs": {
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.11.0/commons-csv-1.11.0.jar",
+				"commons-math4-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-core/4.0-beta1/commons-math4-core-4.0-beta1.jar",
+				"commons-math4-legacy": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy/4.0-beta1/commons-math4-legacy-4.0-beta1.jar",
+				"commons-math4-legacy-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-core/4.0-beta1/commons-math4-legacy-core-4.0-beta1.jar",
+				"commons-math4-legacy-exception": "https://repo1.maven.org/maven2/org/apache/commons/commons-math4-legacy-exception/4.0-beta1/commons-math4-legacy-exception-4.0-beta1.jar",
+				"commons-numbers-core": "https://repo1.maven.org/maven2/org/apache/commons/commons-numbers-core/1.2/commons-numbers-core-1.2.jar",
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.2.2/jmeter-plugins-comm-1.2.2.jar"
+			},
+			"depends":["jmeter-core"]
+		}		
 	}
   },
   {
@@ -2395,6 +2469,10 @@
       "1.1.0": {
         "changes": "Loading indicator added. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.1.0/jmeter-har-import-plugin-v1.1.0.jar"
+      },
+      "1.1.2": {
+        "changes": "Security and library Updates. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.1.2/jmeter-har-import-plugin-1.1.2.jar"
       }
     }
   },
@@ -2511,6 +2589,27 @@
         "changes": "Say hello to these new features:<br><ul><li>Intellisense in the chat panel for `@` commands.</li><li>Display version information in the chat panel.</li></ul>",
         "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v1.0.10/jmeter-agent-1.0.10-jar-with-dependencies.jar",
         "depends": ["jmeter-core", "jmeter-components"]
+      }
+    }
+  },
+  {
+    "componentClasses": [
+      "dukhi.a.jmeter.config.UniqueCSVDataSet"
+    ],
+    "description": "This CSV config plugin offers two distinctive features.<ul>1. The ability to provide CSV data only to specified Thread Groups<br>2. The ability to designate the number of data records that can be used in each Thread.<br>&nbsp;&nbsp;&nbsp;&nbsp;(Effect of unique data allocation.)</ul>",
+    "helpUrl": "https://github.com/adukhi/Unique-CSV-DataSet-Config",
+    "id": "unique-csv-data-set-config",
+    "markerClass": "dukhi.a.jmeter.config.UniqueCSVDataSet",
+    "name": "Unique CSV dataset config",
+    "screenshotUrl": "https://raw.githubusercontent.com/adukhi/Unique-CSV-DataSet-Config/refs/heads/main/image/screen.png",
+    "vendor": "HYUNDAI AUTOEVER CORP",
+    "versions": {
+      "0.9": {
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ],
+        "downloadUrl": "https://github.com/adukhi/Unique-CSV-DataSet-Config/releases/download/v0.9.0/unique-csv-data-set-config-0.9.0.jar"
       }
     }
   }

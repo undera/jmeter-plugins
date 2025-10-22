@@ -1314,6 +1314,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "4.0.0": {
+        "changes": "Update java, gradle and dependencies versions, and support for Localstack with custom endpoints.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v4.0.0/awsmeter-4.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },
@@ -2462,6 +2469,10 @@
       "1.1.0": {
         "changes": "Loading indicator added. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.1.0/jmeter-har-import-plugin-v1.1.0.jar"
+      },
+      "1.1.2": {
+        "changes": "Security and library Updates. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.1.2/jmeter-har-import-plugin-1.1.2.jar"
       }
     }
   },

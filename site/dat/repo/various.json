@@ -1271,7 +1271,7 @@
   {
     "id": "awsmeter",
     "name": "AWS Support",
-    "description": "JMeter plugin to execute test over AWS Services like Kinesis Data Stream, SQS Standard and FIFO queue and SNS Standard and FIFO topic.",
+    "description": "AWS Meter is a comprehensive JMeter plugin designed to execute performance tests against AWS services including Kinesis, SQS, SNS, Cognito, and EventBridge. This plugin provides specialized Java samplers for each AWS service, leveraging the AWS SDK for seamless integration and communication.",
     "screenshotUrl": "https://raw.githubusercontent.com/JoseLuisSR/awsmeter/main/doc/img/awsmeter-diagrams-Logo.png",
     "helpUrl": "https://github.com/JoseLuisSR/awsmeter",
     "vendor": "JoseLuisSR",
@@ -1326,6 +1326,13 @@
       "4.1.0": {
         "changes": "Add Event Bridge Java sampler.",
         "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v4.1.0/awsmeter-4.1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "4.1.1": {
+        "changes": "Get AWS credentials from EC2 instance profile and ECS task IAM role.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v4.1.1/awsmeter-4.1.1.jar",
         "depends": [
           "jmeter-core"
         ]

@@ -1271,7 +1271,7 @@
   {
     "id": "awsmeter",
     "name": "AWS Support",
-    "description": "JMeter plugin to execute test over AWS Services like Kinesis Data Stream, SQS Standard and FIFO queue and SNS Standard and FIFO topic.",
+    "description": "AWS Meter is a comprehensive JMeter plugin designed to execute performance tests against AWS services including Kinesis, SQS, SNS, Cognito, and EventBridge. This plugin provides specialized Java samplers for each AWS service, leveraging the AWS SDK for seamless integration and communication.",
     "screenshotUrl": "https://raw.githubusercontent.com/JoseLuisSR/awsmeter/main/doc/img/awsmeter-diagrams-Logo.png",
     "helpUrl": "https://github.com/JoseLuisSR/awsmeter",
     "vendor": "JoseLuisSR",
@@ -1284,7 +1284,8 @@
       "org.apache.jmeter.protocol.aws.sns.SNSProducerStandardTopic",
       "org.apache.jmeter.protocol.aws.sns.SNSProducerFifoTopic",
       "org.apache.jmeter.protocol.aws.cognito.CognitoProducerAdminCreateUser",
-      "org.apache.jmeter.protocol.aws.cognito.CognitoProducerAdminLoginUser"
+      "org.apache.jmeter.protocol.aws.cognito.CognitoProducerAdminLoginUser",
+      "org.apache.jmeter.protocol.aws.eventbus.EventBusProducerSampler"
     ],
     "versions": {
       "1.0.0": {
@@ -1318,6 +1319,20 @@
       "4.0.0": {
         "changes": "Update java, gradle and dependencies versions, and support for Localstack with custom endpoints.",
         "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v4.0.0/awsmeter-4.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "4.1.0": {
+        "changes": "Add Event Bridge Java sampler.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v4.1.0/awsmeter-4.1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "4.1.1": {
+        "changes": "Get AWS credentials from EC2 instance profile and ECS task IAM role.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v4.1.1/awsmeter-4.1.1.jar",
         "depends": [
           "jmeter-core"
         ]

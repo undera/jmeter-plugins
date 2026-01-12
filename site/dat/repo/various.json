@@ -2510,6 +2510,10 @@
       "1.1.2": {
         "changes": "Security and library Updates. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.1.2/jmeter-har-import-plugin-1.1.2.jar"
+      },
+      "1.1.4": {
+        "changes": "Security and library Updates. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v1.1.4/jmeter-har-import-plugin-1.1.4.jar"
       }
     }
   },

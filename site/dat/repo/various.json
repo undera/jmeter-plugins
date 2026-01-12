@@ -895,7 +895,7 @@
   {
     "id": "ulp-jmeter-videostreaming-plugin",
     "name": "UbikLoadPack Video Streaming plugin",
-    "description": "Plugin which provides the ability to easily load test servers delivering Adaptive Bitrate Streaming (ABR). It supports the following implementations: Low Latency Mpeg-Dash, Mpeg-Dash, Apple HLS / Low-Latency HLS (LL-HLS), Microsoft Smooth (HSS) and Adobe HDS. Both Live and VOD streams are automatically handled. The plugin realistically simulates players and outputs video specific metrics allowing you to analyze User Experience. It supports HTTP 1.1 and HTTP/2. It also allows to simulate CDN behaviour with Video Streams.",
+    "description": "Plugin which provides the ability to easily load test servers delivering Adaptive Bitrate Streaming (ABR). It supports the following implementations: Low Latency Mpeg-Dash, Mpeg-Dash, Apple HLS / Low-Latency HLS (LL-HLS), HLS SGAI (Interstitials), Microsoft Smooth (HSS) and Adobe HDS. Both Live and VOD streams are automatically handled. The plugin realistically simulates players and outputs video specific metrics allowing you to analyze User Experience. It supports HTTP 1.1 and HTTP/2. It also allows to simulate CDN behaviour with Video Streams.",
     "screenshotUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/ulp_vs_screenshot_910.png",
     "helpUrl": "https://www.ubik-ingenierie.com/blog/ubikloadpack-streaming-plugin-help/",
     "vendor": "UbikLoadPack by Ubik-Ingenierie",
@@ -905,6 +905,17 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+    "10.2.5": {
+      "changes": "Bugfix release",
+      "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/10.2.5/ubik-jmeter-videostreaming-plugin-10.2.5.jar",
+      "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+
+    },
+    "10.2.4": {
+      "changes": "Major release introducing support for HLS SGAI with Interstitials, full release notes at https://www.ubik-ingenierie.com/blog/ubikloadpack-video-streaming-plugin-10-2/",
+      "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/10.2.4/ubik-jmeter-videostreaming-plugin-10.2.4.jar",
+      "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+    },
      "10.1.2": {
         "changes": "Bugfix release",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/10.1.2/ubik-jmeter-videostreaming-plugin-10.1.2.jar",
@@ -1271,7 +1282,7 @@
   {
     "id": "awsmeter",
     "name": "AWS Support",
-    "description": "JMeter plugin to execute test over AWS Services like Kinesis Data Stream, SQS Standard and FIFO queue and SNS Standard and FIFO topic.",
+    "description": "AWS Meter is a comprehensive JMeter plugin designed to execute performance tests against AWS services including Kinesis, SQS, SNS, Cognito, and EventBridge. This plugin provides specialized Java samplers for each AWS service, leveraging the AWS SDK for seamless integration and communication.",
     "screenshotUrl": "https://raw.githubusercontent.com/JoseLuisSR/awsmeter/main/doc/img/awsmeter-diagrams-Logo.png",
     "helpUrl": "https://github.com/JoseLuisSR/awsmeter",
     "vendor": "JoseLuisSR",
@@ -1284,7 +1295,8 @@
       "org.apache.jmeter.protocol.aws.sns.SNSProducerStandardTopic",
       "org.apache.jmeter.protocol.aws.sns.SNSProducerFifoTopic",
       "org.apache.jmeter.protocol.aws.cognito.CognitoProducerAdminCreateUser",
-      "org.apache.jmeter.protocol.aws.cognito.CognitoProducerAdminLoginUser"
+      "org.apache.jmeter.protocol.aws.cognito.CognitoProducerAdminLoginUser",
+      "org.apache.jmeter.protocol.aws.eventbus.EventBusProducerSampler"
     ],
     "versions": {
       "1.0.0": {
@@ -1318,6 +1330,20 @@
       "4.0.0": {
         "changes": "Update java, gradle and dependencies versions, and support for Localstack with custom endpoints.",
         "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v4.0.0/awsmeter-4.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "4.1.0": {
+        "changes": "Add Event Bridge Java sampler.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v4.1.0/awsmeter-4.1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "4.1.1": {
+        "changes": "Get AWS credentials from EC2 instance profile and ECS task IAM role.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v4.1.1/awsmeter-4.1.1.jar",
         "depends": [
           "jmeter-core"
         ]
@@ -1587,6 +1613,13 @@
         },
         "2.2": {
           "downloadUrl": "https://github.com/rollno748/Extended-csv-dataset-config/releases/download/2.2/di-extended-csv-2.2.jar",
+          "depends": [
+            "jmeter-core",
+            "jmeter-components"
+          ]
+        },
+        "2.3": {
+          "downloadUrl": "https://github.com/rollno748/Extended-csv-dataset-config/releases/download/2.3/di-extended-csv-2.3.jar",
           "depends": [
             "jmeter-core",
             "jmeter-components"
@@ -2107,6 +2140,10 @@
 	"7.1": {
           "changes": "Remove request headers from HTTP/2, these headers start with ':' likes ':authority' or ':scheme', don't create HttpSampler for url 'data:'",
           "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v7.1/har-convertor-jmeter-plugin-7.1-jar-with-dependencies.jar"
+        },
+	"8.0": {
+          "changes": "Add new parameter 'remove_headers' remove a list of http headers (comma separator, case insensitive), e.g:'User-Agent,Pragma'",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v8.0/har-convertor-jmeter-plugin-8.0-jar-with-dependencies.jar"
         }
       }
    },

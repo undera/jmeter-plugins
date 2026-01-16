@@ -905,6 +905,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+    "10.2.8": {
+      "changes": "MPEG-DASH bugfix release (invalid segment availability)",
+      "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/10.2.8/ubik-jmeter-videostreaming-plugin-10.2.8.jar",
+      "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+    },
     "10.2.5": {
       "changes": "Bugfix release",
       "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/10.2.5/ubik-jmeter-videostreaming-plugin-10.2.5.jar",

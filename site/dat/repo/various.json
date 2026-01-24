@@ -746,6 +746,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.3.2": {
+        "changes": "Fixed bug (memory leak due to repeated merging of Header Manager)",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.3.2/jmeter-websocket-samplers-1.3.2.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

@@ -60,6 +60,8 @@ like [SettingsPanel GUI settings] do with optional parameters:
 || {{{--end-offset <sec>}}} || include in report only samples with (timestamp - relativeStartTime) < endOffset ||
 || {{{--yAxisLabel <String>}}} || Set Y-Axis label on charts ||
 
+Java system properties can be defined via the environment variable {{JVM_ARGS}}, e.g. {{JVM_ARGS=-Duser.timezone=GMT JMeterPluginsCMD ...}}.
+
 == Plugin Type Classes ==
 Make note that you need to install corresponding plugins set to have Extras plugins available in CMD.
 

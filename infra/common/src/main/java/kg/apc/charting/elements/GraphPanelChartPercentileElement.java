@@ -12,11 +12,15 @@ public class GraphPanelChartPercentileElement extends AbstractGraphPanelChartEle
 
     @Override
     public double getValue() {
-        return percentile.getResult();
+        synchronized (this) {
+            return percentile.getResult();
+        }
     }
 
     @Override
     public void add(double val) {
-        percentile.increment(val);
+        synchronized (this) {
+            percentile.increment(val);
+        }
     }
 }

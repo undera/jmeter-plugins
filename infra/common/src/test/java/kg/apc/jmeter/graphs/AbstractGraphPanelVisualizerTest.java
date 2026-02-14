@@ -264,6 +264,22 @@ public class AbstractGraphPanelVisualizerTest {
     }
 
     /**
+     * Test of getNewRow method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testGetNewRow_4args() {
+        System.out.println("getNewRow");
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        boolean isAggregate = false;
+        boolean canCompose = false;
+        Color customColor = Color.yellow;
+        AbstractGraphRow row = AbstractGraphRow.instantiateNewRow(AbstractGraphRow.ROW_SIMPLE);
+        AbstractGraphRow result = instance.getNewRow(row, customColor, isAggregate, canCompose);
+        assertEquals(row, result);
+        assertEquals(customColor, result.getColor());
+    }
+
+    /**
      * Test of updateGui method, of class AbstractGraphPanelVisualizer.
      */
     @Test

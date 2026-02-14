@@ -108,7 +108,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
             <version>3.6.1</version>
-            <scope>provided</scope><!--comes as a JMeter core dependency-->
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>

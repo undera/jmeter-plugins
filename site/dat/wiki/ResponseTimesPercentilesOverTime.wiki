@@ -1,0 +1,15 @@
+= Response Times Percentiles Over Time =
+
+<span class=''>[/?search=jpgc-graphs-dist <i class='fa fa-download'></i> Download]</span>
+
+Similar to the Response Times Over Time that displays the average response times in discrete time intervals,
+this graph shows response times percentiles in those time intervals.
+
+By default, the 50th, 90th, 95th and 99th percentile are plotted.
+
+This can be configured via a JMeter property like so: {{{jmeterPlugin.percentilesOverTime=50,90,99,99.9}}}
+
+Caveat: The percentiles are not calculated exactly but estimated via the P-Square algorithm
+(reference: [https://www.cse.wustl.edu/~jain/papers/psqr.htm]).
+
+[/img/wiki/response_times_percentiles_over_time.png]

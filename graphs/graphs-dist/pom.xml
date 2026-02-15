@@ -6,7 +6,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-graphs-dist</artifactId>
-    <version>2.0</version>
+    <version>2.1</version>
 
     <name>Distribution Graphs Plugins</name>
     <description>Distribution Graphs Plugins</description>
@@ -40,7 +40,7 @@
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
-            <version>0.3</version>
+            <version>0.9</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-emulators</artifactId>
-            <version>0.2</version>
+            <version>0.4</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

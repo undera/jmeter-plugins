@@ -80,6 +80,7 @@ Most of class names are self-explanatory:
   * ResponseTimesDistribution
   * ResponseTimesOverTime
   * ResponseTimesPercentiles
+  * ResponseTimesPercentilesOverTime
   * ThroughputVsThreads
   * TimesVsThreads = Response Times VS Threads
   * TransactionsPerSecond

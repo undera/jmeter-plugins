@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Setup PHP Action
       uses: shivammathur/setup-php@2.24.0
@@ -25,10 +25,10 @@ jobs:
     - name: Prepare upload
       run: ./prepare-upload.sh
 
-    - uses: actions/setup-java@v3
+    - uses: actions/setup-java@v4
       with:
         distribution: temurin
-        java-version: '8'
+        java-version: '11'
         cache: maven
 
     - name: Maven tests
@@ -36,7 +36,7 @@ jobs:
       # working-directory: ./plugins/dummy
 
     - name: Codecov
-      uses: codecov/codecov-action@v3.1.1
+      uses: codecov/codecov-action@v5
 
     - name: Perform upload
       run: 'curl --fail -vk https://jmeter-plugins.org/unzip.php -F "zipfile=@upload/site.zip" -H "Authorization: Bearer ${{ secrets.UPLOAD_TOKEN }}"'

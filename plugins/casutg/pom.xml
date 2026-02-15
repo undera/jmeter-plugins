@@ -63,7 +63,7 @@
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
-            <version>0.6</version>
+            <version>0.8</version>
         </dependency>
         <dependency>
             <groupId>kg.apc</groupId>
@@ -74,7 +74,7 @@
         <dependency>
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_core</artifactId>
-            <version>5.2.1</version>
+            <version>5.6.3</version>
         </dependency>
     </dependencies>
 </project>

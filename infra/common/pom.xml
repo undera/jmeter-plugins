@@ -12,7 +12,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
-    <version>0.8</version>
+    <version>0.9</version>
 
     <name>JMeter Plugins Common Classes</name>
     <description>Various utility classes to ease development of plugins</description>
@@ -46,14 +46,13 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.7.0</version>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.7.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>sonatype-nexus-staging</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
                 </configuration>
             </plugin>
             <plugin>

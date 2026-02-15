@@ -1,7 +1,13 @@
 package kg.apc.jmeter.samplers;
 
 import org.apache.jorphan.util.JOrphanUtils;
-import org.xbill.DNS.*;
+import org.xbill.DNS.DClass;
+import org.xbill.DNS.Header;
+import org.xbill.DNS.Message;
+import org.xbill.DNS.Name;
+import org.xbill.DNS.Record;
+import org.xbill.DNS.Section;
+import org.xbill.DNS.Type;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

@@ -57,10 +57,10 @@ public class UltimateThreadGroup
         int flightTime = currentRecord.get(HOLD_LOAD_FOR_FIELD_NO).getIntValue();
         int endRampUp = currentRecord.get(SHUTDOWN_TIME_FIELD_NO).getIntValue();
 
-        long ascentPoint = tgStartTime + 1000 * initialDelay;
+        long ascentPoint = tgStartTime + 1000L * initialDelay;
         final int rampUpDelayForThread = (int) Math.floor(1000 * startRampUp * (double) threadsToSchedule / numThreads);
         long startTime = ascentPoint + rampUpDelayForThread;
-        long descentPoint = startTime + 1000 * flightTime + 1000 * startRampUp - rampUpDelayForThread;
+        long descentPoint = startTime + 1000L * flightTime + 1000L * startRampUp - rampUpDelayForThread;
 
         thread.setStartTime(startTime);
         thread.setEndTime(descentPoint + (int) Math.floor(1000 * endRampUp * (double) threadsToSchedule / numThreads));
@@ -102,7 +102,7 @@ public class UltimateThreadGroup
     private CollectionProperty getLoadFromExternalProperty() {
         String loadProp = JMeterUtils.getProperty(EXTERNAL_DATA_PROPERTY);
         log.debug("Profile prop: " + loadProp);
-        if (loadProp != null && loadProp.length() > 0) {
+        if (loadProp != null && !loadProp.isEmpty()) {
             //expected format : threads_schedule="spawn(1,1s,1s,1s,1s) spawn(2,1s,3s,1s,2s)"
             log.info("GUI threads profile will be ignored");
             PowerTableModel dataModel = new PowerTableModel(UltimateThreadGroupGui.columnIdentifiers, UltimateThreadGroupGui.columnClasses);

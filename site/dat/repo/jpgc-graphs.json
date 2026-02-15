@@ -75,13 +75,21 @@
     "markerClass": "kg.apc.jmeter.vizualizers.ResponseTimesDistributionGui",
     "componentClasses": [
       "kg.apc.jmeter.vizualizers.ResponseTimesDistributionGui",
-      "kg.apc.jmeter.vizualizers.ResponseTimesPercentilesGui"
+      "kg.apc.jmeter.vizualizers.ResponseTimesPercentilesGui",
+      "kg.apc.jmeter.vizualizers.ResponseTimesPercentilesOverTimeGui"
     ],
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-dist/2.0/jmeter-plugins-graphs-dist-2.0.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
+        }
+      },
+      "2.1": {
+        "changes": "New chart: Response Times Percentiles Over Time",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-dist/2.1/jmeter-plugins-graphs-dist-2.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.9/jmeter-plugins-cmn-jmeter-0.9.jar"
         }
       }
     }

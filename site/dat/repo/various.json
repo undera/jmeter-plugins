@@ -2690,5 +2690,34 @@
         "downloadUrl": "https://github.com/adukhi/Unique-CSV-DataSet-Config/releases/download/v0.9.0/unique-csv-data-set-config-0.9.0.jar"
       }
     }
+  },
+  {
+    "id": "jmeter.backendlistener.reportportal",
+    "name": "ReportPortal backend listener",
+    "description": "JMeter Backend Listener ReportPortal is a JMeter plugin enabling you to send test results to a Report Portal server. <ul><li>Simply add a Backend Listener </li><li>Change the listener's configuration</li></ul>",
+    "helpUrl": "https://github.com/prasantmohanty/jmeter-backend-listner-reportportal/issues",
+    "screenshotUrl": "https://github.com/prasantmohanty/jmeter-backend-listner-reportportal/blob/master/docs/configuration.JPG",
+    "vendor": "Prasanta Mohanty",
+    "markerClass": "io.github.prasantmohanty.jmeter.backendlistener.reportportal.ReportPortalBackendClient",
+    "versions": {
+      "1.0.0": {
+        "changes": "Initial Release.",
+        "downloadUrl": "https://github.com/prasantmohanty/jmeter-backend-listner-reportportal/releases/download/v1.0.0/jmeter.backendlistener.reportportal-1.0.0.jar",
+        "depends": [
+        ]
+      },
+	   "1.0.1": {
+        "changes": "Handled ReportPortal publish to teardown to use a single launch for the whole test run",
+        "downloadUrl": "https://github.com/prasantmohanty/jmeter-backend-listner-reportportal/releases/download/v1.0.1/jmeter.backendlistener.reportportal-1.0.1.jar",
+        "depends": [
+        ]
+      },
+	   "1.0.2": {
+        "changes": "Removed some of the unwanted codes and refactor the deprecated method used",
+        "downloadUrl": "https://github.com/prasantmohanty/jmeter-backend-listner-reportportal/releases/download/v1.0.2/jmeter.backendlistener.reportportal-1.0.2.jar",
+        "depends": [
+        ]
+      }
+    }
   }
 ]

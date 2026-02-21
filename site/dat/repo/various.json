@@ -2695,8 +2695,8 @@
     "id": "jmeter.backendlistener.reportportal",
     "name": "ReportPortal backend listener",
     "description": "JMeter Backend Listener ReportPortal is a JMeter plugin enabling you to send test results to a Report Portal server. <ul><li>Simply add a Backend Listener </li><li>Change the listener's configuration</li></ul>",
-    "helpUrl": "https://github.com/prasantmohanty/jmeter-backend-listner-reportportal/issues",
-    "screenshotUrl": "https://github.com/prasantmohanty/jmeter-backend-listner-reportportal/blob/master/docs/configuration.JPG",
+    "helpUrl": "https://github.com/prasantmohanty/jmeter-backend-listner-reportportal",
+    "screenshotUrl": "https://raw.githubusercontent.com/prasantmohanty/jmeter-backend-listner-reportportal/master/docs/configuration.JPG",
     "vendor": "Prasanta Mohanty",
     "markerClass": "io.github.prasantmohanty.jmeter.backendlistener.reportportal.ReportPortalBackendClient",
     "versions": {

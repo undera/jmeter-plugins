@@ -16,7 +16,10 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         registerJTextfieldForValidation(jTextFieldRespLatencySec, false);
         registerJTextfieldForValidation(jTextFieldRespTime, false);
         registerJTextfieldForValidation(jTextFieldRespTimeSec, false);
-
+        registerJTextfieldForValidation(jTextFieldPercentileRespTime, false);
+        registerJTextfieldForValidation(jTextFieldPercentileRespTimeSec, false);
+        registerJTextfieldForValidation(jTextFieldPercentileValue, false);
+        registerJTextfieldForValidation(jTextFieldCustomDuration, false);
         initFields();
     }
 
@@ -27,6 +30,10 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         jTextFieldErrorSec.setText(testElement.getErrorRateSecs());
         jTextFieldRespLatency.setText(testElement.getResponseLatency());
         jTextFieldRespLatencySec.setText(testElement.getResponseLatencySecs());
+        jTextFieldPercentileRespTime.setText(testElement.getPercentileResponseTime());
+        jTextFieldPercentileRespTimeSec.setText(testElement.getPercentileResponseTimeSecs());
+        jTextFieldPercentileValue.setText(testElement.getPercentileValue());
+        jTextFieldCustomDuration.setText(testElement.getCustomValidationDuration());
     }
 
     public void modifyTestElement(AutoStop testElement) {
@@ -36,6 +43,10 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         testElement.setErrorRateSecs(jTextFieldErrorSec.getText());
         testElement.setResponseLatency(jTextFieldRespLatency.getText());
         testElement.setResponseLatencySecs(jTextFieldRespLatencySec.getText());
+        testElement.setPercentileResponseTime(jTextFieldPercentileRespTime.getText());
+        testElement.setPercentileResponseTimeSecs(jTextFieldPercentileRespTimeSec.getText());
+        testElement.setPercentileValue(jTextFieldPercentileValue.getText());
+        testElement.setCustomValidationDuration(jTextFieldCustomDuration.getText());
     }
 
     public final void initFields() {
@@ -45,6 +56,9 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         jTextFieldErrorSec.setText("10");
         jTextFieldRespLatency.setText("5000");
         jTextFieldRespLatencySec.setText("10");
+        jTextFieldPercentileRespTime.setText("15000");
+        jTextFieldPercentileRespTimeSec.setText("10");
+        jTextFieldPercentileValue.setText("90");
     }
 
     private int getIntValue(JTextField tf) {
@@ -80,6 +94,7 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         jLabelBulletError.setEnabled(getFloatValue(jTextFieldError) > 0 || isVariableValue(jTextFieldError));
         jLabelBulletRespTime.setEnabled(getIntValue(jTextFieldRespTime) > 0 || isVariableValue(jTextFieldRespTime));
         jLabelBulletLatency.setEnabled(getIntValue(jTextFieldRespLatency) > 0 || isVariableValue(jTextFieldRespLatency));
+        jLabelBulletPercentile.setEnabled(getIntValue(jTextFieldPercentileRespTime) > 0 || isVariableValue(jTextFieldPercentileRespTime));
     }
 
     private void setJTextFieldColor(final JTextField tf, boolean isFloat) {
@@ -150,6 +165,22 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabelBulletPercentile = new javax.swing.JLabel();
+        jTextFieldPercentileValue = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jTextFieldPercentileRespTime = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jTextFieldPercentileRespTimeSec = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabelBulletCustomValidation = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jTextFieldCustomDuration = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Test Shutdown Criteria"));
         setLayout(new java.awt.GridBagLayout());
@@ -250,13 +281,13 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         add(jPanel4, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         add(jPanel3, gridBagConstraints);
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 10));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel8.setText("OR");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -265,7 +296,7 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         add(jLabel8, gridBagConstraints);
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 10));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         jLabel9.setText("OR");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -273,6 +304,63 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         add(jLabel9, gridBagConstraints);
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jLabel13.setText("OR");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        add(jLabel13, gridBagConstraints);
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        add(jLabel20, gridBagConstraints);
+
+        jLabelBulletPercentile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/reporters/bulletGreen.png"))); // NOI18N
+        jPanel5.add(jLabelBulletPercentile);
+
+        jTextFieldPercentileValue.setColumns(2);
+        jTextFieldPercentileValue.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextFieldPercentileValue.setMaximumSize(new java.awt.Dimension(100, 20));
+        jPanel5.add(jTextFieldPercentileValue);
+
+        jLabel14.setText("th Percentile Response time is greater than");
+        jPanel5.add(jLabel14);
+
+        jTextFieldPercentileRespTime.setColumns(7);
+        jTextFieldPercentileRespTime.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextFieldPercentileRespTime.setMaximumSize(new java.awt.Dimension(100, 20));
+        jPanel5.add(jTextFieldPercentileRespTime);
+
+        jLabel15.setText("ms for");
+        jPanel5.add(jLabel15);
+
+        jTextFieldPercentileRespTimeSec.setColumns(5);
+        jTextFieldPercentileRespTimeSec.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextFieldPercentileRespTimeSec.setMaximumSize(new java.awt.Dimension(100, 20));
+        jPanel5.add(jTextFieldPercentileRespTimeSec);
+
+        jLabel16.setText("seconds");
+        jPanel5.add(jLabel16);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        add(jPanel5, gridBagConstraints);
+
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        add(jPanel6, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -281,7 +369,16 @@ public class JAutoStopPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -289,15 +386,23 @@ public class JAutoStopPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelBulletCustomValidation;
     private javax.swing.JLabel jLabelBulletError;
     private javax.swing.JLabel jLabelBulletLatency;
+    private javax.swing.JLabel jLabelBulletPercentile;
     private javax.swing.JLabel jLabelBulletRespTime;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JTextField jTextFieldCustomDuration;
     private javax.swing.JTextField jTextFieldError;
     private javax.swing.JTextField jTextFieldErrorSec;
+    private javax.swing.JTextField jTextFieldPercentileRespTime;
+    private javax.swing.JTextField jTextFieldPercentileRespTimeSec;
+    private javax.swing.JTextField jTextFieldPercentileValue;
     private javax.swing.JTextField jTextFieldRespLatency;
     private javax.swing.JTextField jTextFieldRespLatencySec;
     private javax.swing.JTextField jTextFieldRespTime;

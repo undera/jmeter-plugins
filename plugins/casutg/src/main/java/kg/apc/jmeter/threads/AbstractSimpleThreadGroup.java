@@ -90,7 +90,7 @@ public abstract class AbstractSimpleThreadGroup extends AbstractThreadGroup {
         String distributedPrefix = JMeterUtils.getPropDefault(THREAD_GROUP_DISTRIBUTED_PREFIX_PROPERTY_NAME, "");
         final String threadName = distributedPrefix + (distributedPrefix.isEmpty() ? "" : "-") + groupName + " " + groupNum + "-" + (threadNum + 1);
 
-        final JMeterThread jmeterThread = new JMeterThread(cloneTree(threadGroupTree), this, notifier);
+        final JMeterThread jmeterThread = new JMeterThread(cloneThreadGroupTree(threadGroupTree), this, notifier);
         jmeterThread.setThreadNum(threadNum);
         jmeterThread.setThreadGroup(this);
         jmeterThread.setInitialContext(context);
@@ -207,7 +207,7 @@ public abstract class AbstractSimpleThreadGroup extends AbstractThreadGroup {
         }
     }
 
-    private ListedHashTree cloneTree(ListedHashTree tree) {
+    private ListedHashTree cloneThreadGroupTree(ListedHashTree tree) {
         TreeCloner cloner = new TreeCloner(true);
         tree.traverse(cloner);
         return cloner.getClonedTree();

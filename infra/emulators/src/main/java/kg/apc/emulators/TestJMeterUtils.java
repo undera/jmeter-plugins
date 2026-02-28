@@ -49,8 +49,12 @@ public abstract class TestJMeterUtils {
         threadGroup.setName("test thread group");
         JMeterContextService.getContext().setThreadGroup(threadGroup);
         JMeterUtils.setProperty("sample_variables", "TEST1,TEST2,TEST3"); // for Flexible File Writer Test
-        JMeterUtils.setProperty("saveservice_properties", JMeterUtils.getJMeterHome() + "/ss.props");
-        JMeterUtils.setProperty("upgrade_properties", JMeterUtils.getJMeterHome() + "/ss.props");
+        // Before v5.0 SaveService prepended JMeterHome to the saveservice.properties value
+        // https://github.com/apache/jmeter/commit/77a4fcff0f1c5fee0d89ac9ea85d719fa5607aa4
+        // We need to cater for older versions as several plugins are built on core version 2.13
+        String ss_props = JMeterUtils.getJMeterVersion().compareTo("5.") < 0 ? "/ss.props" : dst.getAbsolutePath();
+        JMeterUtils.setProperty("saveservice_properties", ss_props);
+        JMeterUtils.setProperty("upgrade_properties", ss_props);
         JMeterUtils.setProperty("sampleresult.default.encoding", StandardCharsets.UTF_8.name()); // enable multibyte
     }
 

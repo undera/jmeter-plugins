@@ -1437,6 +1437,12 @@
       "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
     ],
     "versions": {
+      "1.0.0": {
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/1.0.0/jmeter-datadog-backend-listener-1.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.5.0": {
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.5.0/jmeter-datadog-backend-listener-0.5.0.jar",
         "depends": [

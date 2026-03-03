@@ -1438,6 +1438,7 @@
     ],
     "versions": {
       "1.0.0": {
+        "changes": "Cumulative metrics, statistics calculation modes (ddsketch/aggregate_report/dashboard), assertion metrics, test run events, label sanitization fix",
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/1.0.0/jmeter-datadog-backend-listener-1.0.0.jar",
         "depends": [
           "jmeter-core"

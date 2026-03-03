@@ -2717,5 +2717,28 @@
         ]
       }
     }
-  }
+  },
+{
+    "id": "io.github.vasanthshanmugam-jmeter-auto-correlation-plugin",
+    "name": "One-Click Auto-Correlation Plugin",
+    "description": "One-click detection and correlation of dynamic values in JMeter test scripts. Automatically finds session IDs, CSRF tokens, OAuth/Bearer tokens, hidden form fields, ViewState, SAML tokens, and replaces hardcoded values with extractors.",
+    "screenshotUrl": "https://raw.githubusercontent.com/vasanthshanmugam/jmeter-auto-correlation-plugin/main/screenshot.png",
+    "helpUrl": "https://github.com/vasanthshanmugam/jmeter-auto-correlation-plugin",
+    "vendor": "Vasanth Shanmugam",
+    "markerClass": "io.github.vasanthshanmugam.jmeter.plugins.correlation.gui.CorrelationPostProcessorGui",
+    "componentClasses": [
+        "io.github.vasanthshanmugam.jmeter.plugins.correlation.CorrelationPostProcessor"
+    ],
+    "canUninstall": true,
+    "versions": {
+        "1.0.1": {
+            "downloadUrl": "https://github.com/vasanthshanmugam/jmeter-auto-correlation-plugin/releases/download/v1.0.1/jmeter-auto-correlation-plugin-1.0.0-jar-with-dependencies.jar",
+            "libs": {
+                "io.github.vasanthshanmugam-jmeter-auto-correlation-plugin": "https://github.com/vasanthshanmugam/jmeter-auto-correlation-plugin/releases/download/v1.0.1/jmeter-auto-correlation-plugin-1.0.0-jar-with-dependencies.jar"
+            },
+            "changes": "Initial release with correct package namespace (io.github.vasanthshanmugam)."
+        }
+    }
+}
+
 ]

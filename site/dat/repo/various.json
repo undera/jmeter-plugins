@@ -14,8 +14,7 @@
 	"versions": {
 		"1.1.0": {
 			"changes": "Initial Release changes and Bug Fix for saving the Table",
-			"downloadUrl": "https://repo1.maven.org/maven2/io/github/sagaraggarwal86/Configurable_Aggregate_Report/1.1.0/Configurable_Aggregate_Report-1.1.0.jar",
-			"libs": {}
+			"downloadUrl": "https://repo1.maven.org/maven2/io/github/sagaraggarwal86/Configurable_Aggregate_Report/1.1.0/Configurable_Aggregate_Report-1.1.0.jar"
 		}
 	}
 },

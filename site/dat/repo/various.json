@@ -1,4 +1,23 @@
-[
+[{
+	"id": "io.github.sagaraggarwal86-configurable-aggregate-report",
+	"name": "Configurable Aggregate Report",
+	"description": "A listener configurable plugin to prepare report for configurable parameters for Apache JMeter",
+	"screenshotUrl": "https://github.com/sagaraggarwal86/Configurable_Aggregate_Report/blob/main/img.jpg",
+	"helpUrl": "https://github.com/sagaraggarwal86/Configurable_Aggregate_Report/blob/main/README.md",
+	"vendor": "Sagar Aggarwal",
+	"markerClass": "com.personal.jmeter.listener.ListenerCollector",
+	"componentClasses": [
+		"com.personal.jmeter.listener.ListenerCollector",
+		"com.personal.jmeter.listener.ListenerGUI"
+	],
+	"versions": {
+		"1.1.0": {
+			"changes": "Initial Release changes and Bug Fix for saving the Table",
+			"downloadUrl": "https://repo1.maven.org/maven2/io/github/sagaraggarwal86/Configurable_Aggregate_Report/1.1.0/Configurable_Aggregate_Report-1.1.0.jar",
+			"libs": {}
+		}
+	}
+},
   {
     "id": "ssh-sampler",
     "name": "SSH Protocol Support",

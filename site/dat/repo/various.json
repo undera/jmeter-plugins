@@ -1,4 +1,5 @@
-[{
+[
+	{
 	"id": "io.github.sagaraggarwal86-configurable-aggregate-report",
 	"name": "Configurable Aggregate Report",
 	"description": "A listener configurable plugin to prepare report for configurable parameters for Apache JMeter",

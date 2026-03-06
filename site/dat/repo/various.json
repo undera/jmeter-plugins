@@ -2173,9 +2173,19 @@
             "jackson-databind>=2.16.1": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.16.1/jackson-databind-2.16.1.jar",
             "Saxon-HE>=12.3": "https://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/12.3/Saxon-HE-12.3.jar"
           }
+        },
+        "10.0": {
+          "changes": "External file could be a JSON file created with 'HAR Transaction Marker' Chrome Plugin or CSV file",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v10.0/har-convertor-jmeter-plugin-10.0-jar-with-dependencies.jar",
+          "libs": {
+            "jackson-core>=2.16.1": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.16.1/jackson-core-2.16.1.jar",
+            "jackson-annotations>=2.16.1": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.16.1/jackson-annotations-2.16.1.jar",
+            "jackson-databind>=2.16.1": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.16.1/jackson-databind-2.16.1.jar",
+            "Saxon-HE>=12.3": "https://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/12.3/Saxon-HE-12.3.jar"
+          }
         }
-      }
-    },
+     }
+   },
    {
       "id": "vdn-pacing-jmeter-plugin",
       "name": "vdn@github - pacing-jmeter-plugin",

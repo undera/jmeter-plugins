@@ -3,7 +3,7 @@
 	"id": "io.github.sagaraggarwal86-configurable-aggregate-report",
 	"name": "Configurable Aggregate Report",
 	"description": "A listener configurable plugin to prepare report for configurable parameters for Apache JMeter",
-	"screenshotUrl": "https://github.com/sagaraggarwal86/Configurable_Aggregate_Report/blob/main/img.jpg",
+	"screenshotUrl": "https://raw.githubusercontent.com/sagaraggarwal86/Configurable_Aggregate_Report/main/img.jpg",
 	"helpUrl": "https://github.com/sagaraggarwal86/Configurable_Aggregate_Report/blob/main/README.md",
 	"vendor": "Sagar Aggarwal",
 	"markerClass": "com.personal.jmeter.listener.ListenerCollector",

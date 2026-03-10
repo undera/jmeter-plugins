@@ -1,13 +1,11 @@
 {
-  "id": "jmeter-jtl-xls-plugin",
+  "id": "jtl-xls-smart-report",
   "name": "JTL Excel Smart Report Generator",
-  "description": "Generate Excel SLA reports from JMeter JTL files",
-  "site": "https://github.com/rishavsawarn/jmeter-jtl-xls-report-plugin",
-  "version": "1.0",
-  "downloads": [
+  "description": "Generate Excel SLA reports from JTL files",
+  "versions": [
     {
       "version": "1.0",
-      "url": "https://github.com/rishavsawarn/jmeter-jtl-xls-report-plugin/tree/main/releases/jtl-xls-plugin-1.0.jar"
+      "downloadUrl": "https://github.com/rishavsawarn/jmeter-jtl-xls-report-plugin/tree/main/releases/jtl-xls-plugin-1.0.jar"
     }
   ]
 }

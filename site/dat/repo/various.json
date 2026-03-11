@@ -2807,6 +2807,24 @@
       "downloadUrl": "https://github.com/rishavsawarn/jmeter-jtl-xls-report-plugin/releases/download/v1.0.0/jtl-xls-plugin-1.0.jar"
     }
   }
+},
+{
+  "id": "prism",
+  "name": "Prism - tab-style interface plugin for Apache JMeter",
+  "description": "A tab-style interface plugin for Apache JMeter",
+  "screenshotUrl": "https://raw.githubusercontent.com/QAInsights/prism/refs/heads/main/prism-oss/images/Prism.png",
+  "helpUrl": "https://github.com/QAInsights/prism",
+  "vendor": "QAInsights.com",
+  "markerClass": "com.jmeter.prism.oss.PrismMenuCreator",
+  "componentClasses": [
+    "com.jmeter.prism.oss.PrismMenuCreator"
+  ],
+  "versions": {
+    "1.0.0": {
+      "downloadUrl": "https://github.com/QAInsights/prism/releases/download/v1.0.2/prism-oss-1.0.0-SNAPSHOT.jar",
+      "depends": ["jmeter-core", "jmeter-components"]
+    }
+  }
 }
 
 ]

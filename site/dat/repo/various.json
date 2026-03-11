@@ -1,4 +1,23 @@
 [
+	{
+	"id": "io.github.sagaraggarwal86-configurable-aggregate-report",
+	"name": "Configurable Aggregate Report",
+	"description": "A listener configurable plugin to prepare report for configurable parameters for Apache JMeter",
+	"screenshotUrl": "https://raw.githubusercontent.com/sagaraggarwal86/Configurable_Aggregate_Report/main/img.jpg",
+	"helpUrl": "https://github.com/sagaraggarwal86/Configurable_Aggregate_Report/blob/main/README.md",
+	"vendor": "Sagar Aggarwal",
+	"markerClass": "com.personal.jmeter.listener.ListenerCollector",
+	"componentClasses": [
+		"com.personal.jmeter.listener.ListenerCollector",
+		"com.personal.jmeter.listener.ListenerGUI"
+	],
+	"versions": {
+		"1.1.0": {
+			"changes": "Initial Release changes and Bug Fix for saving the Table",
+			"downloadUrl": "https://repo1.maven.org/maven2/io/github/sagaraggarwal86/Configurable_Aggregate_Report/1.1.0/Configurable_Aggregate_Report-1.1.0.jar"
+		}
+	}
+},
   {
     "id": "ssh-sampler",
     "name": "SSH Protocol Support",
@@ -1437,6 +1456,13 @@
       "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
     ],
     "versions": {
+      "1.0.0": {
+        "changes": "Cumulative metrics, statistics calculation modes, assertion metrics, test run events",
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/1.0.0/jmeter-datadog-backend-listener-1.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.5.0": {
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.5.0/jmeter-datadog-backend-listener-0.5.0.jar",
         "depends": [
@@ -2166,9 +2192,19 @@
             "jackson-databind>=2.16.1": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.16.1/jackson-databind-2.16.1.jar",
             "Saxon-HE>=12.3": "https://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/12.3/Saxon-HE-12.3.jar"
           }
+        },
+        "10.0": {
+          "changes": "External file could be a JSON file created with 'HAR Transaction Marker' Chrome Plugin or CSV file",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v10.0/har-convertor-jmeter-plugin-10.0-jar-with-dependencies.jar",
+          "libs": {
+            "jackson-core>=2.16.1": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.16.1/jackson-core-2.16.1.jar",
+            "jackson-annotations>=2.16.1": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.16.1/jackson-annotations-2.16.1.jar",
+            "jackson-databind>=2.16.1": "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.16.1/jackson-databind-2.16.1.jar",
+            "Saxon-HE>=12.3": "https://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/12.3/Saxon-HE-12.3.jar"
+          }
         }
-      }
-    },
+     }
+   },
    {
       "id": "vdn-pacing-jmeter-plugin",
       "name": "vdn@github - pacing-jmeter-plugin",
@@ -2739,6 +2775,38 @@
             "changes": "Initial release with correct package namespace (io.github.vasanthshanmugam)."
         }
     }
+},
+{
+    "id": "superkey",
+    "name": "SuperKey - JMeter Command Center",
+    "description": "JMeter Command Center",
+    "screenshotUrl": "https://raw.githubusercontent.com/QAInsights/superkey/refs/heads/main/images/add.png",
+    "helpUrl": "https://github.com/QAInsights/superkey",
+    "vendor": "QAInsights.com",
+    "markerClass": "io.github.naveenkumar.jmeter.superkey",
+    "componentClasses": [
+      "io.github.naveenkumar.jmeter.superkey.ComponentProvider"
+    ],
+    "versions": {
+      "1.0.0": {
+        "downloadUrl": "https://github.com/QAInsights/superkey/releases/download/v1.0.0/superkey-jmeter-plugin-1.0-SNAPSHOT.jar",
+        "depends": ["jmeter-core", "jmeter-components"]
+      }
+    }
+},
+{
+  "id": "jtl-xls-smart-report",
+  "name": "JTL Excel Smart Report Generator",
+  "description": "Generate Excel SLA reports from JTL result files with transaction-wise metrics and P90 SLA validation.",
+  "vendor": "Rishav",
+  "helpUrl": "https://github.com/rishavsawarn/jmeter-jtl-xls-report-plugin",
+  "markerClass": "com.example.jmeter.plugin.JtlToXlsListener",
+  "screenshotUrl": "https://raw.githubusercontent.com/rishavsawarn/jmeter-jtl-xls-report-plugin/main/docs/Screenshot1.jpeg",
+  "versions": {
+    "1.0.0": {
+      "downloadUrl": "https://github.com/rishavsawarn/jmeter-jtl-xls-report-plugin/releases/download/v1.0.0/jtl-xls-plugin-1.0.jar"
+    }
+  }
 }
 
 ]

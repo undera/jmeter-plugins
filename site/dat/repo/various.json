@@ -19,6 +19,10 @@
 		"3.1.0": {
 			"changes": "Configurable percentile, SLA threshold highlighting, AI-generated HTML performance report, CLI headless mode, transaction search with regex support, chart interval control",
 			"downloadUrl": "https://repo1.maven.org/maven2/io/github/sagaraggarwal86/Configurable_Aggregate_Report/3.1.0/Configurable_Aggregate_Report-3.1.0.jar"
+		},
+        "3.7.0": {
+			"changes": "performance improvents and bug fixes",
+			"downloadUrl": "https://repo1.maven.org/maven2/io/github/sagaraggarwal86/Configurable_Aggregate_Report/3.7.0/Configurable_Aggregate_Report-3.7.0.jar"
 		}
 	}
 },

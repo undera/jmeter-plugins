@@ -2,7 +2,7 @@
   {
     "id": "avm-mcp-sampler",
     "name": "MCPulse MCP Sampler",
-    "description": "JMeter sampler for MCP (Model Context Protocol) servers over stdio transport.",
+    "description": "MCP sampler for stdio, HTTP, and HTTP+SSE transports",
     "screenshotUrl": "https://raw.githubusercontent.com/AndreyVMarkelov/MCPulse/main/docs/images/stdio_sampler_settings.png",
     "helpUrl": "https://github.com/AndreyVMarkelov/MCPulse",
     "vendor": "Andrey Markelov",

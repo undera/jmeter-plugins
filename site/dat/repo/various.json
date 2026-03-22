@@ -2901,6 +2901,37 @@
       "depends": ["jmeter-core", "jmeter-components"]
     }
   }
+},
+
+{
+  "id": "loadmagic-load-distributor",
+  "name": "Distributed Load Distributor",
+  "description": "Automatically distributes thread counts across JMeter generators for distributed testing. Works with JMeter remote testing (-R) via -Ggenerator.hosts, or standalone generators via -Jgenerator.id/-Jgenerator.count. Auto-activates from lib/ext — no test plan element required. Supports Standard ThreadGroup, Ultimate Thread Group, Concurrency Thread Group, and Stepping Thread Group.",
+  "screenshotUrl": "https://raw.githubusercontent.com/loadmagic/jmeter-load-distributor/main/docs/screenshot.png",
+  "helpUrl": "https://github.com/loadmagic/jmeter-load-distributor",
+  "vendor": "LoadMagic",
+  "markerClass": "ai.loadmagic.jmeter.distributed.LoadDistributor",
+  "componentClasses": [
+    "ai.loadmagic.jmeter.distributed.LoadDistributor",
+    "ai.loadmagic.jmeter.distributed.LoadDistributorGui",
+    "ai.loadmagic.jmeter.distributed.LoadDistributorAutoActivator"
+  ],
+  "versions": {
+    "1.2.0": {
+      "downloadUrl": "https://github.com/loadmagic/jmeter-load-distributor/releases/download/v1.2.0/jmeter-load-distributor-1.2.0.jar",
+      "changes": "JMeter distributed testing support via -Ggenerator.hosts. Auto-detects slave hostname for ID assignment.",
+      "depends": ["jmeter-core"]
+    },
+    "1.1.0": {
+      "downloadUrl": "https://github.com/loadmagic/jmeter-load-distributor/releases/download/v1.1.0/jmeter-load-distributor-1.1.0.jar",
+      "changes": "Auto-activation via Function SPI — no test plan element required.",
+      "depends": ["jmeter-core"]
+    },
+    "1.0.0": {
+      "downloadUrl": "https://github.com/loadmagic/jmeter-load-distributor/releases/download/v1.0.0/jmeter-load-distributor-1.0.0.jar",
+      "changes": "Initial release. Requires Config Element in test plan."
+    }
+  }
 }
 
 ]

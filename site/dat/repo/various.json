@@ -2734,7 +2734,12 @@
         "changes": "Minor fix: macOS launch. NEW: Claude Code integration for real agentic experience.",
         "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v2.0.1/jmeter-agent-2.0.1-jar-with-dependencies.jar",
         "depends": ["jmeter-core", "jmeter-components"]
-      }
+      },
+    "2.0.2": {
+      "changes": "NEW: Support for Ollama models. Now you can run the agent locally with your custom or open-source models using Ollama. For more details, check out our documentation:",
+      "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v2.0.2/jmeter-agent-2.0.2-jar-with-dependencies.jar",
+      "depends": ["jmeter-core", "jmeter-components"]
+    }
     }
   },
   {

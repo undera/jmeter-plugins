@@ -2888,8 +2888,7 @@
     "com.qainsights.jmeter.themes.ThemePlugin",
     "com.qainsights.jmeter.themes.ThemeManager",
     "com.qainsights.jmeter.themes.ThemeDescriptor",
-    "com.qainsights.jmeter.themes.ThemeLaf",
-    "com.qainsights.jmeter.themes.IconGenerator"
+    "com.qainsights.jmeter.themes.ThemeLaf"
   ],
   "versions": {
     "1.0.2": {

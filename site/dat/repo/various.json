@@ -2893,6 +2893,7 @@
   ],
   "versions": {
     "1.0.2": {
+      "changes": "NEW: Catpuccin Mocha Theme",
       "downloadUrl": "https://github.com/QAInsights/jmeter-studio/releases/download/v1.0.2/jmeter-studio-oss-1.0.2.jar"
     },
     "1.0.1": {

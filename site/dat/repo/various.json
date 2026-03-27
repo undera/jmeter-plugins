@@ -2723,6 +2723,11 @@
       "changes": "NEW: Support for Ollama models. Now you can run the agent locally with your custom or open-source models using Ollama. For more details, check out our documentation:",
       "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v2.0.2/jmeter-agent-2.0.2.jar",
       "depends": ["jmeter-core", "jmeter-components"]
+    },
+ 	"2.0.3": {
+      "changes": "FIX: Dark/Light theme conflicts. Shiny upgrade to the UI. NEW: Support for Ollama models. For more details, check out our documentation:",
+      "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v2.0.3/jmeter-agent-2.0.3.jar",
+      "depends": ["jmeter-core", "jmeter-components"]
     }
     }
   },

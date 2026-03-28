@@ -2916,6 +2916,24 @@
       "changes": "Initial release. Requires Config Element in test plan."
     }
   }
+},
+{
+  "id": "llm-metrics-visualizer",
+  "name": "LLM Metrics Visualizer",
+  "description": "A JMeter listener plugin for monitoring LLM (Large Language Model) performance metrics in real time. Captures TTFT (Time to First Token), TPOT (Time per Output Token), RPS, input/output tokens per request and per minute, and response time percentiles — grouped by sampler name.",
+  "screenshotUrl": "",
+  "helpUrl": "https://github.com/bakthava/LLM-Metrics-Visualizer",
+  "vendor": "bakthava",
+  "markerClass": "com.example.jmeter.LLMMetricsVisualizer",
+  "componentClasses": [
+    "com.example.jmeter.LLMMetricsVisualizer"
+  ],
+  "versions": {
+    "0.1": {
+      "downloadUrl": "https://github.com/bakthava/LLM-Metrics-Visualizer/releases/download/v0.1/LLM_Metrics_Visualizer-0.1.jar",
+      "depends": ["jmeter-core"]
+    }
+  }
 }
 
 ]

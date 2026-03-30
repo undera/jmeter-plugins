@@ -1,0 +1,21 @@
+[
+    {
+        "id" : "jmeter.listener.jmeternarrator",
+        "name" : "JMeter Narrator",
+        "description" : "A custom JMeter listener that aggregates test results and calls Google's Gemini LLM to generate human-readable performance observations, summaries, and recommendations from .jtl data.",
+        "screenshotUrl" : "https://github.com/TesterGuruji/JMeterNarrator/tree/plugin-code/src/main/resources",
+        "helpUrl": "https://github.com/TesterGuruji/JMeterNarrator/blob/plugin-code/README.md",
+        "vendor": "TesterGuruji",
+        "markerClass": "com.example.jmeterllm.LLMAnalysisMarker",
+        "installerClass": "com.example.jmeterllm.LLMAnalysisVisualizer",
+        "versions" : {
+            "0.1" : {
+                "downloadUrl" : "https://github.com/TesterGuruji/JMeterNarrator/blob/plugin-code/target/jmeter-llm-gemini-listener-0.1.0-SNAPSHOT.jar",
+                "libs" : {
+                },
+                "depends" : [
+                ]
+            }
+        }
+    }
+]

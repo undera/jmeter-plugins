@@ -10,7 +10,7 @@
         "installerClass": "com.example.jmeterllm.LLMAnalysisVisualizer",
         "versions" : {
             "0.1" : {
-                "downloadUrl" : "https://github.com/TesterGuruji/JMeterNarrator/blob/plugin-code/target/jmeter-llm-gemini-listener-0.1.0-SNAPSHOT.jar",
+                "downloadUrl" : "https://github.com/TesterGuruji/JMeterNarrator/releases/download/v.01/jmeter-llm-gemini-listener-0.1.0-SNAPSHOT.jar",
                 "libs" : {
                 },
                 "depends" : [

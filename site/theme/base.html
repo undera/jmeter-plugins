@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if page and page.title %}{{ page.title }} :: {% endif %}JMeter-Plugins.org</title>
+
+    <link rel="icon" href="/img/site/logo.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <meta name="keywords" content="jmeter, plugins, load, performance, analysis, graphs, hadoop, webdriver, selenium"/>
+    <meta name="description" content="A custom set of plugins for Apache JMeter, not affiliated with Apache Software Foundation, graphs, load shapers, new functions."/>
+    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="/img/plugins.css"/>
+    <link rel='stylesheet' type='text/css' href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+<header class="header clearfix">
+    <div class="container">
+        <div class="row topmost">
+            <div class="col-md-12">
+                {% if page %}
+                <div class="position">
+                    <span><a class="nohl" href="/">JMeter Plugins</a></span>
+                    {% if page.parent %}
+                    &gt; <span><a class="nohl" href="/{{ page.parent.url }}">{{ page.parent.title }}</a></span>
+                    {% endif %}
+                    {% if page.title %}
+                    &gt; <a class="hl" href="/{{ page.url }}">{{ page.title }}</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="site-header">
+            <div class="logo"><a href="/"><img src="/img/site/logo.png" alt="JMeter-Plugins.org"/></a></div>
+            <div class="purpose">
+                <div>jmeter-plugins.org</div>
+                <div>Every load test needs some sexy features!</div>
+            </div>
+            <div class="sponsorship pull-right">
+                <a href="/editor/?utm_source=jpgc&utm_medium=banner&utm_campaign=header"><img src="/editor/img/banner.png" width="125" height="68" alt="BlocklyJMX"/></a>
+            </div>
+        </div>
+
+        {% include "partials/nav.html" %}
+    </div>
+</header>
+
+<div class="container">
+    {% block content %}
+    {{ page.content }}
+    {% endblock %}
+</div>
+
+<footer>
+    <div class="container">
+        <span>&copy; 2009-2026 <a href="https://www.linkedin.com/in/andreypohilko">Andrey Pokhilko</a> and <a href="/wiki/Contributors/">project contributors</a></span><br/>
+        <span>Licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a></span>
+    </div>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    {% if config.extra.analytics %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.extra.analytics.property }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ config.extra.analytics.property }}');
+    </script>
+    {% endif %}
+</footer>
+
+</body>
+</html>

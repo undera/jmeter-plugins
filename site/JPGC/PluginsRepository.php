@@ -39,7 +39,9 @@ class PluginsRepository extends PWEModule implements Outputable
 
     private function getRepoData($readFiles = false)
     {
-        $repoFile = 'dat/repo/repo.json';
+        $node = $this->PWE->getNode();
+        $configsDir = $node['!a']['configs'];
+        $repoFile = $configsDir . '/repo.json';
         if (!is_file($repoFile)) {
             throw new HTTP5xxException("Repo file not found: " . realpath($repoFile));
         }

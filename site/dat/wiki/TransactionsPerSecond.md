@@ -1,0 +1,16 @@
+# Transactions per Second
+
+<span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-graphs-basic)</span>
+
+This graph shows the number of transactions per second for each sampler. It counts for each seconds the number of finished transactions. Compared to the previous version (0.3.0), it will now also display the failed transactions.
+
+## Result
+### Normal display
+
+![](/img/wiki/transactions_per_seconds.png)
+
+### Aggregated display
+
+The aggragated display replace the old **Total Transaction per Seconds** graph. You can set this parameter in the Settings panel.
+
+![](/img/wiki/total_transactions_per_seconds.png)

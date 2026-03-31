@@ -1,0 +1,13 @@
+# HBase Rowkey Sampler
+
+<span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-hadoop)</span>
+
+<i>This plugin was originally developed by [Atlantbh d.o.o.](http://www.atlantbh.com/), 
+released as [jmeter-components](https://github.com/ATLANTBH/jmeter-components), 
+then merged into JP@GC.</i>
+
+## Description
+
+HBase rowkey sampler is used to retrieve a specific record by specifying the rowkey of the hbase table. You need to specify the Connection name (name which is specified in the Hbase connection config element), Table: hbase table name, Rowkey. rowkey of the specific record. The possibility exists to check the checkbox to retrieve  the most recent record, as a record might be updated and you are interested in the latest data, have this parameter turned on.
+
+![](/img/wiki/HBaseRowkey1.png)

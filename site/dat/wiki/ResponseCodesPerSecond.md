@@ -1,0 +1,9 @@
+# Response Codes per Second
+
+<span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-graphs-additional)</span>
+
+This graph will display the response code per second returned during the test.
+
+## Sample result
+
+![](/img/wiki/response_codes_per_second.png)

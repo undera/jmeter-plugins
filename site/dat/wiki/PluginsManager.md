@@ -1,0 +1,64 @@
+# JMeter Plugins Manager
+
+The idea of JMeter Plugins Manager is simple: instead of installing various plugins manually, it will do it for you through nice UI.
+No need to mess with JARs anymore. Install Plugins Manager once and it will do it all for you: installing, upgrading, uninstalling.
+
+The plugins it manages include usual plugins from JMeter-Plugins.org, various third-party plugins and even core JMeter plugins.
+This is important, because removing rarely used features like JDBC and LDAP will tidy up huge popup menus from unused items. As a bonus you will get the increased JMeter startup time.
+
+You can observe the catalogue of plugins </ here>. As the first experiment, try to uninstall all the plugins and see how bare JMeter looks like. Then install something. Then install something more. Have fun!
+
+## Installation and Usage
+
+Download the Plugins Manager [JAR file](/get/) and put it into JMeter's `lib/ext` directory. Then start JMeter and go to "Options" menu to access the Plugins Manager.
+
+![](/img/wiki/pmgr/pmgr_menu_item.png)
+
+The label on the menu item will say "has upgrades" in case any of your installed plugins have upgrades for it.
+
+Clicking on menu item will bring up the plugins manager dialog:
+
+![](/img/wiki/pmgr/pmgr_dialog.png)
+
+The dialog has three tabs, "Review Changes" area and "Apply" button. Removing ticks from plugins on "Installed" tab will uninstall them. Setting ticks on "Available" tab will install the plugin. 
+
+The plugins that have upgrades will show in the list with *italic font*. Choose the new version you want to install for them from "Version" drop-down. By default, all upgradable plugins are selected for upgrade and listed on "Upgrades" tab.
+
+The "Review Changes" pane is important, it lists all the changes that supposed to be done after you click "Apply" button.
+Sometimes plugins have dependencies from each other, so there might be additional plugins uninstalled. There is no hurry for important business, so review the changes prior to applying it.
+
+Right mouse click over checkbox lists opens "Toggle All" option, which takes some time to toggle all items in the list.
+
+If you want to use the Plugins Manager from command-line or programmatically, please read [this guide](/wiki/PluginsManagerAutomated/).
+
+<div class="alert alert-warning">If you see empty dialog, this means that most likely you have proxy requirement for Internet connection. Please read [following instructions](/wiki/PluginsManagerNetworkConfiguration).</div>
+
+If you face some issues where new plugins do not appear, then Plugins Manager might be using an outdated cached information.
+In this case, you can clear the folder referenced by `System property "java.io.tmpdir"/pmgr_cache`.
+
+
+## Add Your Plugin or Repository
+
+Now there is an opportunity for anyone who creates the JMeter plugins to quickly make them available to wide audience of JMeter-Plugins.org.
+You don't have to contribute your source code into our repository, you can just create your project and maintain it, just using JPGC as distribution infrastructure.
+If you are interested, please raise the topic on our [community forum](/support/) to get more detailed instructions.
+
+### Plugins Sources Configuration
+
+If you have need to serve additional internal plugins repository within your organization, you can do so by setting `jpgc.repo.address` JMeter property, adding URL for your proprietary plugins repository after semicolon like this:
+
+```
+jpgc.repo.address=https://jmeter-plugins.org/repo/;http://my.intranet.site/plugins-repo.json
+```
+
+First item is default plugins repository, second is "custom internal". You can have as many repos as you want, splitting them with semicolon character.
+
+Plugins repository JSON has to satisfy [requirements](/wiki/PluginRepositoryDescriptorFormat/) for its content. In case of plugins-ID conflict the earliest declared has precedence.
+
+## Usage Statistics Collected
+
+By default, Plugins Manager sends some anonymous information to JMeter-Plugins.org, specifically: full version of JMeter used,
+list of installed plugins with their versions, anonymous unique ID for the installation. No personal identifiable information is sent.
+We analyze that information to learn more about which plugins deserve more development according to their popularity. Also, we share the statistics derived from usage reports on [statistics page](/stats/).
+The information is completely anonymous, you can validate that through our source code. You are free to disable these reporting by setting `jpgc.repo.sendstats=false` in JMeter properties.
+

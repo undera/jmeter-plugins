@@ -1,0 +1,40 @@
+# Filter Results Tool
+
+<span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-filterresults)</span>
+
+
+Often it's necessary to filter the results of a test to obtain a global vision with pages without all the urls that are declared in the html page.
+
+It should also filter queries that are not calls to the application but debug samplers or intermediate calculation samplers as beanshell samplers.
+
+If you want to remove the ramp-up phase, you could use offset filters.
+
+## Usage and Parameters
+
+Filter results with multi parameters
+
+Example 1 :
+
+```
+jmeter\bin\FilterResults.bat --output-file filteredout.csv --input-file inputfile.jtl --include-label-regex true --include-labels "P[1-3].*"
+```
+
+
+Example 2 :
+
+```
+jmeter/bin/FilterResults.sh --output-file filteredout.xml --input-file inputfile.csv --include-label-regex true --include-labels "P[1-3].*" --start-offset 2 --end-offset 180 --success-filter true --save-as-xml true
+```
+
+Parameters are :
+--input-file <filenameIn> --output-file <filenameFilteredOut>
+[ 
+--success-filter <true/false>   (true : Only success samplers, false : all results by default)
+--include-labels <labels list>
+--exclude-labels <labels list>
+--include-label-regex <true/false>
+--exclude-label-regex <true/false>
+--start-offset <sec>
+--end-offset <sec>
+--save-as-xml <true/false> (false : CSV format by default) "
+]

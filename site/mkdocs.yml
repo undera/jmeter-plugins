@@ -1,0 +1,124 @@
+site_name: JMeter-Plugins.org
+site_url: https://jmeter-plugins.org/
+site_description: Custom plugins for Apache JMeter
+
+docs_dir: dat
+site_dir: build
+
+use_directory_urls: true
+
+theme:
+  name: material
+  custom_dir: theme
+  logo: img/site/logo.png
+  favicon: img/site/logo.png
+  palette:
+    scheme: default
+    primary: blue grey
+    accent: orange
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - search.suggest
+
+extra_css:
+  - img/plugins.css
+
+extra:
+  analytics:
+    provider: google
+    property: G-7JYE42KKZ1
+
+nav:
+  - Home: index.md
+  - Install: install/Install.md
+  - Browse Plugins: catalogue.md
+  - Documentation:
+    - wiki/Start.md
+    - wiki/PluginsManager.md
+    - wiki/PluginsManagerAutomated.md
+    - wiki/PluginsManagerNetworkConfiguration.md
+    - wiki/PluginInstall.md
+    - wiki/SettingsPanel.md
+    - Thread Groups:
+      - wiki/ArrivalsThreadGroup.md
+      - wiki/ConcurrencyThreadGroup.md
+      - wiki/FreeFormArrivalsThreadGroup.md
+      - wiki/SteppingThreadGroup.md
+      - wiki/UltimateThreadGroup.md
+    - Listeners & Graphs:
+      - wiki/ActiveThreadsOverTime.md
+      - wiki/BytesThroughput.md
+      - wiki/CompositeGraph.md
+      - wiki/ConnectTimeOverTime.md
+      - wiki/GraphsGeneratorListener.md
+      - wiki/HitsPerSecond.md
+      - wiki/LatenciesOverTime.md
+      - wiki/ResponseCodesPerSecond.md
+      - wiki/ResponseTimesOverTime.md
+      - wiki/ResponseTimesPercentilesOverTime.md
+      - wiki/ResponseTimesVsThreads.md
+      - wiki/RespTimePercentiles.md
+      - wiki/RespTimesDistribution.md
+      - wiki/TransactionsPerSecond.md
+      - wiki/TransactionThroughputVsThreads.md
+      - wiki/SynthesisReport.md
+      - wiki/ConsoleStatusLogger.md
+    - Samplers:
+      - wiki/DummySampler.md
+      - wiki/HttpSimpleTableServer.md
+      - wiki/JMSSampler.md
+      - wiki/OAuthSampler.md
+      - wiki/RawRequest.md
+      - wiki/UDPRequest.md
+    - Config & Data:
+      - wiki/FlexibleFileWriter.md
+      - wiki/InterThreadCommunication.md
+      - wiki/LockFile.md
+      - wiki/PageDataExtractor.md
+      - wiki/ParameterizedController.md
+      - wiki/RawDataSource.md
+      - wiki/RedisDataSet.md
+      - wiki/SetVariablesAction.md
+      - wiki/ThroughputShapingTimer.md
+      - wiki/VariablesFromCSV.md
+    - Assertions & Extractors:
+      - wiki/JSONPathAssertion.md
+      - wiki/JSONPathExtractor.md
+      - wiki/JSONFormatter.md
+      - wiki/JSONToXMLConverter.md
+      - wiki/XMLFormatPostProcessor.md
+    - Monitoring:
+      - wiki/AutoStop.md
+      - wiki/DbMon.md
+      - wiki/JMXMon.md
+      - wiki/PerfMon.md
+    - Functions:
+      - wiki/Functions.md
+    - Tools:
+      - wiki/FilterResultsTool.md
+      - wiki/JMeterPluginsCMD.md
+      - wiki/MergeResults.md
+      - wiki/TestPlanCheckTool.md
+    - Hadoop/HBase:
+      - wiki/HadoopJobTracker.md
+      - wiki/HBaseConnection.md
+      - wiki/HBaseCRUDSampler.md
+      - wiki/HBaseRowkeySampler.md
+      - wiki/HBaseScanSampler.md
+      - wiki/HDFSOperations.md
+    - Other:
+      - wiki/XMPPSet.md
+      - wiki/dns_test_using_jmeter.md
+      - wiki/AsyncDownloadTutorial.md
+      - wiki/FFWTutorials.md
+    - Development:
+      - wiki/DeveloperGuide.md
+      - wiki/BuildingFromSource.md
+      - wiki/PluginsGuiGuidelines.md
+      - wiki/PluginRepositoryDescriptorFormat.md
+      - wiki/Contributors.md
+      - wiki/Roadmap.md
+      - wiki/Changelog.md
+  - Usage Statistics: stats.md
+  - Support: https://groups.google.com/forum/#!forum/jmeter-plugins

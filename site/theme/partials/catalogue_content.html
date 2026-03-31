@@ -1,0 +1,202 @@
+<div id="catalogue">
+    <a href="http://jmeter.apache.org/" target="_blank" class="pull-right"><img width="150"
+                                                                                src="https://jmeter.apache.org/images/logo.svg"
+                                                                                alt="Apache JMeter"/></a>
+    <h1>Custom Plugins for Apache JMeter&trade;</h1>
+    <p>
+        This project is an independent set of plugins for <a href="http://jmeter.apache.org/">Apache JMeter</a>,
+        the popular Open-Source load and performance testing tool.
+    </p>
+    <hr/>
+    <div>
+        This catalogue lists plugins available for use with Plugins Manager. If you're first time here, consider
+        installing <a href="/wiki/PluginsManager/">Plugins Manager</a> into your JMeter.
+    </div>
+    <div>
+        <p>
+            <i class="count pull-right">
+                Items found: <span></span>
+            </i>
+            <i class="fa fa-spin fa-spinner text-muted" style="position: relative; top: 2em; right: 1.2em"></i>
+            <input placeholder="Search..."/>
+        </p>
+    </div>
+    <div class="clearfix"></div>
+    <div class="list"><i class="fa fa-spin fa-spinner fa-4x"></i></div>
+</div>
+
+<script>
+    function values(dict) {
+        var values = [];
+        var keys = Object.keys(dict).sort();
+        for (var k = 0; k < keys.length; k++) {
+            values.push(dict[keys[k]]);
+        }
+        return values;
+    }
+
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    $(function () {
+        var plugins = [];
+        var cat = $("#catalogue");
+        cat.find("input").val(getParameterByName("search"));
+
+        function getSparkline(stats) {
+            var pluginSpark = $("<div></div>").addClass("sparkline-container");
+            var vals = values(stats);
+            while (vals.length > 30) {
+                vals.shift();
+            }
+            var span = $("<span></span>").addClass("sparkline").text(vals);
+            pluginSpark.append(span);
+            pluginSpark.append("<br/>");
+            pluginSpark.append("<small>Users: " + vals[vals.length - 1] + "</small>");
+            return pluginSpark;
+        }
+
+        function getPluginCard(plugin) {
+            var left = $("<div></div>").addClass("col-md-6");
+            left.append("<h4><a href='" + plugin.helpUrl + "'>" + plugin.name + "</a></h4>");
+            left.append("<p>" + plugin.description + "</p>");
+
+            var vers_list = Object.keys(plugin.versions);
+            var groupId;
+            var artifactId;
+            var lastVersionId;
+            if (vers_list[0] != "" && plugin.versions[vers_list[0]].downloadUrl && plugin.id !== 'jpgc-plugins-manager') {
+                var vers = $("<tt><i class='fa fa-download'></i> Download Versions: </tt><br/>").addClass('small');
+                for (var n = 0; n < vers_list.length; n++) {
+                    var ver_link = $('<a href="/files/packages/' + plugin.id + '-' + vers_list[n] + '.zip">' + vers_list[n] + "</a>");
+                    if (plugin.versions[vers_list[n]]['changes']) {
+                        ver_link.attr('title', 'Changes: ' + plugin.versions[vers_list[n]]['changes']);
+                    }
+                    vers.append(ver_link);
+                    if (n < vers_list.length - 1) {
+                        vers.append(", ")
+                    }
+                }
+                {
+                    var downloadUrl = plugin.versions[vers_list[vers_list.length - 1]].downloadUrl;
+                    var indexOfFP = downloadUrl.indexOf("filepath=");
+                    if (indexOfFP > 0) {
+                        var artifactUrl = downloadUrl.substring(indexOfFP + "filepath=".length);
+                        var parts = artifactUrl.split("/");
+                        lastVersionId = parts[parts.length - 2];
+                        artifactId = parts[parts.length - 3];
+                        groupId = "";
+                        for (var i = 0; i < parts.length - 3; i++) {
+                            if (i == 0) {
+                                groupId = parts[i];
+                            } else {
+                                groupId = groupId + "." + parts[i];
+                            }
+                        }
+                    }
+                }
+                left.append("<br/>");
+                left.append(vers);
+            }
+
+            var mid = $("<div></div>").addClass("pull-left col-md-3 text-center");
+            if (plugin.screenshotUrl) {
+                var a = $("<a href='" + plugin.helpUrl + "'></a>");
+                a.append("<img src='" + plugin.screenshotUrl + "'/>");
+                mid.append(a);
+            }
+
+            var right = $("<div></div>").addClass("col-md-3 text-right");
+            right.append("<small><tt>ID: " + plugin.id + "</tt></small><br/>");
+            if (groupId) {
+                left.append("<small style='white-space: normal'><tt><i class='fa fa-code'></i> Maven Artifact: " + groupId + ":" + artifactId + ":" + lastVersionId + "</tt></small>");
+            }
+
+            $.get('/dat/stats/plugins/' + plugin.id + '.json').success(function (json) {
+                var sparkline = getSparkline(json['usage']);
+                right.append(sparkline);
+                sparkline.find(".sparkline").sparkline("html", {type: "bar", width: "100%", height: "2em"});
+            });
+
+            var card = $("<div></div>").addClass("row");
+            card.addClass("alert");
+            card.append(left);
+            card.append(mid);
+            card.append(right);
+            card.append("<div class='clearfix'></div>");
+            return card;
+        }
+
+        function refreshCatalogue() {
+            var cnt = 0;
+            var list = cat.find(".list");
+            list.empty();
+            var filter = cat.find("input").val().toLowerCase();
+            console.log("Refresh", filter);
+            for (var n = 0; n < plugins.length; n++) {
+
+                var plugin = plugins[n];
+                if (!plugin.name) {
+                    continue;
+                }
+
+                if (filter) {
+                    var data = plugin.id + plugin.name + plugin.description;
+                    if (plugin.componentClasses) {
+                        data += plugin.componentClasses.join(" ");
+                    }
+                    if (data.toLowerCase().indexOf(filter) < 0) {
+                        continue;
+                    }
+                }
+
+                cnt++;
+                if (!filter && n >= 5) {
+                    continue;
+                }
+                list.append(getPluginCard(plugin));
+            }
+            cat.find(".count span").text(cnt);
+            cat.find(".fa-spin").hide();
+
+            //cat.find(".sparkline").sparkline("html", {type: "bar", width: "100%", height: "2em"});
+
+
+            if (!filter && cnt > 5) {
+                list.append("<a href='/wiki/' class='text-muted'>" + (cnt - 5) + " more plugins&hellip;</a>");
+            }
+        }
+
+        $.get("/repo/").success(function (data) {
+            var typingTimer;
+            var doneTypingInterval = 200;
+
+            cat.find("input").on('keyup', function () {
+                cat.find(".fa-spin").show();
+                clearTimeout(typingTimer);
+                typingTimer = setTimeout(refreshCatalogue, doneTypingInterval);
+            }).on('keydown', function () {
+                clearTimeout(typingTimer);
+            });//.change(refreshCatalogue);
+
+            data.sort(function () {
+                return Math.random() > 0.5 ? 1 : -1;
+            });
+
+            plugins.push.apply(plugins, data);
+
+            refreshCatalogue();
+        });
+    });
+
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>

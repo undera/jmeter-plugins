@@ -2,7 +2,7 @@
 
 The easiest way to get the plugins is to install [Plugins Manager](/wiki/PluginsManager/). Then you'll be able to install any other plugins just by clicking chekbox.
 
-<div class="alert alert-success">
+<div markdown="1" class="alert alert-success">
 Download **[plugins-manager.jar](/get/)** and put it into `lib/ext` directory, then restart JMeter.
 </div>
 

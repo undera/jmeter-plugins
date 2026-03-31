@@ -31,7 +31,7 @@ Right mouse click over checkbox lists opens "Toggle All" option, which takes som
 
 If you want to use the Plugins Manager from command-line or programmatically, please read [this guide](/wiki/PluginsManagerAutomated/).
 
-<div class="alert alert-warning">If you see empty dialog, this means that most likely you have proxy requirement for Internet connection. Please read [following instructions](/wiki/PluginsManagerNetworkConfiguration).</div>
+<div markdown="1" class="alert alert-warning">If you see empty dialog, this means that most likely you have proxy requirement for Internet connection. Please read [following instructions](/wiki/PluginsManagerNetworkConfiguration).</div>
 
 If you face some issues where new plugins do not appear, then Plugins Manager might be using an outdated cached information.
 In this case, you can clear the folder referenced by `System property "java.io.tmpdir"/pmgr_cache`.

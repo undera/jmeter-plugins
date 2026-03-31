@@ -39,27 +39,16 @@ class PluginsRepository extends PWEModule implements Outputable
 
     private function getRepoData($readFiles = false)
     {
-        $node = $this->PWE->getNode();
-        $configsDir = $node['!a']['configs'];
-        if (!$configsDir || !is_dir($configsDir)) {
-            throw new HTTP5xxException("Configs dir don't exist: " . realpath($configsDir));
+        $repoFile = 'dat/repo/repo.json';
+        if (!is_file($repoFile)) {
+            throw new HTTP5xxException("Repo file not found: " . realpath($repoFile));
         }
 
-        $plugins = [];
-        $oldest = 0;
-        foreach (scandir($configsDir) as $fname) {
-            if ($fname[0] == '.') {
-                continue;
-            }
-            $full_name = $configsDir . '/' . $fname;
-            $oldest = max($oldest, filemtime($full_name));
-            if ($readFiles) {
-                $set = json_decode(file_get_contents($full_name), true);
-                $plugins = array_merge($plugins, $set);
-            }
-        }
+        $this->PWE->sendHTTPHeader('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($repoFile)) . ' GMT', true);
 
-        $this->PWE->sendHTTPHeader('Last-Modified: ' . gmdate('D, d M Y H:i:s', $oldest) . ' GMT', true);
-        return $plugins;
+        if ($readFiles) {
+            return json_decode(file_get_contents($repoFile), true);
+        }
+        return [];
     }
 }

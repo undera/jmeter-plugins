@@ -16,6 +16,17 @@ cp -r site/build/* upload/
 # Examples
 cp -r examples upload/img/
 
+# Merge repo JSON files into single file
+python -c "
+import json, os
+plugins = []
+for f in sorted(os.listdir('site/dat/repo')):
+    if f.endswith('.json'):
+        plugins.extend(json.load(open('site/dat/repo/' + f)))
+os.makedirs('upload/dat/repo', exist_ok=True)
+json.dump(plugins, open('upload/dat/repo/repo.json', 'w'))
+"
+
 # PHP for /repo/ endpoint (stays dynamic)
 cp site/index.php upload/
 cp site/cfg.php upload/

@@ -19,13 +19,15 @@ cp -r examples upload/img/
 # Merge repo JSON files into single file
 python merge_repo.py
 
+# Non-MkDocs site files
+cp -r site/dat upload/
+cp -r site/files upload/ 2>/dev/null || true
+
 # PHP for /repo/ endpoint (stays dynamic)
 cp site/index.php upload/
 cp site/cfg.php upload/
 cp site/composer.json upload/
 cp -r site/JPGC upload/
-cp site/dat/out.xml upload/dat/
-cp -r site/files upload/ 2>/dev/null || true
 
 php --version
 curl -sS https://getcomposer.org/installer | php

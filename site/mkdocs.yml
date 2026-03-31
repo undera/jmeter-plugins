@@ -2,7 +2,7 @@ site_name: JMeter-Plugins.org
 site_url: https://jmeter-plugins.org/
 site_description: Custom plugins for Apache JMeter
 
-docs_dir: dat
+docs_dir: .mkdocs_src
 site_dir: build
 
 use_directory_urls: true

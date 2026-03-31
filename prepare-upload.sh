@@ -19,8 +19,10 @@ cp -r examples upload/img/
 # Merge repo JSON files into single file
 python merge_repo.py
 
-# Non-MkDocs site files
-cp -r site/dat upload/
+# PWE data files for /repo/ endpoint
+mkdir -p upload/dat
+cp site/dat/out.xml upload/dat/
+cp -r site/dat/repo upload/dat/
 cp -r site/files upload/ 2>/dev/null || true
 
 # PHP for /repo/ endpoint (stays dynamic)

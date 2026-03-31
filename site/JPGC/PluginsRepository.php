@@ -41,6 +41,9 @@ class PluginsRepository extends PWEModule implements Outputable
     {
         $node = $this->PWE->getNode();
         $configsDir = $node['!a']['configs'];
+        if (!$configsDir || !is_dir($configsDir)) {
+            throw new HTTP5xxException("Configs dir don't exist: " . realpath($configsDir));
+        }
         $repoFile = $configsDir . '/repo.json';
         if (!is_file($repoFile)) {
             throw new HTTP5xxException("Repo file not found: " . realpath($repoFile));

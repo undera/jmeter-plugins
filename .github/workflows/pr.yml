@@ -66,6 +66,9 @@ jobs:
         php-version: '5.6'
         tools: composer
 
+    - name: Install Python dependencies
+      run: pip install packaging jsonschema requests mkdocs
+
     - name: Prepare upload
       run: ./prepare-upload.sh
 

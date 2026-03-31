@@ -6,7 +6,6 @@ rm -rf upload
 mkdir -p upload
 
 # Build static site with MkDocs
-pip install mkdocs mkdocs-material
 cd site
 bash build.sh
 cd ..
@@ -30,5 +29,5 @@ cd upload
 cd ..
 
 cd upload
-zip -r site.zip * .htaccess
+zip -r site.zip *
 cd ..

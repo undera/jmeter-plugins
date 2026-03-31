@@ -2,7 +2,7 @@ FROM python:3.12-slim AS builder
 
 WORKDIR /src
 COPY . .
-RUN pip install --no-cache-dir mkdocs mkdocs-material \
+RUN pip install --no-cache-dir mkdocs \
     && bash build.sh
 
 FROM nginx:alpine

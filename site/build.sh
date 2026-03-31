@@ -9,8 +9,7 @@ mkdocs build --clean
 cp robots.txt build/
 cp favicon.ico build/ 2>/dev/null || true
 cp -r img build/
-mkdir -p build/dat
-cp -r dat/stats build/dat/ 2>/dev/null || true
+mkdir -p build/dat/stats
 cp -r dat/repo build/dat/
 
 echo "Build complete: build/"

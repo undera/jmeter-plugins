@@ -60,12 +60,6 @@ jobs:
       with:
         python-version: '3.12'
 
-    - name: Setup PHP Action
-      uses: shivammathur/setup-php@2.24.0
-      with:
-        php-version: '5.6'
-        tools: composer
-
     - name: Install Python dependencies
       run: pip install packaging jsonschema requests mkdocs
 

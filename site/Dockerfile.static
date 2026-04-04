@@ -1,0 +1,50 @@
+FROM python:3.12-slim AS builder
+
+WORKDIR /src
+COPY . .
+RUN pip install --no-cache-dir mkdocs \
+    && bash build.sh
+
+FROM nginx:alpine
+
+COPY --from=builder /src/build /usr/share/nginx/html
+
+RUN cat > /etc/nginx/conf.d/default.conf << 'NGINX'
+server {
+    listen 80;
+    server_name localhost;
+    root /usr/share/nginx/html;
+    index index.html;
+    absolute_redirect off;
+
+    location ~ ^/(wiki|install|stats|catalogue)/[^/]+$ {
+        return 301 $uri/;
+    }
+
+    location = /wiki/ { return 302 /wiki/Start/; }
+    location = /install/ { return 302 /install/Install/; }
+    location = /catalogue/ { return 302 /; }
+    location = /get/ { return 302 https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.12/jmeter-plugins-manager-1.12.jar; }
+    location = /support/ { return 302 https://groups.google.com/forum/#!forum/jmeter-plugins; }
+    location /editor/ { return 302 /editor/?utm_source=jpgc&utm_medium=banner&utm_campaign=menu; }
+    location = /sources/ { return 302 https://github.com/undera/jmeter-plugins; }
+    location = /downloads/ { return 302 /install/Install/; }
+
+    location = /wiki/DirectoryListing/ { return 302 https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/directory-listing/DirectoryListing.md; }
+    location = /wiki/LoadosophiaUploader/ { return 302 https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/sense-uploader/LoadosophiaUploader.md; }
+    location = /wiki/PerfMonAgent/ { return 302 https://github.com/undera/perfmon-agent; }
+
+    location / {
+        try_files $uri $uri/index.html $uri/ =404;
+    }
+
+    location ~* \.(css|js|png|jpg|gif|svg|ico|json|csv)$ {
+        expires 1h;
+        add_header Cache-Control "public, no-transform";
+    }
+
+    error_page 404 /404.html;
+}
+NGINX
+
+EXPOSE 80

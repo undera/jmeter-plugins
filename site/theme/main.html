@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table class="wiki">
+    <tr>
+        <td>{{ page.content }}</td>
+        {% if page.toc|length > 1 %}
+        <td class="sidebar">
+            <div id="sticker">
+                <b>On this page:</b>
+                <ul class="toc-list toc-list1">
+                {% for item in page.toc %}
+                    <li class="toc-entry">
+                        <a href="{{ item.url }}">{{ item.title }}</a>
+                        {% if item.children %}
+                        <ul class="toc-list toc-list2">
+                            {% for child in item.children %}
+                            <li class="toc-entry"><a href="{{ child.url }}">{{ child.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+                </ul>
+                <div style='white-space: nowrap'><i class="fa fa-twitter-square"></i> <a href="https://twitter.com/#!/jmeter_plugins" target="_blank" rel="nofollow">Follow us on Twitter</a></div>
+                <div style='white-space: nowrap'><i class="fa fa-pencil-square"></i> <a href="/editor/?utm_source=jpgc&utm_medium=banner&utm_campaign=sidebar">Online JMX Editor</a></div>
+            </div>
+            <div class="stickPlaceholder">&nbsp;</div>
+        </td>
+        {% endif %}
+    </tr>
+</table>
+<script type="text/javascript">
+    jQuery.fn.visibilityToggle = function () {
+        return this.css('visibility', function (i, visibility) {
+            return (visibility == 'visible') ? 'hidden' : 'visible';
+        });
+    };
+
+    for (var level = 1; level <= 6; level++) {
+        $("h" + level).each(function () {
+            var a;
+            $(this).hover(function () {
+                $(a).visibilityToggle();
+                if (!a) {
+                    a = document.createElement("a");
+                    a.href = "#" + this.id;
+                    a.id = this.id;
+                    $(a).html("&para;").addClass("anchorLink").css({position: 'relative', zIndex: 5});
+                    $(this).append(a);
+                }
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        var s = $("#sticker");
+        var pos = s.position();
+        $(window).scroll(function () {
+            var windowpos = $(window).scrollTop();
+            if (windowpos >= pos.top) {
+                s.parent().find(".stickPlaceholder").width(s.width());
+                s.addClass("stick");
+            } else {
+                s.removeClass("stick");
+            }
+        });
+    });
+</script>
+{% endblock %}

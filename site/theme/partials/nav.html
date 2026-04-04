@@ -1,0 +1,30 @@
+<nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+        {% set nav_items = [
+            {"url": "/install/", "title": "Install", "ico": "fa-download", "section": "install"},
+            {"url": "/catalogue/", "title": "Browse Plugins", "ico": "fa-search", "section": "catalogue"},
+            {"url": "/wiki/", "title": "Documentation", "ico": "fa-book", "section": "wiki"},
+            {"url": "/stats/", "title": "Usage Statistics", "ico": "fa-bar-chart", "section": "stats"},
+            {"url": "https://groups.google.com/forum/#!forum/jmeter-plugins", "title": "Support Forums", "ico": "fa-support"},
+            {"url": "/editor/?utm_source=jpgc&utm_medium=banner&utm_campaign=menu", "title": "JMX Editor", "ico": "fa-pencil-square-o"},
+        ] %}
+        {% for item in nav_items %}
+            {% if page and item.section and page.url.startswith(item.section) %}
+            <li role="presentation" class="active">
+            {% else %}
+            <li role="presentation">
+            {% endif %}
+                <a href="{{ item.url }}"><i class="fa {{ item.ico }}"></i> {{ item.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="pull-right" style="vertical-align: middle; padding-right: 0.75em; padding-top: 0.15em">
+        <a class="github-button" href="https://github.com/undera/jmeter-plugins"
+           data-count-href="/undera/jmeter-plugins/stargazers"
+           data-count-api="/repos/undera/jmeter-plugins#stargazers_count"
+           data-count-aria-label="# stargazers on GitHub" aria-label="Star undera/jmeter-plugins on GitHub">Star</a>
+    </div>
+    <div class="pull-right" style="vertical-align: middle; padding-right: 0.75em; padding-top: 0.15em;">
+        <a href="https://twitter.com/jmeter_plugins" title="Twitter"><i class="fa fa-twitter-square" style="font-size: 1.2em; color: #666"></i></a>
+    </div>
+</nav>

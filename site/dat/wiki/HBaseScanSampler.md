@@ -1,0 +1,20 @@
+# HBase Scan Sampler
+
+<span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-hadoop)</span>
+
+<i>This plugin was originally developed by [Atlantbh d.o.o.](http://www.atlantbh.com/), 
+released as [jmeter-components](https://github.com/ATLANTBH/jmeter-components), 
+then merged into JP@GC.</i>
+
+## Description
+
+HBase scan sampler provides the possibility to retrieve one/multiple records from hbase table with specifying a filter.
+Same values should be specified as in the hbase rowkey sampler, with additionally the following:
+  - Start rowkey: this is optional
+  - End rowkey: this is optional
+  - Filter should be in the format: {{{ {column_family}:{qualifier}{= | != | < | > | <= | >=}{value} }}}
+  - Limit: limit the number of returned records
+
+With this sampler you have the same possibility to create a variable for each row, in this way the returned values will be stored in the same matter as with a jdbc request, while by default, an xml response will be returned. If you are using the default option you can extract the values and store them by using an xpath extractor post processor. Also, you can retrieve only the latest record by checking the checkbox Retrieve most recent record.
+
+![](/img/wiki/HBaseScan1.png)

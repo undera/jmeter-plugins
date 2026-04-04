@@ -1,9 +1,0 @@
-= Response Codes per Second =
-
-<span class=''>[/?search=jpgc-graphs-additional <i class='fa fa-download'></i> Download]</span>
-
-This graph will display the response code per second returned during the test.
-
-== Sample result ==
-
-[/img/wiki/response_codes_per_second.png]

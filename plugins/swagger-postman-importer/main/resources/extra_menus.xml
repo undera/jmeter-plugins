@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menubar>
+  <menu name="tools_menu">
+    <menuitem>
+      <name>Swagger / Postman Importer</name>
+      <action>swagger_postman_importer</action>
+    </menuitem>
+  </menu>
+</menubar>

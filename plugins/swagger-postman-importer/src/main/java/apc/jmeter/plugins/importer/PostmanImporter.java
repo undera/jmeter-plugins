@@ -1,6 +1,6 @@
-package com.example.jmeter.importer;
+package kg.apc.jmeter.plugins.importer;
 
-import com.example.jmeter.importer.model.RequestModel;
+import kg.apc.jmeter.plugins.importer.model.RequestModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

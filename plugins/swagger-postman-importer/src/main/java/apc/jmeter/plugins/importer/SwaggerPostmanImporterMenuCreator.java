@@ -1,4 +1,4 @@
-package com.example.jmeter.importer;
+package kg.apc.jmeter.plugins.importer;
 
 import org.apache.jmeter.gui.plugin.MenuCreator;
 

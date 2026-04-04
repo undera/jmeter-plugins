@@ -1,6 +1,6 @@
-package com.example.jmeter.importer;
+package kg.apc.jmeter.plugins.importer;
 
-import com.example.jmeter.importer.model.RequestModel;
+import kg.apc.jmeter.plugins.importer.model.RequestModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,8 +22,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * so the generated JMX is immediately runnable in JMeter.</p>
  */
 public class JMeterTestPlanBuilder {
-
-    private final AtomicInteger idSeq = new AtomicInteger(100);
 
     /**
      * Build a JMX XML string from the supplied requests.
@@ -232,12 +230,25 @@ public class JMeterTestPlanBuilder {
      */
     private String appendQueryToPath(String path, RequestModel req, boolean hasBody) {
         if (!hasBody || req.getQueryParams().isEmpty()) return path;
-        StringBuilder sb = new StringBuilder(path).append('?');
-        boolean first = true;
+        StringBuilder sb = new StringBuilder(path);
+        // Check if path already contains query parameters
+        if (!path.contains("?")) {
+            sb.append('?');
+        } else {
+            sb.append('&');
+        }
+        boolean first = !path.contains("?");
         for (RequestModel.ParamEntry qp : req.getQueryParams()) {
             if (!first) sb.append('&');
             first = false;
-            sb.append(qp.getName()).append('=').append(qp.getValue());
+            try {
+                String encodedName = java.net.URLEncoder.encode(qp.getName(), "UTF-8");
+                String encodedValue = java.net.URLEncoder.encode(qp.getValue(), "UTF-8");
+                sb.append(encodedName).append('=').append(encodedValue);
+            } catch (java.io.UnsupportedEncodingException e) {
+                // UTF-8 is always supported
+                sb.append(qp.getName()).append('=').append(qp.getValue());
+            }
         }
         return sb.toString();
     }

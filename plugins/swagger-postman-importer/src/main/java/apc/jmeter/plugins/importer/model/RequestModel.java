@@ -1,4 +1,4 @@
-package com.example.jmeter.importer.model;
+package kg.apc.jmeter.plugins.importer.model;
 
 import java.util.ArrayList;
 import java.util.List;

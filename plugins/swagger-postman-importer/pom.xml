@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.example</groupId>
-    <artifactId>swagger-postman-importer</artifactId>
+    <groupId>kg.apc</groupId>
+    <artifactId>jmeter-plugin-swagger-postman-importer</artifactId>
     <version>1.1</version>
     <packaging>jar</packaging>
     <name>Swagger / Postman Importer for JMeter</name>
@@ -40,6 +40,21 @@
             <artifactId>json</artifactId>
             <version>20210307</version>
         </dependency>
+
+        <!-- YAML parsing for OpenAPI specs -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.32</version>
+        </dependency>
+
+        <!-- JUnit for testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -70,13 +85,18 @@
                             <artifactSet>
                                 <includes>
                                     <include>org.json:json</include>
+                                    <include>org.yaml:snakeyaml</include>
                                 </includes>
                             </artifactSet>
-                            <!-- Relocate org.json to avoid conflicts with other plugins -->
+                            <!-- Relocate dependencies to avoid conflicts with other plugins -->
                             <relocations>
                                 <relocation>
                                     <pattern>org.json</pattern>
-                                    <shadedPattern>com.example.shaded.org.json</shadedPattern>
+                                    <shadedPattern>kg.apc.shaded.org.json</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.yaml</pattern>
+                                    <shadedPattern>kg.apc.shaded.org.yaml</shadedPattern>
                                 </relocation>
                             </relocations>
                             <filters>

@@ -1,6 +1,6 @@
-package com.example.jmeter.importer;
+package kg.apc.jmeter.plugins.importer;
 
-import com.example.jmeter.importer.model.RequestModel;
+import kg.apc.jmeter.plugins.importer.model.RequestModel;
 import org.apache.jmeter.gui.action.AbstractAction;
 
 import javax.swing.*;

@@ -64,6 +64,13 @@
         "libs": {
           "cmdrunner>=2.3": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
         }
+      },
+      "1.12": {
+        "changes": "Fix canUninstall flag bypass in DependencyResolver, fix Log4j CVE",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.12/jmeter-plugins-manager-1.12.jar",
+        "libs": {
+          "cmdrunner>=2.3": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
+        }
       }
     }
   }

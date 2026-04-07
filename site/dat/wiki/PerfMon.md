@@ -1,0 +1,111 @@
+<font size="5"><B>Servers Performance Monitoring</B></font>
+
+<span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-perfmon)</span>
+
+=Introduction=
+
+During a load test, it is important to know the health of the servers loaded. 
+It is also nice to see if you are targeting a cluster if the load is correctly 
+dispatched. To address this, the plugin package now supports server monitoring!
+Using it, you can monitor [CPU, Memory, Swap, Disks I/O and Networks I/O](https://github.com/undera/perfmon-agent/blob/master/README.md#supported-metrics)
+on [almost all platforms](http://support.hyperic.com/display/SIGAR/Home#Home-overview)!
+
+Here is how the plugin looks like. It shows the CPU usage of 4 servers involved in the load test:
+
+![](/img/wiki/servers_performance_monitoring.png)
+
+=Metrics Collected=
+
+Since version 0.5.0 the Server Agent tool supports collecting over 75 system metrics.
+[See full list](https://github.com/undera/perfmon-agent/blob/master/README.md#supported-metrics).
+
+=How it works=
+
+==Concept==
+
+JMeter cannot retrieve by default server metrics except Tomcat ones. 
+To overcome this situation, we have developed a server agent which will get 
+performance data for JMeter. The agent uses 
+the [SIGAR](http://support.hyperic.com/display/SIGAR/Home) open source library. 
+It is composed of a Java common part and native libraries per OS.
+
+![](/img/wiki/agent_architecture.png)
+
+==Installation==
+
+Server Agent tool detailed description is placed [here](https://github.com/undera/perfmon-agent/blob/master/README.md).
+
+=Usage=
+==GUI Mode==
+In GUI mode, just add the listener, define servers and metric types to monitor, 
+ensure the agent is running at remote server and is not blocked by a firewall, 
+then run the test. The values will be displayed at real time chart.
+
+==Non GUI Mode==
+If you run JMeter in non GUI mode and want to save monitoring data to file, 
+just configure result file saving in GUI as you do with other listeners. After 
+running the test you may load saved file into GUI and see the values timeline.
+
+==JMeter Properties==
+
+  - `jmeterPlugin.perfmon.interval` - metrics collection interval in milliseconds
+  - `jmeterPlugin.perfmon.useUDP` - true/false, enabling UDP connection try after failed TCP connection attempt
+  - `jmeterPlugin.perfmon.label.useHostname` - true/false, enable using "short" hostnames, default pattern is ` (&#91;\w\-&#93;+)\..* `
+  - `jmeterPlugin.perfmon.label.useHostname.pattern` - string (escaped), regular expression to extract hostname (first group is matched)
+    - e.g. Default pattern would be: ` jmeterPlugin.perfmon.label.useHostname.pattern=(&#91;\\w\\-&#93;+)\\..* `
+    - e.g. Pattern for EC2 us-east/west subdomain matching: ` jmeterPlugin.perfmon.label.useHostname.pattern=(&#91;\w\-&#93;+\.us-(east|west)-&#91;0-9&#93;).* `
+  - `forcePerfmonFile` - true/false, enabling it makes JMeter to write JTL file with perfmon metrics in the current directory
+
+
+# Common Considerations
+PerfMon Server Agent did support only few metrics in versions up to 0.4.2.
+The old agent still supported in [PerfMon Metrics Collector](/wiki/PerfMon/) version 0.5.0+.
+However, version 0.5.0 ships new [ServerAgent](https://github.com/undera/perfmon-agent/blob/master/README.md) which provide over 75
+separate metrics, support per-process CPU and Memory metrics and even
+custom metrics for measuring whatever you want: file sizes, database row counts,
+Java heap sizes and garbage collections.
+
+## Specifying Metric Params
+[PerfMon Metrics Collector](/wiki/PerfMon/) has special "Metric Parameter" column,
+where user can specify metric subtype to collect, specify which process
+should be monitored (which filesystem, network interface).
+Metric parameter string may have several parameters inside it,
+separated with colon `:`. To include colon as a char inside parameter, use
+backslash escaping `\:`. Make note you cannot use tab characters inside
+metric parameter string, all tabs will be converted to spaces silently.
+
+Most of the metrics accepts single parameter called 'type'. This parameter
+specifies which particular number you want to collect. There is default
+metric type for each metric category that will be collected if no 'type'
+parameter specified (see lists below, **bold** first item in each category).
+
+Some metric types are commonly used and considered **primary**,
+leaving some rarely used types as **additional**. Make note that not all metrics
+available on all platforms, we depend on [SIGAR](http://support.hyperic.com/display/SIGAR/Home)
+API capabilities here.
+
+Some metrics allow specifying particular object to monitor, you may specify
+*selector parameter* to monitor values only for this object:
+  - *name*, *pid* and *[ptql](http://support.hyperic.com/display/SIGAR/PTQL)* selectors for processes
+  - *core* selector for monitoring specific CPU of multicore systems
+  - *fs* selector for filesystems
+  - *iface* selector for network interfaces
+Make note that metric types are different for per-process and total metrics for
+CPU and Memory.
+
+Some example metric parameter strings:
+
+```
+### CPU ###
+combined - measure total CPU usage, equals to 100-idle value
+core=2:user - measure user process CPU usage for third core in system (core numbering starts at 0)
+name=java#2:user - will monitor second java process instance for user time spent
+pid=14523:percent - will monitor process with PID 14523 for total CPU usage percentage
+name=httpd - omitting metric type will use default 'percent'
+
+### Disk IO ###
+fs=/home:writes - will monitor /home filesystem for number of write operations
+
+### Network IO ###
+iface=eth0:tx - will monitor interface eth0 for transmitted packet rate
+```

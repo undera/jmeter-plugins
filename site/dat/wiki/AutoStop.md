@@ -1,0 +1,33 @@
+# AutoStop
+
+<span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-autostop)</span>
+
+AutoStop used when you want to stop test on some runtime criteria.
+Currently 3 criteria available: average response time, average latency and error rate.
+
+This criteria are used in OR logic, the component will ask JMeter to stop test
+if one of the criteria has been met.
+After 5 tries of "shutdown test" component will switch to more insistent "stop test",
+after 5 more it will try to "stop NOW".
+
+On initiating "shutdown test" AutoStop will create environment variable "auto_stopped" = "true" 
+which can be checked later in order to take additional actions on test failure (e.g. send alert). 
+
+![](/img/wiki/AutoStop1.png)
+
+## AutoStop on Response Time/Latency
+
+There is combo-box switching which result parameter to use in conditions: response time or latency.
+Test will be stopped only if specified response time/latency exceeded for *sequentially* N seconds.
+To disable auto-stop on time criteria, just set time value to zero.
+
+## AutoStop on Error Rate
+
+Error rate specified in percent. Rate can be float number.
+Test will be stopped only if specified error rate exceeded for *sequentially* N seconds.
+To disable auto-stop on rate criteria, just set error rate to zero.
+
+## Examples
+[Example AutoStop on Response Time JMX](/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/AutoStopExample_Time.jmx)
+
+[Example AutoStop on Error Rate JMX](/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/AutoStopExample_ErrRate.jmx)

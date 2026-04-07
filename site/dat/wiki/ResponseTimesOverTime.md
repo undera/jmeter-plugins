@@ -1,0 +1,11 @@
+# Response Times Over Time
+
+<span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-graphs-basic)</span>
+
+From all the tutorials floating around in the net on how to get response times graphs from JMeter log files it is clear that this feature is missing to a lot of JMeter users.
+Well, this is history now, as the Response Times Over Time Listener is now part of the plugin package!
+
+This graph will display for each sampler the average response time in milliseconds.
+And here is how it looks like:
+
+![](/img/wiki/response_times_over_time.png)

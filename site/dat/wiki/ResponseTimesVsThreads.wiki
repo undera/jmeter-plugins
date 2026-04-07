@@ -1,9 +1,0 @@
-= Response Times vs Threads =
-
-<span class=''>[/?search=jpgc-graphs-vs <i class='fa fa-download'></i> Download]</span>
-
-This graph shows how Response Time changes with amount of parallel threads. Naturally, server takes longer to respond when a lot of users requests it simultaneously. This graph visualizes such dependencies.
-
-Example graph:
-
-[/img/wiki/timevsthreads.png]

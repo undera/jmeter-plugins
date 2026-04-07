@@ -1,0 +1,10 @@
+# Response Times Percentiles
+
+<span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-graphs-dist)</span>
+
+This graph will display the percentiles for the response time values. X Axis represents percentage, Y Axis Response time values. One point (P, Value) means for the whole scenario, P percent of the values are bellow Value ms.
+
+The precision of the graph was updated in version 0.4.1 to `0.1` granularity. The percentiles are calculated in the range `&#91;0.1 .. 99.9&#93;` so outliers values will not break the graph Y range.
+ 
+## Sample Result
+![](/img/wiki/response_times_percentiles.png)

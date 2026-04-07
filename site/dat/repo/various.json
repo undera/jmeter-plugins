@@ -25,9 +25,7 @@
 {                                                                                                                                                                                                                                
   "id": "io.github.sagaraggarwal86-bpm-jmeter-plugin",                                                                                                                                                                         
   "name": "BPM — Browser Performance Metrics",                                                                                                                                                                                 
-  "description": "A live JMeter listener plugin for capturing browser rendering metrics via Chrome DevTools Protocol. Features include Core Web Vitals (LCP, FCP, CLS, TTFB), Network & Console capture, Composite Performance 
-Score, SLA Threshold Highlighting, Improvement Area Detection, Filter by Start/End Offset & Transaction Names with RegEx support, CLI Headless Mode, Chart Interval Control, HTML Performance Report, and Excel Export — with
-minimal impact on JMeter thread performance.",
+  "description": "A live JMeter listener plugin for capturing browser rendering metrics via Chrome DevTools Protocol. Features include Core Web Vitals (LCP, FCP, CLS, TTFB), Network & Console capture, Composite Performance Score, SLA Threshold Highlighting, Improvement Area Detection, Filter by Start/End Offset & Transaction Names with RegEx support, CLI Headless Mode, Chart Interval Control, HTML Performance Report, and Excel Export — with minimal impact on JMeter thread performance.",
   "screenshotUrl": "https://raw.githubusercontent.com/sagaraggarwal86/BPM-jmeter-plugin/v1.0.0/docs/Image.jpg",
   "helpUrl": "https://github.com/sagaraggarwal86/BPM-jmeter-plugin/blob/v1.0.0/README.md",
   "vendor": "Sagar Aggarwal",

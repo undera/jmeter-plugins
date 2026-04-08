@@ -1,5 +1,26 @@
 [
 {
+  "id": "perfsage-slo-reporter",
+  "name": "PerfSage SLO Reporter",
+  "description": "A JMeter plugin by PerfSage for SLO-based reporting and performance analysis.",
+  "screenshotUrl": "https://raw.githubusercontent.com/perfsage/perfsage-slo-reporter/main/blog/images/perfsage-slo-report-sample.png",
+  "helpUrl": "https://github.com/perfsage/perfsage-slo-reporter/blob/main/README.md",
+  "vendor": "perfsage.com",
+  "markerClass": "com.perfsage.jmeter.SLOAnalysisListener",
+  "componentClasses": [
+    "com.perfsage.jmeter.SLOAnalysisListener",
+    "com.perfsage.jmeter.SLOReporter"
+  ],
+  "versions": {
+    "0.1.0": {
+      "changes": "Initial public release",
+      "downloadUrl": "https://github.com/perfsage/perfsage-slo-reporter/releases/download/v0.1.0/perfsage-slo-reporter-0.1.0.jar",
+      "libs": {},
+      "depends": []
+    }
+  }
+},
+{
 	"id": "io.github.sagaraggarwal86-configurable-aggregate-report",
 	"name": "JAAR — JTL AI Analysis & Reporting",
 	"description": "A file-based Apache JMeter listener plugin for post-test JTL analysis. Provides a filterable aggregate table with features like Filter Results using Start/End Offset & Transaction Names with RegEx support, Dynamic Percentile & Table Columns, SLA Threshold Highlighting, CLI Headless Mode, Chart Interval Control, AI-Analyzed HTML Performance Report, Export AI Report in Excel Format — with zero runtime overhead.",

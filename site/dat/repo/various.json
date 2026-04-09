@@ -1763,6 +1763,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "2.0.0": {
+        "changes": "Security: CVE fixes (commons-io 2.14.0 for CVE-2024-47554, TestNG 7.5.1 for CVE-2022-4065). Added Mutual TLS (mTLS) support with client certificate, client key, and CA certificate fields. JDK 8 compatible (bytecode 52).",
+        "downloadUrl": "https://github.com/bakthava/jmeter-grpc-request/releases/download/v2.0.0/jmeter-grpc-request.2.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

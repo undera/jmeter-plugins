@@ -27,3 +27,4 @@ plugins/csl/bin/src/test/java/kg/apc/jmeter/reporters/ConsoleStatusLoggerGuiTest
 plugins/csl/bin/src/test/java/kg/apc/jmeter/reporters/ConsoleStatusLoggerTest.class
 .DS_Store
 /site/build/
+/site/dat/repo/repo.json

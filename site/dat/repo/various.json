@@ -30,8 +30,8 @@
     "id": "io.github.sagaraggarwal86-bpm-jmeter-plugin",
     "name": "BPM — Browser Performance Metrics",
     "description": "A live JMeter listener plugin for capturing browser rendering metrics via Chrome DevTools Protocol. Features include Core Web Vitals (LCP, FCP, CLS, TTFB), Network & Console capture, Composite Performance Score, SLA Threshold Highlighting, Improvement Area Detection, Filter by Start/End Offset & Transaction Names with RegEx support, CLI Headless Mode, Chart Interval Control, HTML Performance Report, and Excel Export — with minimal impact on JMeter thread performance.",
-    "screenshotUrl": "https://raw.githubusercontent.com/sagaraggarwal86/BPM-jmeter-plugin/v1.0.0/docs/Image.jpg",
-    "helpUrl": "https://github.com/sagaraggarwal86/BPM-jmeter-plugin/blob/v1.0.0/README.md",
+    "screenshotUrl": "https://raw.githubusercontent.com/sagaraggarwal86/BPM-jmeter-plugin/v1.0.1/docs/Image.jpg",
+    "helpUrl": "https://github.com/sagaraggarwal86/BPM-jmeter-plugin/blob/v1.0.1/README.md",
     "vendor": "Sagar Aggarwal",
     "markerClass": "io.github.sagaraggarwal86.jmeter.bpm.core.BpmListener",
     "componentClasses": [
@@ -39,9 +39,9 @@
       "io.github.sagaraggarwal86.jmeter.bpm.gui.BpmListenerGui"
     ],
     "versions": {
-      "1.0.0": {
+      "1.0.1": {
         "changes": "Initial release",
-        "downloadUrl": "https://repo1.maven.org/maven2/io/github/sagaraggarwal86/bpm-jmeter-plugin/1.0.0/bpm-jmeter-plugin-1.0.0.jar"
+        "downloadUrl": "https://repo1.maven.org/maven2/io/github/sagaraggarwal86/bpm-jmeter-plugin/v1.0.1/bpm-jmeter-plugin-v1.0.1.jar"
       }
     }
   },

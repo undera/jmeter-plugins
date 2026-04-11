@@ -3228,20 +3228,19 @@
   {
     "id": "llm-metrics-visualizer",
     "name": "LLM Metrics Visualizer",
-    "description": "A JMeter listener plugin for monitoring LLM (Large Language Model) performance metrics in real time. Captures TTFT (Time to First Token), TPOT (Time per Output Token), RPS, input/output tokens per request and per minute, and response time percentiles — grouped by sampler name.",
-    "screenshotUrl": "",
+    "description": "A JMeter Listener plugin for load testing LLM APIs. Captures real-time metrics including TTFT (Time To First Token), TPOT (Time Per Output Token), RPS, input/output token throughput, and 90th percentile response times. Rows are grouped by HTTP sampler name.",
+    "screenshotUrl": "https://github.com/bakthava/LLM-Metrics-Visualizer/raw/main/screenshot.png",
     "helpUrl": "https://github.com/bakthava/LLM-Metrics-Visualizer",
     "vendor": "bakthava",
     "markerClass": "com.example.jmeter.LLMMetricsVisualizer",
-    "componentClasses": [
-      "com.example.jmeter.LLMMetricsVisualizer"
-    ],
     "versions": {
+      "0.2": {
+        "changes": "JDK 8 Compatibility - Compiled with Java 8 target, bytecode version 52, compatible with JDK 8 and later",
+        "downloadUrl": "https://github.com/bakthava/LLM-Metrics-Visualizer/releases/download/v0.2/LLM_Metrics_Visualizer-0.2.jar"
+      },
       "0.1": {
-        "downloadUrl": "https://github.com/bakthava/LLM-Metrics-Visualizer/releases/download/v0.1/LLM_Metrics_Visualizer-0.1.jar",
-        "depends": [
-          "jmeter-core"
-        ]
+        "changes": "Initial release - TTFT, TPOT, RPS metrics with token counting and percentile analysis",
+        "downloadUrl": "https://github.com/bakthava/LLM-Metrics-Visualizer/releases/download/v0.1/LLM_Metrics_Visualizer-0.1.jar"
       }
     }
   }

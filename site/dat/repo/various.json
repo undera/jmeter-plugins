@@ -1511,8 +1511,8 @@
     "name": "JMeter gRPC Request",
     "description": "Send gRPC request",
     "screenshotUrl": "https://user-images.githubusercontent.com/15891411/93206727-121f3400-f784-11ea-890f-0ba6c6aaee9e.png",
-    "helpUrl": "https://github.com/zalopay-oss/jmeter-grpc-request",
-    "vendor": "Datadog",
+    "helpUrl": "https://github.com/bakthava/jmeter-grpc-request",
+    "vendor": "bakthava",
     "markerClass": "vn.zalopay.benchmark.GRPCSamplerGui",
     "componentClasses": [
       "vn.zalopay.benchmarkGRPCSampler"
@@ -1555,6 +1555,20 @@
       "1.2.6": {
         "changes": "Prints exceptions that occur before the request is initiated; setEndTime must be called after setStartTime; allow run plugin with M1 ARM chip; ...",
         "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.2.6/jmeter-grpc-request.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "2.0.0": {
+        "changes": "Continuation of the archived zalopay-oss/jmeter-grpc-request project. Security: fixed 18 CVEs — xstream 1.4.21 (CVE-2022-41966, CVE-2022-40151, CVE-2024-47072), jackson-databind 2.17.2 (CVE-2022-42004, CVE-2022-42003), excluded EOL log4j 1.x (CVE-2019-17571 CRITICAL), json-smart 2.5.2 (CVE-2023-1370, CVE-2024-57699), batik 1.17 (CVE-2022-44729), bouncycastle 1.70 (14+ CVEs), Netty 4.1.132.Final, gRPC 1.68.1, protobuf 3.25.5. New feature: Mutual TLS (mTLS) support. JDK 8 compatible (bytecode 52).",
+        "downloadUrl": "https://github.com/bakthava/jmeter-grpc-request/releases/download/v2.0.0/jmeter-grpc-request.2.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "2.0.1": {
+        "changes": "Java 21 Compatibility: Consolidated fix for Java 21 support ensuring all build checks pass. Maintains security improvements from v2.0.0 (commons-io 2.14.0, TestNG 7.5.1). mTLS support and JDK 8+ compatibility included.",
+        "downloadUrl": "https://github.com/bakthava/jmeter-grpc-request/releases/download/v2.0.1/jmeter-grpc-request.2.0.1.jar",
         "depends": [
           "jmeter-core"
         ]

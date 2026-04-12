@@ -1,0 +1,22 @@
+# Synthesis Report
+
+<span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-synthesis)</span>
+
+Synthesis Report is a mix between Summary Report and Aggregate Report:
+
+  - Samples
+  - Average
+  - Min
+  - Max
+  - 90%
+  - Line
+  - Std. Dev
+  - Error %
+  - Throughout
+  - KB/sec
+  - Avg.Bytes
+
+It is possible to include/exclude some samples by adding their labels (with comma separator) or a regular expression in the include/exclude field.
+It is also possible to restrict on an specified test period (Start/End Offset).
+
+![](/img/wiki/synthesis_report.png)

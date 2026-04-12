@@ -1,0 +1,86 @@
+# Plugin Repository Descriptor Format
+
+Plugin Repositories are used by [JMeter Plugins Manager](/wiki/PluginsManager/) to offer user with additional plugins to install.
+You can see example of valid plugins repository [here](/repo/).
+
+Plugin Repository URL should respond with JSON array, where each item represents the plugin descriptor.
+Each plugin is a JSON object that contains following fields:
+
+    - `id` - represents a unique plugin identifier;
+    - `name` - simple plugin name;
+    - `description` - description of plugin or usage guide for this plugin;
+    - `screenshotUrl` - URL with screenshot of this plugin;
+    - `helpUrl` - URL with help page for this plugin;
+    - `vendor` -  vendor of this plugin;
+    - `markerClass` - some class from this plugin, the presence of which may indicate that the plugin is installed;
+    - `componentClasses` - an array of significant classes that the plugin contains (Elements and GUIs). This information is used by 
+    jmeter-plugins-manager to find whether a plugin is installed or not;
+    - `installerClass` - the class that will be launched during the installation of the plugin. *This field is optional*.
+                This class must be an executable class, meaning it must contain:
+                        
+```
+public static void main(String[] argv) {
+...
+}
+```
+
+                This class is executed outside of JMeter and will write its output (System.err/System.out) to a file called jpgc-installers-XXX.log in temp folder. Note that when running, this class has as classpath only the plugin jar.
+    - `canUninstall` - Boolean value that tells jmeter-plugins-manager whether plugin can be uninstalled. *This field is optional*. and defaults to true.
+    - `versions` - mapping of version number to version descriptor, as explained below
+
+
+## Version Descriptor
+
+This JSON object contains information about plugin version and consists from the next fields:
+
+    - `downloadUrl` - URL for download this plugin;
+    - `changes` - information about changes in this version, optional;
+    - `libs` - it is a JSON map of plugins dependency libraries, where key is a library name and value is link for download this library;
+    Note this key can use a special syntax to indicate minimal version required using "key>=version",for example below we require that jmeter-plugins-cmn-jmeter is higher or equal to version 0.6:
+
+```
+    "jmeter-plugins-cmn-jmeter>=0.6": "https:\/\/search.maven.org\/remotecontent?filepath=kg\/apc\/jmeter-plugins-cmn-jmeter\/0.6\/jmeter-plugins-cmn-jmeter-0.6.jar"
+```
+    
+    - `depends` - array of dependencies from other plugins, by plugin IDs.
+
+## Example Plugin Descriptor
+
+```
+[
+    {
+        "id" : "my-beta-plugin-id",
+        "name" : "Beta Plugin Name",
+        "description" : "This plugin created for demonstration graphics in JMeter",
+        "screenshotUrl" : "https://my.site.com/demoPlugin/screenshot.png",
+        "helpUrl": "https://my.site.com/demoPlugin/about",
+        "vendor": "my.site.com",
+        "markerClass": "com.site.my.demo.plugin.SomeGuiClass",
+        "installerClass": "com.site.my.demo.plugin.InstallerClass",
+        "versions" : {
+            "0.1" : {
+                "downloadUrl" : "https://my.site.com/demoPlugin/my-beta-plugin-id-0.1.jar",
+                "libs" : {
+                    "graph-builder" : "https://other.site.com/graph-builder-0.2.jar"
+                },
+                "depends" : [
+                    "jpgc-graphs-basic",
+                    "jpgc-graphs-additional"
+                ]
+            },
+            "0.2" : {
+                "changes" : "In version 0.2 we fixed some bugs and added some new features."
+                "downloadUrl" : "https://my.site.com/demoPlugin/my-beta-plugin-id-0.2.jar",
+                "libs" : {
+                    "graph-builder" : "https://other.site.com/graph-builder-0.2.jar"
+                },
+                "depends" : [
+                    "jpgc-graphs-basic",
+                    "jpgc-graphs-additional"
+                ]
+            }
+        }
+    }
+]
+```
+

@@ -55,11 +55,16 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Setup PHP Action
-      uses: shivammathur/setup-php@2.24.0
+    - name: Setup Python
+      uses: actions/setup-python@v5
       with:
-        php-version: '5.6'
-        tools: composer
+        python-version: '3.12'
+
+    - name: Install Python dependencies
+      run: pip install packaging jsonschema requests mkdocs
+
+    - name: Check repo JSON formatting
+      run: python format_repo.py --check
 
     - name: Prepare upload
       run: ./prepare-upload.sh

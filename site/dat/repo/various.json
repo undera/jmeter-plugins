@@ -1797,6 +1797,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "2.0.2": {
+        "changes": "Dependency updates: lombok 1.18.44, gson 2.13.2, fastjson 2.0.61, mockito-core 5.23.0, jacoco-maven-plugin 0.8.14, jmeter-plugins-emulators 0.5",
+        "downloadUrl": "https://github.com/bakthava/jmeter-grpc-request/releases/download/v2.0.2/jmeter-grpc-request.2.0.2.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

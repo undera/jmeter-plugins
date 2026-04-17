@@ -1,0 +1,19 @@
+# Example CSV file for Adaptive Timer From CSV
+# Format: stepcount,mm:ss,tps
+# stepcount: Sequential step number
+# mm:ss: Time in minutes:seconds
+# tps: Target transactions per second
+
+# Ramp up phase
+1,00:10,100
+2,00:30,200
+3,01:00,500
+
+# Sustained load
+4,02:00,1000
+5,03:00,1000
+6,04:00,1000
+
+# Ramp down phase
+7,05:00,500
+8,05:30,100

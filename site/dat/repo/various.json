@@ -3314,5 +3314,24 @@
         "changes": "Initial release."
       }
     }
+  },
+  {
+    "id": "adaptive-throughput-timer",
+    "name": "Adaptive Throughput Timer",
+    "description": "A dynamic JMeter timer plugin that adjusts throughput (TPS) and thread count in real-time based on CSV-defined load profiles. Supports step-based, time-based, and default modes with automatic thread scaling. Features include 24-hour infinite execution cycling, dynamic CSV reload (check every 60 seconds), P90 latency monitoring, and comprehensive load profile visualization.",
+    "screenshotUrl": "https://github.com/bakthava/Adaptive-Throughput-Timer/raw/master/docs/screenshot.png",
+    "helpUrl": "https://github.com/bakthava/Adaptive-Throughput-Timer",
+    "vendor": "bakthava",
+    "markerClass": "com.adaptive.jmeter.plugins.AdaptiveTimerFromCSV",
+    "componentClasses": [
+      "com.adaptive.jmeter.plugins.AdaptiveTimerFromCSV",
+      "com.adaptive.jmeter.plugins.AdaptiveTimerFromCSVGui"
+    ],
+    "versions": {
+      "1.0.0": {
+        "changes": "Initial release - Adaptive timer with CSV-based load profiles, dynamic thread scaling, 24-hour infinite execution, dynamic CSV reload feature with live modifications support",
+        "downloadUrl": "https://github.com/bakthava/Adaptive-Throughput-Timer/releases/download/v1.0.0/adaptive-throughput-timer-1.0.0.jar"
+      }
+    }
   }
 ]

@@ -63,9 +63,12 @@ jobs:
     - name: Install Python dependencies
       run: pip install packaging jsonschema requests mkdocs
 
+    - name: Check repo JSON formatting
+      run: python format_repo.py --check
+
     - name: Prepare upload
       run: ./prepare-upload.sh
 
     - name: Perform upload
-      run: 'curl --fail -vk https://jmeter-plugins.org/unzip.php -F "zipfile=@upload/site.zip" -H "Authorization: Bearer ${{ secrets.UPLOAD_TOKEN }}"'
+      run: 'curl --fail -v https://jmeter-plugins.org/unzip --data-binary @upload/site.zip -H "Authorization: Bearer ${{ secrets.UPLOAD_TOKEN }}" -H "Content-Type: application/zip"'
       if: github.ref == 'refs/heads/master'

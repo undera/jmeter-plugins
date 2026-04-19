@@ -8,8 +8,7 @@
   "vendor": "perfsage.com",
   "markerClass": "com.perfsage.jmeter.SLOAnalysisListener",
   "componentClasses": [
-    "com.perfsage.jmeter.SLOAnalysisListener",
-    "com.perfsage.jmeter.SLOReporter"
+    "com.perfsage.jmeter.SLOAnalysisListener"
   ],
   "versions": {
     "0.1.0": {

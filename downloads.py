@@ -26,7 +26,7 @@ def is_version_packed(fname):
 def get_packages():
     resp = requests.get("http://jmeter-plugins.org/files/packages/")
     assert resp.status_code == 200
-    return {x['file']: x['size'] for x in json.loads(resp.content)['files']}
+    return {x['name']: x['size'] for x in json.loads(resp.content)}
 
 
 def pack_version(fname, ver_obj, pmgr_obj, installer_cls):

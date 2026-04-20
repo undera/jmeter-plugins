@@ -1,24 +1,24 @@
 [
   {
-  "id": "perfsage-slo-reporter",
-  "name": "PerfSage SLO Reporter",
-  "description": "A JMeter plugin by PerfSage for SLO-based reporting and performance analysis.",
-  "screenshotUrl": "https://raw.githubusercontent.com/perfsage/perfsage-slo-reporter/main/blog/images/perfsage-slo-report-sample.png",
-  "helpUrl": "https://github.com/perfsage/perfsage-slo-reporter/blob/main/README.md",
-  "vendor": "perfsage.com",
-  "markerClass": "com.perfsage.jmeter.SLOAnalysisListener",
-  "componentClasses": [
-    "com.perfsage.jmeter.SLOAnalysisListener"
-  ],
-  "versions": {
-    "0.1.0": {
-      "changes": "Initial public release",
-      "downloadUrl": "https://github.com/perfsage/perfsage-slo-reporter/releases/download/v0.1.0/perfsage-slo-reporter-0.1.0.jar",
-      "libs": {},
-      "depends": []
+    "id": "perfsage-slo-reporter",
+    "name": "PerfSage SLO Reporter",
+    "description": "A JMeter plugin by PerfSage for SLO-based reporting and performance analysis.",
+    "screenshotUrl": "https://raw.githubusercontent.com/perfsage/perfsage-slo-reporter/main/blog/images/perfsage-slo-report-sample.png",
+    "helpUrl": "https://github.com/perfsage/perfsage-slo-reporter/blob/main/README.md",
+    "vendor": "perfsage.com",
+    "markerClass": "com.perfsage.jmeter.SLOAnalysisListener",
+    "componentClasses": [
+      "com.perfsage.jmeter.SLOAnalysisListener"
+    ],
+    "versions": {
+      "0.1.0": {
+        "changes": "Initial public release",
+        "downloadUrl": "https://github.com/perfsage/perfsage-slo-reporter/releases/download/v0.1.0/perfsage-slo-reporter-0.1.0.jar",
+        "libs": {},
+        "depends": []
+      }
     }
-  }
-},
+  },
   {
     "id": "io.github.sagaraggarwal86-configurable-aggregate-report",
     "name": "JAAR — JTL AI Analysis & Reporting",

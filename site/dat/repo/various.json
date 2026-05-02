@@ -3068,6 +3068,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "2.0.5": {
+        "changes": "NEW: Streaming responses; Fix: Supports chinese characters.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v2.0.5/jmeter-agent-2.0.5.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

@@ -3076,6 +3076,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "2.0.6": {
+        "changes": "NEW: Support for Claude Code, Codex, Gemini, and OpenCode. Response sound/chime in chat. ",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v2.0.6/jmeter-agent-2.0.6.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

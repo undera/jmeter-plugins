@@ -3368,5 +3368,23 @@
         "depends": []
       }
     }
+  },
+  {
+    "id": "jmeter-readme-sampler",
+    "name": "README Sampler",
+    "description": "A JMeter sampler that lets you embed Markdown documentation directly inside your test plan with a live GitHub-style preview and deep-link navigation to tree nodes.",
+    "screenshotUrl": "https://raw.githubusercontent.com/QAInsights/jmeter-readme-sampler/refs/heads/main/images/MarkdownPreview.png",
+    "helpUrl": "https://github.com/QAInsights/jmeter-readme-sampler",
+    "vendor": "QAInsights.com",
+    "markerClass": "com.qainsights.jmeter.readme.readme.ReadMeSampler",
+    "componentClasses": [
+      "com.qainsights.jmeter.readme.gui.ReadMeSamplerGui"
+    ],
+    "versions": {
+      "0.0.1": {
+        "changes": "NEW: README Sampler for documentation. Dark mode support. JMeter Deep link.",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/readme-sampler/0.0.1/readme-sampler-0.0.1.jar"
+      }
+    }
   }
 ]

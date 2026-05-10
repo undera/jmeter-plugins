@@ -1,0 +1,19 @@
+[
+  {
+    "id": "com.prince.jmeter.curl",
+    "name": "cURL Import/Export Plugin",
+    "description": "Import cURL commands as HTTP Request samplers and export JMeter HTTP Request samplers as cURL commands.",
+    "screenshotUrl": "https://raw.githubusercontent.com/prince205927/jmeter-curl-plugin/main/screenshots/import-dialog.png",    "helpUrl": "https://github.com/prince205927/jmeter-curl-plugin",
+    "vendor": "Prince Sapkota<sapkotaprince17@gmail.com>",
+    "markerClass": "com.prince.jmeter.curl.CurlPluginMenuCreator",
+    "installerClass": null,
+    "versions": {
+      "1.0.0": {
+        "downloadUrl": "https://github.com/prince205927/jmeter-curl-plugin/releases/download/v1.0.0/jmeter-curl-plugin-1.0.0.jar",
+        "libs": {},
+        "depends": [],
+        "minJmeterVersion": "5.5"
+      }
+    }
+  }
+]

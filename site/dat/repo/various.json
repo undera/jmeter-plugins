@@ -3382,7 +3382,7 @@
     ],
     "versions": {
       "0.0.1": {
-        "changes": "NEW: README Sampler for documentation. Dark mode support. JMeter Deep link.",
+        "changes": "NEW: README Config Element for documentation. Dark mode support. JMeter Deep link.",
         "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/readme-config-element/0.0.1/readme-config-element-0.0.1-jar-with-dependencies.jar"
       }
     }

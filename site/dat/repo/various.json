@@ -1,8 +1,8 @@
 [
   {
     "id": "io.github.sagaraggarwal86-configurable-aggregate-report",
-    "name": "JAAR 🤖 JTL AI Analysis & Reporting",
-    "description": "A file-based Apache JMeter listener plugin for post-test JTL analysis. Provides a filterable aggregate table with features like Filter Results using Start/End Offset & Transaction Names with RegEx support, Dynamic Percentile & Table Columns, SLA Threshold Highlighting (Error %, Response Time & TPS), CLI Headless Mode, Chart Interval Control, AI-Analyzed HTML Performance Report, Data-Only HTML Report (no AI required), Export Report in Excel & PDF Format, Performance Charts, Dark Mode 🤖 with zero runtime overhead.",
+    "name": "JAAR — JTL AI Analysis & Reporting",
+    "description": "A file-based Apache JMeter listener plugin for post-test JTL analysis. Provides a filterable aggregate table with features like Filter Results using Start/End Offset & Transaction Names with RegEx support, Dynamic Percentile & Table Columns, SLA Threshold Highlighting (Error %, Response Time & TPS), CLI Headless Mode, Chart Interval Control, AI-Analyzed HTML Performance Report, Data-Only HTML Report (no AI required), Export Report in Excel & PDF Format, Performance Charts, Dark Mode — with zero runtime overhead.",
     "screenshotUrl": "https://raw.githubusercontent.com/sagaraggarwal86/jaar-jmeter-plugin/main/docs/Image.jpg",
     "helpUrl": "https://github.com/sagaraggarwal86/jaar-jmeter-plugin/blob/main/README.md",
     "vendor": "Sagar Aggarwal",
@@ -28,7 +28,7 @@
   },
   {
     "id": "io.github.sagaraggarwal86-jmxauditor",
-    "name": "JMXAuditor 🤖 JMX Static Analyser",
+    "name": "JMXAuditor — JMX Static Analyser",
     "description": "A JMeter GUI-mode plugin that performs static analysis on .jmx test plans. Surfaces findings across six quality categories (Correctness, Security, Scalability, Realism, Maintainability, Observability) with 25 read-only rules. HTML & JSON Report Export, with zero impact on test execution.",
     "screenshotUrl": "https://raw.githubusercontent.com/sagaraggarwal86/JMXAuditor-jmeter-plugin/main/docs/Image.jpg",
     "helpUrl": "https://github.com/sagaraggarwal86/JMXAuditor-jmeter-plugin/blob/main/README.md",
@@ -46,8 +46,8 @@
   },
   {
     "id": "io.github.sagaraggarwal86-jmx-version-control-system",
-    "name": "JVCS 🤖 JMX Version Control System",
-    "description": "A lightweight local version control plugin for Apache JMeter test plans (.jmx files). Auto-snapshots on every save with SHA-256 deduplication, manual checkpoints with notes, one-click rollback with safety net, version freezing, configurable retention with FIFO pruning, periodic auto-checkpoint, selective deletion, export to .jmx, audit trail, lock file mechanism, dirty state indicator, self-healing index, toolbar integration, keyboard shortcuts (Ctrl+K, Ctrl+H) 🤖 no Git, no SVN, no external tools required.",
+    "name": "JVCS — JMX Version Control System",
+    "description": "A lightweight local version control plugin for Apache JMeter test plans (.jmx files). Auto-snapshots on every save with SHA-256 deduplication, manual checkpoints with notes, one-click rollback with safety net, version freezing, configurable retention with FIFO pruning, periodic auto-checkpoint, selective deletion, export to .jmx, audit trail, lock file mechanism, dirty state indicator, self-healing index, toolbar integration, keyboard shortcuts (Ctrl+K, Ctrl+H) — no Git, no SVN, no external tools required.",
     "screenshotUrl": "https://raw.githubusercontent.com/sagaraggarwal86/jmx-version-control-system/main/docs/Image.jpeg",
     "helpUrl": "https://github.com/sagaraggarwal86/jmx-version-control-system/blob/main/README.md",
     "vendor": "Sagar Aggarwal",
@@ -59,15 +59,15 @@
     ],
     "versions": {
       "1.1.0": {
-        "changes": "Initial release 🤖 auto-snapshot on save, manual checkpoint, version history panel, one-click restore, freeze/unfreeze, retention pruning, auto-checkpoint, selective deletion, export, audit log, lock management, dirty indicator, toolbar buttons, settings dialog, self-healing index, storage migration",
+        "changes": "Initial release — auto-snapshot on save, manual checkpoint, version history panel, one-click restore, freeze/unfreeze, retention pruning, auto-checkpoint, selective deletion, export, audit log, lock management, dirty indicator, toolbar buttons, settings dialog, self-healing index, storage migration",
         "downloadUrl": "https://repo1.maven.org/maven2/io/github/sagaraggarwal86/jmx-version-control-system/v1.1.0/jmx-version-control-system-v1.1.0.jar"
       }
     }
   },
   {
     "id": "io.github.sagaraggarwal86-bpm-jmeter-plugin",
-    "name": "BPM 🤖 Browser Performance Metrics",
-    "description": "A live JMeter listener plugin for capturing browser rendering metrics via Chrome DevTools Protocol. Features include Core Web Vitals (LCP, FCP, CLS, TTFB), Network & Console capture, Composite Performance Score, SLA Threshold Highlighting, Improvement Area Detection, Filter by Start/End Offset & Transaction Names with RegEx support, CLI Headless Mode, Chart Interval Control, HTML Performance Report, and Excel Export 🤖 with minimal impact on JMeter thread performance.",
+    "name": "BPM — Browser Performance Metrics",
+    "description": "A live JMeter listener plugin for capturing browser rendering metrics via Chrome DevTools Protocol. Features include Core Web Vitals (LCP, FCP, CLS, TTFB), Network & Console capture, Composite Performance Score, SLA Threshold Highlighting, Improvement Area Detection, Filter by Start/End Offset & Transaction Names with RegEx support, CLI Headless Mode, Chart Interval Control, HTML Performance Report, and Excel Export — with minimal impact on JMeter thread performance.",
     "screenshotUrl": "https://raw.githubusercontent.com/sagaraggarwal86/BPM-jmeter-plugin/v1.0.1/docs/Image.jpg",
     "helpUrl": "https://github.com/sagaraggarwal86/BPM-jmeter-plugin/blob/v1.0.1/README.md",
     "vendor": "Sagar Aggarwal",
@@ -3080,14 +3080,6 @@
       "2.0.6": {
         "changes": "NEW: Support for Claude Code, Codex, Gemini, and OpenCode. Response sound/chime in chat. ",
         "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v2.0.6/jmeter-agent-2.0.6.jar",
-        "depends": [
-          "jmeter-core",
-          "jmeter-components"
-        ]
-      },
-      "2.0.7": {
-        "changes": "NEW: Support for DeepSeek models. ",
-        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/2.0.7/jmeter-agent-2.0.7-jar-with-dependencies.jar",
         "depends": [
           "jmeter-core",
           "jmeter-components"

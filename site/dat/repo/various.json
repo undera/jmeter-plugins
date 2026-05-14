@@ -3084,6 +3084,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "2.0.7": {
+        "changes": "NEW: Support for DeepSeek models. ",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/2.0.7/jmeter-agent-2.0.7-jar-with-dependencies.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

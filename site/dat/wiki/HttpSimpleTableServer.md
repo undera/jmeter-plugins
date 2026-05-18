@@ -9,7 +9,8 @@ Unfortunately the dataset and csv files aren't transferred from the controller t
 
 The main idea is to use a tiny http server in JMeter Plugins to manage the dataset files with simple commands to get / find / add rows of data in files.
 
-An dzone article about this tool : [https://dzone.com/articles/jmeter-plugin-http-simple-table-server](https://dzone.com/articles/jmeter-plugin-http-simple-table-server) <br/>
+A dzone.com article about this tool : [https://dzone.com/articles/jmeter-plugin-http-simple-table-server](https://dzone.com/articles/jmeter-plugin-http-simple-table-server) <br/>
+
 "Take an in-depth look to discover some of the possibilities of using the HTTP Simple Table Server a JMeter Plugin in this short manual."
 
 ## Configuration
@@ -67,7 +68,9 @@ There are different ways to start the STS:
 
 ![](/img/wiki/http_simple_table_server.png)
 
+
 2. With <code>simple-table-server.cmd</code> (.sh for UNIX) script located in your <code>JMETER_HOME/bin</code> directory. Parameters are read in the jmeter.properties or you could also set parameters like <code>simple-table-server.cmd -DjmeterPlugin.sts.addTimestamp=true -DjmeterPlugin.sts.datasetDirectory=D:/jmeter/dataset</code>, set <code>jmeterPlugin.sts.daemon=true</code> when you want launch the STS with the nohup linux command like process daemon, the STS will not waiting the &lt;ENTER&gt; key to stop.
+
 3. On JMeter CLI startup (Windows : <code>jmeter-n.cmd</code> or Linux <code>jmeter -n</code>) following properties in jmeter.properties file or in user.properties :
 
 ```text
@@ -177,7 +180,7 @@ HTML format:
 ```
 
 Available options:
- - READ_MODE=FIRST => login1;password1
+- READ_MODE=FIRST => login1;password1
  - READ_MODE=LAST => login5;password5
  - READ_MODE=RANDOM => login?;password?
  - KEEP=TRUE => the data is kept and put to the end of list
@@ -568,7 +571,6 @@ You can override STS settings using command-line options:
  - -DjmeterPlugin.sts.initFileAtStartup=&lt;files to read when STS startup, e.g : article.csv,users.csv&gt;
  - -DjmeterPlugin.sts.initFileAtStartupRegex=&lt;true/false&gt; false : no regular expression, files with comma separator, true : read files matching the regular expression.
   
-
 ```
 jmeter.bat -DjmeterPlugin.sts.loadAndRunOnStartup=true -DjmeterPlugin.sts.port=9191 -DjmeterPlugin.sts.datasetDirectory=d:/data -DjmeterPlugin.sts.charsetEncodingReadFile=UTF-8 -n –t testdemo.jmx
 ```

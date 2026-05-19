@@ -722,8 +722,8 @@
   },
   {
     "id": "bzm-http2",
-    "name": "BlazeMeter - HTTP/2 Plugin",
-    "description": "HTTP/2 protocol sampler",
+    "name": "BlazeMeter - HTTP Plugin",
+    "description": "BlazeMeter HTTP (HTTP/1.1, HTTP/2, HTTP/3)",
     "helpUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/blob/master/README.md",
     "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-http2-plugin/master/docs/addHTTP2Sampler.png",
     "vendor": "BlazeMeter",
@@ -1019,6 +1019,13 @@
           "jetty-util>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.6/jetty-util-11.0.15.jar",
           "jmeter-bzm-commons>=0.2.3": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.6/jmeter-bzm-commons-0.2.3.jar"
         },
+        "depends": [
+          "jmeter-http"
+        ]
+      },
+      "3.0.1": {
+        "changes": "Plugin renamed to BlazeMeter HTTP. Protocol support: HTTP/1.x, HTTP/2 and HTTP/3. Recording support and many other improvements.",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v3.0.1/jmeter-bzm-http2-3.0.1.jar",
         "depends": [
           "jmeter-http"
         ]

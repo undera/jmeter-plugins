@@ -1022,6 +1022,14 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "3.0.1": {
+        "changes": "BlazeMeter HTTP",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v3.0.1/jmeter-bzm-http2-3.0.1.jar",
+        "libs": {},
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

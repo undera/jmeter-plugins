@@ -3092,6 +3092,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "2.0.8": {
+        "changes": "NEW: Google Gemini model support. Minor fixes and UI polish. ",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/2.0.8/jmeter-agent-2.0.8.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

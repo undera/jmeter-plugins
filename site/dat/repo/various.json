@@ -3410,7 +3410,7 @@
   {
     "id": "coordinated-throughput-controller",
     "name": "Coordinated Throughput Controller",
-    "description": "A replacement for JMeter's standard Throughput Controller when sibling flows must be mutually exclusive. It coordinates sibling controllers so only one weighted controller runs per parent iteration, fixing cases where multiple Throughput Controllers can run in the same iteration and overwrite variables or execute conflicting business paths.",
+    "description": "A replacement for JMeter's standard Throughput Controller when sibling flows must be mutually exclusive. It coordinates sibling controllers so only one controller runs per parent iteration, fixing cases where multiple Throughput Controllers can run in the same iteration and overwrite variables or execute conflicting business paths.",
     "screenshotUrl": "",
     "helpUrl": "https://github.com/ammyrohilla5050-dot/jmeter-coordinated-throughput-controller",
     "vendor": "Amit Kumar",

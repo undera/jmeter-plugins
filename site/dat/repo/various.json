@@ -3410,7 +3410,7 @@
   {
     "id": "coordinated-throughput-controller",
     "name": "Coordinated Throughput Controller",
-    "description": "A JMeter Logic Controller that coordinates sibling branches so one weighted branch is selected per parent iteration. If sibling weights add up to less than 100, the remainder intentionally selects no coordinated branch.",
+    "description": "A replacement for JMeter's standard Throughput Controller when sibling flows must be mutually exclusive. It coordinates sibling controllers so only one weighted controller runs per parent iteration, fixing cases where multiple Throughput Controllers can run in the same iteration and overwrite variables or execute conflicting business paths.",
     "screenshotUrl": "",
     "helpUrl": "https://github.com/ammyrohilla5050-dot/jmeter-coordinated-throughput-controller",
     "vendor": "Amit Kumar",
@@ -3423,6 +3423,15 @@
       "0.1.0": {
         "changes": "Initial public release.",
         "downloadUrl": "https://github.com/ammyrohilla5050-dot/jmeter-coordinated-throughput-controller/releases/download/v0.1.0/jmeter-coordinated-throughput-controller-0.1.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ],
+        "libs": {}
+      },
+      "0.1.1": {
+        "changes": "Fixes nested controller handling inside Coordinated Throughput Controller. The selected controller can now reliably contain Transaction Controller, Loop Controller, Generic Controller, If Controller, Include Controller, and sampler stacks.",
+        "downloadUrl": "https://github.com/ammyrohilla5050-dot/jmeter-coordinated-throughput-controller/releases/download/v0.1.1/jmeter-coordinated-throughput-controller-0.1.1.jar",
         "depends": [
           "jmeter-core",
           "jmeter-components"

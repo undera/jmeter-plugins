@@ -90,6 +90,7 @@
 # Developing Plugins
   - [Contibutors List](/wiki/Contributors/) - write down yourself, if you took your part
   - [DeveloperGuide](/wiki/DeveloperGuide/)
+  - [Submitting Your Plugin to the Marketplace](/wiki/SubmitYourPlugin/)
   - [BuildingFromSource](/wiki/BuildingFromSource/)
   - [PluginsGuiGuidelines](/wiki/PluginsGuiGuidelines/)
   - [Roadmap](/wiki/Roadmap/) and [Changelog](/wiki/Changelog/)

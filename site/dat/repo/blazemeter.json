@@ -681,6 +681,27 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "3.3.1": {
+        "changes": "Updates in HLS Parsing and improvements in exception handling",
+        "downloadUrl": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/jmeter-bzm-hls-3.3.1.jar",
+        "libs": {
+          "hlsparserj>=1.0.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/hlsparserj-1.0.2.jar",
+          "jackson-annotations>=2.11.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/jackson-annotations-2.11.0.jar",
+          "jackson-core>=2.10.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/jackson-core-2.10.0.jar",
+          "jackson-databind>=2.11.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/jackson-databind-2.11.0.jar",
+          "jackson-dataformat-xml>=2.10.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/jackson-dataformat-xml-2.10.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/jackson-module-jaxb-annotations-2.10.0.jar",
+          "jakarta.activation-api>=1.2.1": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/jakarta.activation-api-1.2.1.jar",
+          "jakarta.xml.bind-api>=2.3.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/jakarta.xml.bind-api-2.3.2.jar",
+          "jmeter-bzm-commons>=0.2.3": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/jmeter-bzm-commons-0.2.3.jar",
+          "mpd-tools>=release-0.8-jdk8": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/mpd-tools-release-0.8-jdk8.jar",
+          "stax2-api>=4.2": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/stax2-api-4.2.jar",
+          "woodstox-core>=6.0.1": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.3.1/woodstox-core-6.0.1.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

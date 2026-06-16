@@ -3468,5 +3468,19 @@
         }
       }
     }
+  },
+  {
+  "id": "har-jmeter-listener",
+  "name": "HAR vs JMeter Listener",
+  "description": "Compares real browser load time (HAR files) with JMeter sampler results side by side. Matches requests by URL, generates an HTML report with diffs, waterfall view, and a built-in Why-the-diff reference guide. Works in Live mode and Offline mode.",
+  "helpUrl": "https://github.com/Vishhh-alt/HAR_vs_Jmeter",
+  "vendor": "Visvashwarr Venugopal",
+  "versions": {
+    "1.0.0": {
+      "downloadUrl": "https://github.com/Vishhh-alt/HAR_vs_Jmeter/releases/download/v1.0.0/har-jmeter-listener-1.0.0-plugin.jar",
+      "libs": {},
+      "depends": []
+    }
   }
+}
 ]

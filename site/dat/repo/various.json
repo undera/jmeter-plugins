@@ -3476,11 +3476,11 @@
     "screenshotUrl": "",
     "helpUrl": "https://github.com/srenevasanks/jmeter-html-report-plugin",
     "vendor": "Srenevasan",
-	"markerClass": "listener.CustomHtmlReportListener",
-	"componentClasses": [
-	    "listener.CustomHtmlReportListener",
-	    "gui.CustomHtmlReportGui"
-	],
+    "markerClass": "listener.CustomHtmlReportListener",
+    "componentClasses": [
+      "listener.CustomHtmlReportListener",
+      "gui.CustomHtmlReportGui"
+    ],
     "versions": {
       "1.0.0": {
         "changes": "Initial public release.",

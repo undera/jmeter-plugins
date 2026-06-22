@@ -3468,5 +3468,28 @@
         }
       }
     }
+  },
+  {
+    "id": "jmeter-html-report-plugin",
+    "name": "JMeter HTML Report Plugin",
+    "description": "Interactive HTML report generator for JMeter API testing with request/response details, assertion results, filtering, charts and dark mode support.",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/srenevasanks/jmeter-html-report-plugin",
+    "vendor": "Srenevasan",
+    "markerClass": "listener.CustomHtmlReportListener",
+    "componentClasses": [
+      "listener.CustomHtmlReportListener",
+      "gui.CustomHtmlReportGui"
+    ],
+    "versions": {
+      "1.0.0": {
+        "changes": "Initial public release.",
+        "downloadUrl": "https://github.com/srenevasanks/jmeter-html-report-plugin/releases/download/v1.0.0/jmeter-html-report-plugin-1.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ],
+        "libs": {}
+      }
+    }
   }
 ]

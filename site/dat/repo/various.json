@@ -3371,6 +3371,10 @@
       "com.jmeter.sse.SSESamplerGui"
     ],
     "versions": {
+      "2.0.1": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/github/cuneytcakir/jmeter-sse-sampler/2.0.1/jmeter-sse-sampler-2.0.1.jar",
+        "changes": "increase OkHttp connection pool size for high-concurrency load tests"
+      },
       "2.0.0": {
         "downloadUrl": "https://repo1.maven.org/maven2/io/github/cuneytcakir/jmeter-sse-sampler/2.0.0/jmeter-sse-sampler-2.0.0.jar",
         "changes": "Maven Central release preparations and Maven groupId updates."

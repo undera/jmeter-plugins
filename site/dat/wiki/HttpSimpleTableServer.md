@@ -2,12 +2,16 @@
 
 <span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-sts)</span>
 
-Performance testing with JMeter can be done with several JMeter injectors (on a remote host) and one JMeter controller (with GUI or CLI, on your local host).
-Scripts are sent to JMeter injectors using RMI protocol.
-Results are brought back periodically to the JMeter controller.
-Unfortunately the dataset and csv files aren't transferred from the controller to injectors.
+Performance testing with JMeter can be done with several JMeter injectors (on a remote host) and one JMeter controller (with GUI or CLI, on your local host).<br/>
+Scripts are sent to JMeter injectors using RMI protocol.<br/>
+Results are brought back periodically to the JMeter controller.<br/>
+Unfortunately the dataset and csv files aren't transferred from the controller to injectors.<br/>
 
 The main idea is to use a tiny http server in JMeter Plugins to manage the dataset files with simple commands to get / find / add rows of data in files.
+
+A dzone.com article about this tool : [https://dzone.com/articles/jmeter-plugin-http-simple-table-server](https://dzone.com/articles/jmeter-plugin-http-simple-table-server) <br/>
+
+"Take an in-depth look to discover some of the possibilities of using the HTTP Simple Table Server a JMeter Plugin in this short manual."
 
 ## Configuration
 
@@ -24,31 +28,32 @@ jmeterPlugin.sts.charsetEncodingHttpResponse=UTF-8
 jmeterPlugin.sts.charsetEncodingReadFile=UTF-8
 jmeterPlugin.sts.charsetEncodingWriteFile=UTF-8
 
+# Load files at startup
 jmeterPlugin.sts.initFileAtStartup=article.csv,users.csv
 jmeterPlugin.sts.initFileAtStartupRegex=false
-
+# OR
 jmeterPlugin.sts.initFileAtStartup=file\d+\.csv
 jmeterPlugin.sts.initFileAtStartupRegex=true
 
 ```
 
-Do not use '\' in the path directory, it doesn't work well, use '/' or '\\\\' instead.
+Do not use '\\' in the path directory, it doesn't work well, use '/' or '\\\\' instead.<br/>
 It is also recommended to use UTF-8 as the encoding:
 
 ```
 sampleresult.default.encoding=UTF-8
 ```
 
-If you want automatically start a Simple Table Server on JMeter STARTUP simply add jsr223.init.file=simple-table-server.groovy in jmeter.properties
-Be sure that simple-table-server.groovy file is in your JMETER_HOME/bin directory.
+If you want automatically start a Simple Table Server on JMeter STARTUP simply add <code>jsr223.init.file=simple-table-server.groovy</code> in jmeter.properties<br/>
+Be sure that simple-table-server.groovy file is in your <code>JMETER_HOME/bin</code> directory.
 
-The Simple Table Server is a tiny http server which can send http GET/POST requests on port 9191 (by default).
-You can set a custom port through the graphical user interface or by overriding the jmeterplugin.sts.port property.
+The Simple Table Server is a tiny http server which can send http GET/POST requests on port 9191 (by default).<br/>
+You can set a custom port through the graphical user interface or by overriding the jmeterplugin.sts.port property.<br/>
 
 ## Distributed architecture for JMeter
 
-The Simple Table Server runs on the JMeter controller (master) and load generators/injectors (slaves) make calls to the STS to get or add some data.  
-At the beginning of the test, the first load injector will load data in memory (initial call) and at the end of the test it asks the STS saving values in a file.  
+The Simple Table Server runs on the JMeter controller (master) and load generators/injectors (slaves) make calls to the STS to get or add some data.<br/>  
+At the beginning of the test, the first load injector will load data in memory (initial call) and at the end of the test it asks the STS saving values in a file.<br/>  
 All the load injectors ask data from the same STS which is started on the JMeter controller.
 
 ![](/img/wiki/http_sts_jmeter_archi_distributed_v4.0.png)
@@ -59,14 +64,16 @@ All the load injectors ask data from the same STS which is started on the JMeter
 
 There are different ways to start the STS:
 
-  - 1) with JMeter GUI:
+1. with JMeter GUI:
 
 ![](/img/wiki/http_simple_table_server.png)
 
-  - 2) with simple-table-server.cmd (.sh for UNIX) script located in your JMETER_HOME/bin directory. Parameters are read in the jmeter.properties or you could also set parameters like simple-table-server.cmd -DjmeterPlugin.sts.addTimestamp=true -DjmeterPlugin.sts.datasetDirectory=D:/jmeter/dataset, set jmeterPlugin.sts.daemon=true when you want launch the STS with the nohup linux command like process daemon, the STS will not waiting the <ENTER> key to stop.
-  - 3) on JMeter CLI startup (Windows : jmeter-n.cmd or Linux jmeter -n) following properties in jmeter.properties file or in user.properties :
 
-```
+2. With <code>simple-table-server.cmd</code> (.sh for UNIX) script located in your <code>JMETER_HOME/bin</code> directory. Parameters are read in the jmeter.properties or you could also set parameters like <code>simple-table-server.cmd -DjmeterPlugin.sts.addTimestamp=true -DjmeterPlugin.sts.datasetDirectory=D:/jmeter/dataset</code>, set <code>jmeterPlugin.sts.daemon=true</code> when you want launch the STS with the nohup linux command like process daemon, the STS will not waiting the &lt;ENTER&gt; key to stop.
+
+3. On JMeter CLI startup (Windows : <code>jmeter-n.cmd</code> or Linux <code>jmeter -n</code>) following properties in jmeter.properties file or in user.properties :
+
+```text
 jmeterPlugin.sts.loadAndRunOnStartup=true
 jmeterPlugin.sts.port=9191
 
@@ -75,16 +82,30 @@ jmeterPlugin.sts.daemon=false
 jsr223.init.file=simple-table-server.groovy
 ```
 
+
+**Calls are synchronized, all commands are executed ONE BY ONE** (no concurrent access to datas)
+
+
+## HELP
+**Show a html page to explain parameters and examples.** <br/>
+```
+http://hostname:port/sts/
+```
 When the STS is running go to `http://<HOST>:<PORT>/sts/` to **see all available commands** and a short help.
 
-Usually `http://localhost:9191/sts/`
+Usually Help at [http://localhost:9191/sts/](http://localhost:9191/sts/)
 
-**Calls are synchronized, all commands are executed ONE BY ONE.**
+## INITFILE
 
+**Load file in memory. Lines are stored in a linked list, 1 line = 1 element**
+
+The filename is limited to 128 characters maxi and must not contain characters \\ / : or ..
+
+This limits are for security reasons (E.g: NOT read "/etc/passwd" or ../../../tomcat/conf/server.xml).
 
 Example of a dataset file logins.csv:
 
-```
+```text
 login1;password1
 login2;password2
 login3;password3
@@ -92,19 +113,13 @@ login4;password4
 login5;password5
 ```
 
-## INITFILE
-
-**Load file in memory. Lines are stored in a linked list, 1 line = 1 element**
-
-The filename is limited to 128 characters maxi and must not contains characters \ / : or ..
-
-This limits are for security reasons (E.g: NOT read "/etc/passwd" or ../../../tomcat/conf/server.xml).
+Load the file "logins.csv" in memory (linked list)
 
 ```
 http://hostname:port/sts/INITFILE?FILENAME=logins.csv
 ```
 
-HTML format:
+Result in HTML format:
 
 ```html
 <html><title>OK</title>
@@ -114,7 +129,7 @@ HTML format:
 
 Linked list after this command:
 
-```
+```text
 login1;password1
 login2;password2
 login3;password3
@@ -138,19 +153,19 @@ jmeterPlugin.sts.initFileAtStartupRegex=true
 jmeterPlugin.sts.initFileAtStartup=file\d+\.csv
 ```
 
-jmeterPlugin.sts.initFileAtStartupRegex=false and jmeterPlugin.sts.initFileAtStartup=file1.csv,file2.csv,otherfile.csv
+jmeterPlugin.sts.initFileAtStartupRegex=false and jmeterPlugin.sts.initFileAtStartup=file1.csv,file2.csv,otherfile.csv<br/>
 read csv files with comma separator (not a regular expression), e.g : read file1.csv and file2.csv and otherfile.csv
 
 OR
 
-jmeterPlugin.sts.initFileAtStartupRegex=true and jmeterPlugin.sts.initFileAtStartup=.+\.csv
+jmeterPlugin.sts.initFileAtStartupRegex=true and jmeterPlugin.sts.initFileAtStartup=.+\\.csv<br/>
 read all csv files in the dataset directory the jmeterPlugin.sts.initFileAtStartup value is a regular expression
 
 ## READ
 
 **Get one line from list**
 
-The charset use in the response is jmeterPlugin.sts.charsetEncodingHttpResponse=<charset>, default value = JMeter property : sampleresult.default.encoding
+The charset use in the response is jmeterPlugin.sts.charsetEncodingHttpResponse=&lt;charset&gt;, default value = JMeter property : sampleresult.default.encoding
 
 ```
 http://hostname:port/sts/READ?READ_MODE={FIRST, LAST, RANDOM}&KEEP={TRUE, FALSE}&FILENAME=logins.csv
@@ -165,17 +180,17 @@ HTML format:
 ```
 
 Available options:
-  - READ_MODE=FIRST => login1;password1
-  - READ_MODE=LAST => login5;password5
-  - READ_MODE=RANDOM => login?;password?
-  - KEEP=TRUE => the data is kept and put to the end of list
-  - KEEP=FALSE => the data is removed
+- READ_MODE=FIRST => login1;password1
+ - READ_MODE=LAST => login5;password5
+ - READ_MODE=RANDOM => login?;password?
+ - KEEP=TRUE => the data is kept and put to the end of list
+ - KEEP=FALSE => the data is removed
 
 KEEP=TRUE, READ_MODE=FIRST => login1;password1
 
 Linked list after this command:
 
-```
+```text
 login2;password2
 login3;password3
 login4;password4
@@ -187,7 +202,7 @@ KEEP=TRUE, READ_MODE=LAST => login5;password5
 
 Linked list after this command:
 
-```
+```text
 login1;password1
 login2;password2
 login3;password3
@@ -199,7 +214,7 @@ KEEP=TRUE, READ_MODE=RANDOM => login2;password2
 
 Linked list after this command:
 
-```
+```text
 login1;password1
 login3;password3
 login4;password4
@@ -211,7 +226,7 @@ KEEP=FALSE (delete mode), READ_MODE=FIRST => login1;password1
 
 Linked list after this command:
 
-```
+```text
 login2;password2
 login3;password3
 login4;password4
@@ -222,7 +237,7 @@ KEEP=FALSE, READ_MODE=LAST => login5;password5
 
 Linked list after this command:
 
-```
+```text
 login1;password1
 login2;password2
 login3;password3
@@ -233,7 +248,7 @@ KEEP=FALSE, READ_MODE=RANDOM => login2;password2
 
 Linked list after this command:
 
-```
+```text
 login1;password1
 login3;password3
 login4;password4
@@ -245,12 +260,12 @@ login5;password5
 **Get multi lines from list in one request**
 
 Available options:
-  - NB_LINES=Number of lines to read : 1 \<= Nb lines (Integer) and Nb lines \<= list size
-  - READ_MODE=FIRST =>start to read at the first line
-  - READ_MODE=LAST => start to read at the last line (reverse)
-  - READ_MODE=RANDOM => read n lines randomly
-  - KEEP=TRUE => the data is kept and put to the end of list
-  - KEEP=FALSE => the data is removed
+ - NB_LINES=Number of lines to read : 1 \<= Nb lines (Integer) and Nb lines \<= list size
+ - READ_MODE=FIRST =>start to read at the first line
+ - READ_MODE=LAST => start to read at the last line (reverse)
+ - READ_MODE=RANDOM => read n lines randomly
+ - KEEP=TRUE => the data is kept and put to the end of list
+ - KEEP=FALSE => the data is removed
 
 GET Protocol
 
@@ -260,7 +275,7 @@ http://hostname:port/sts/READMULTI?FILENAME=logins.csv&NB_LINES={Nb lines to rea
 
 GET parameters : FILENAME=logins.csv, NB\_LINES=Nb lines to read (Integer), READ\_MODE=FIRST (Default) or LAST or RANDOM, KEEP=TRUE (Default) or FALSE
 
-E.g : Read first 3 lines, http://hostname:port/sts/READMULTI?FILENAME=logins.csv&NB1\_LINES=3&READ\_MODE=FIRST&KEEP=true
+E.g : Read first 3 lines, `http://hostname:port/sts/READMULTI?FILENAME=logins.csv&NB_LINES=3&READ_MODE=FIRST&KEEP=true`
 
 NB\_LINES=3, KEEP=TRUE, READ\_MODE=FIRST, KEEP=TRUE => result
 
@@ -304,7 +319,6 @@ http://hostname:port/sts/ADD?FILENAME=dossier.csv&LINE=D0001123&ADD_MODE={FIRST,
 
 GET Parameters : FILENAME=dossier.csv&LINE=D0001123&ADD_MODE={FIRST, LAST}&UNIQUE={FALSE, TRUE}
 
-
 POST Protocol
 
 ```
@@ -322,11 +336,11 @@ HTML format:
 ```
 
 Available options:
-  - ADD_MODE=FIRST => add to the top
-  - ADD_MODE=LAST => add to the end
-  - FILENAME=dossier.csv => if doesn't already exist it creates a LinkedList in memory
-  - LINE=1234;98763 => the line to add
-  - UNIQUE=TRUE => do not add line if the list already contains such line (if already exits then return title KO and don't add the same line)
+ - ADD_MODE=FIRST => add to the top
+ - ADD_MODE=LAST => add to the end
+ - FILENAME=dossier.csv => if doesn't already exist it creates a LinkedList in memory
+ - LINE=1234;98763 => the line to add
+ - UNIQUE=TRUE => do not add line if the list already contains such line (if already exits then return title KO and don't add the same line)
 
 POST Protocol with parameters
 ![](/img/wiki/http_sts_add_request.png)
@@ -336,10 +350,10 @@ POST Protocol with parameters
 **Find a line in a file (GET OR POST HTTP protocol)**
 
 The LINE to find is for FIND_MODE :
-  - A string this SUBSTRING (Default, ALineInTheFile contains the stringToFind ) or EQUALS (stringToFind == ALineInTheFile)
-  - A regular expression with REGEX\_FIND (contains) and REGEX\_MATCH (entire region the pattern)
-  - KEEP=TRUE => the data is kept and put to the end of list
-  - KEEP=FALSE => the data is removed
+ - A string this SUBSTRING (Default, ALineInTheFile contains the stringToFind ) or EQUALS (stringToFind == ALineInTheFile)
+ - A regular expression with REGEX\_FIND (contains) and REGEX\_MATCH (entire region the pattern)
+ - KEEP=TRUE => the data is kept and put to the end of list
+ - KEEP=FALSE => the data is removed
 
 GET Protocol
 
@@ -355,7 +369,7 @@ POST Protocol
 http://hostname:port/sts/FIND
 ```
 
-POST Parameters : FILENAME=colors.txt, LINE=BLUE|RED or LINE=BLUE or LINE=B.\* or LINE=.\**E.\** ,FIND\_MODE=SUBSTRING (Default),EQUALS,REGEX\_FIND or REGEX\_MATCH, KEEP=TRUE (Default) or FALSE
+POST Parameters : FILENAME=colors.txt, LINE=BLUE|RED or LINE=BLUE or LINE=B.\* or LINE=.\*E.\* ,FIND\_MODE=SUBSTRING (Default),EQUALS,REGEX\_FIND or REGEX\_MATCH, KEEP=TRUE (Default) or FALSE
 
 If find return the first line finded, start reading at first line in the file (linked list)
 
@@ -411,13 +425,13 @@ dossier.csv = 1<br />
 
 **Save the specified linked list in a file to the specified location**
 
-The charset use to write the file is set with jmeterPlugin.sts.charsetEncodingWriteFile=\<charset>, default value = System property : file.encoding
+The charset use to write the file is set with jmeterPlugin.sts.charsetEncodingWriteFile=&lt;charset&gt;, default value = System property : file.encoding
 
 ```
 http://hostname:port/sts/SAVE?FILENAME=logins.csv
 ```
 
-If jmeterPlugin.sts.addTimestamp is set to true then a timestamp will be add to the filename,
+If jmeterPlugin.sts.addTimestamp is set to true then a timestamp will be added to the filename,<br/>
 the file is stored in the custom directory specified by editing the jmeterPlugin.sts.datasetDirectory property or in JMETER_HOME/bin directory by default:
 
 ```
@@ -463,7 +477,7 @@ Always returns title OK even if the file did not exist
 http://hostname:port/sts/STOP
 ```
 
-When the jmeterPlugin.sts.daemon=true, you need to call http://hostname:port/sts/STOP or kill the process to stop the STS
+When the <code>jmeterPlugin.sts.daemon=true</code>, you need to call `http://hostname:port/sts/STOP` or kill the process to stop the STS
 
 ## CONFIG
 
@@ -477,7 +491,7 @@ http://hostname:port/sts/CONFIG
 
 Initialize file using a "setUp Thread Group" by calling URL with one or more HTTP Request Sampler or with jmeterPlugin.sts.initFileAtStartup property to read file at JMeter startup.
 
-Reading a row of data is done by calling READ method at each iteration by a HTTP Request Sampler.
+Reading a row of data is done by calling READ method at each iteration by a HTTP Request Sampler.<br/>
 Then you can use a Regular Expression Extractor to parse the response data.
 
 Reading login:
@@ -493,7 +507,7 @@ At the end of your Test Plan you can save remaining/adding data with a HTTP Requ
 
 If you need to parse more than 2 columns, you could use a Post-Processeur groovy JSR223 like :
 
-```python
+```groovy
 // E.g. read line = <body>COL1VALUE;COL2VALUE;COL3VALUE;COL4VALUE;COL5VALUE</body>
 // column separator = ';'
 String lineData = org.apache.commons.lang3.StringUtils.substringBetween(prev.getResponseDataAsString(),"<body>","</body>");
@@ -514,12 +528,12 @@ else {
 
 ## Examples
 
-  - Put the logins.csv file in your JMETER_HOME/bin directory:
+ - Put the logins.csv file in your JMETER_HOME/bin directory:
 
   [Download logins.csv file](/img/examples/logins.csv)
 
-  - Run the Simple Table Server manually with the simple-table-server.cmd file or automatically with groovy configuration.
-  - Run one of the following scripts:
+ - Run the Simple Table Server manually with the simple-table-server.cmd file or automatically with groovy configuration.
+ - Run one of the following scripts:
 
 In a loop, read random values from a file containing a login and a password at each row:
 
@@ -538,26 +552,25 @@ Add rows in a new linked list and save it in a file when the test is done:
 
 
 
-Read in a random mode a dataset located on the controller machine with severals slaves.
-The first injector loads the dataset in memory while the other injectors are waiting few seconds (you could also use jmeterPlugin.sts.initFileAtStartup=file1.csv,file2.csv and jmeterPlugin.sts.initFileAtStartupRegex=false to read files when STS startup)
-The different injectors read randomly the data containing logins and passwords.
-When the test is done the first injector save the values in a file with a timestamp as prefix:
+Read in a random mode a dataset located on the controller machine with severals slaves.<br/>
+The first injector loads the dataset in memory while the other injectors are waiting few seconds (you could also use jmeterPlugin.sts.initFileAtStartup=file1.csv,file2.csv and jmeterPlugin.sts.initFileAtStartupRegex=false to read files when STS startup)<br/>
+The different injectors read randomly the data containing logins and passwords.<br/>
+When the test is done the first injector save the values in a file with a timestamp as prefix:<br/>
 
 [Download Example Test Plan 4](/img/examples/demo_sts_read_random_for2slaves.jmx) Multi JMeter injectors and save list examples
 
 You can override STS settings using command-line options:
-  - -DjmeterPlugin.sts.port=\<port number>
-  - -DjmeterPlugin.sts.loadAndRunOnStartup=\<true/false>
-  - -DjmeterPlugin.sts.datasetDirectory=\<path/to/your/directory>
-  - -DjmeterPlugin.sts.addTimestamp=\<true/false>
-  - -DjmeterPlugin.sts.daemon=\<true/false>
-  - -DjmeterPlugin.sts.charsetEncodingHttpResponse=\<charset like UTF-8>
-  - -DjmeterPlugin.sts.charsetEncodingReadFile=\<charset like UTF-8>
-  - -DjmeterPlugin.sts.charsetEncodingWriteFile=\<charset like UTF-8>
-  - -DjmeterPlugin.sts.initFileAtStartup=\<files to read when STS startup, e.g : article.csv,users.csv>
-  - -DjmeterPlugin.sts.initFileAtStartupRegex=false=\<false : no regular expression, files with comma separator, true : read files matching the regular expression>
+ - -DjmeterPlugin.sts.port=&lt;port number&gt;
+ - -DjmeterPlugin.sts.loadAndRunOnStartup=&lt;true/false&gt;
+ - -DjmeterPlugin.sts.datasetDirectory=&lt;path/to/your/directory&gt;
+ - -DjmeterPlugin.sts.addTimestamp=&lt;true/false&gt;
+ - -DjmeterPlugin.sts.daemon=&lt;true/false&gt;
+ - -DjmeterPlugin.sts.charsetEncodingHttpResponse=&lt;charset like UTF-8&gt;
+ - -DjmeterPlugin.sts.charsetEncodingReadFile=&lt;charset like UTF-8&gt;
+ - -DjmeterPlugin.sts.charsetEncodingWriteFile=&lt;charset like UTF-8&gt;
+ - -DjmeterPlugin.sts.initFileAtStartup=&lt;files to read when STS startup, e.g : article.csv,users.csv&gt;
+ - -DjmeterPlugin.sts.initFileAtStartupRegex=&lt;true/false&gt; false : no regular expression, files with comma separator, true : read files matching the regular expression.
   
-
 ```
 jmeter.bat -DjmeterPlugin.sts.loadAndRunOnStartup=true -DjmeterPlugin.sts.port=9191 -DjmeterPlugin.sts.datasetDirectory=d:/data -DjmeterPlugin.sts.charsetEncodingReadFile=UTF-8 -n –t testdemo.jmx
 ```
@@ -566,21 +579,21 @@ When it's done see results in the Listener Tree View.
 
 ## JMETER MAVEN PLUGIN
 If you want to use the Http Simple Server with the **JMeter Maven plugin**, you could :
-  - Put your csv files in <project>/src/test/jmeter directory (e.g : logins.csv)
-  - Put the simple-table-server.groovy (groovy script) in  <project>/src/test/jmeter directory
-  - Put the your jmeter script in <project>/src/test/jmeter directory (e.g : test_login.jmx)
-  - Declare in the maven build section, in the configuration > jmeterExtensions > declare the artifact kg.apc:jmeter-plugins-table-server:<version>
-  - Declare user properties for STS configuration and automatic start
+ - Put your csv files in <project>/src/test/jmeter directory (e.g : logins.csv)
+ - Put the simple-table-server.groovy (groovy script) in  <project>/src/test/jmeter directory
+ - Put the your jmeter script in <project>/src/test/jmeter directory (e.g : test_login.jmx)
+ - Declare in the maven build section, in the configuration > jmeterExtensions > declare the artifact kg.apc:jmeter-plugins-table-server:<version>
+ - Declare user properties for STS configuration and automatic start
 
 Extract pom.xml dedicated to Http Simple Table Server :
 
-```python
+```xml
      <build>
          <plugins>
              <plugin>
                  <groupId>com.lazerycode.jmeter</groupId>
                  <artifactId>jmeter-maven-plugin</artifactId>
-                 <version>3.7.0</version>
+                 <version>3.8.0</version>
 ...
                  <configuration>
                      <jmeterExtensions>
@@ -600,6 +613,12 @@ Extract pom.xml dedicated to Http Simple Table Server :
     </build>
 ```
 
+Link to JMeter Maven plugin : [https://github.com/jmeter-maven-plugin/jmeter-maven-plugin](https://github.com/jmeter-maven-plugin/jmeter-maven-plugin)
+
+## STS ALONE
+The Http Simple Table Server (STS) exist in external tool (.jar) without the need of JMeter.<br/>
+[Link to https://github.com/vdaburon/simple-table-server-alone](https://github.com/vdaburon/simple-table-server-alone) <br/>
+Alone because this tool don't need Apache JMeter, it works by itself or alone.
 
 ## VERSIONS
 

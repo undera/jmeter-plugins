@@ -108,6 +108,7 @@ nav:
       - wiki/BuildingFromSource.md
       - wiki/PluginsGuiGuidelines.md
       - wiki/PluginRepositoryDescriptorFormat.md
+      - wiki/SubmitYourPlugin.md
       - wiki/Contributors.md
       - wiki/Roadmap.md
       - wiki/Changelog.md

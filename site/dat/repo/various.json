@@ -3210,6 +3210,10 @@
       "3.0.0": {
         "changes": "Baseline JTL comparison support. The Excel report now contains three sheets: Current, Baseline, and Comparison. Added 'Baseline Directory' field in the GUI listener.",
         "downloadUrl": "https://github.com/rishavsawarn/jmeter-jtl-xls-report-plugin/releases/download/v3.0.0/jmeter-jtl-xls-report-plugin-v3.0.0.jar"
+      },
+      "3.1.0": {
+        "changes": "Added Error Analysis sheet: per-transaction breakdown of failures by type (Timeout, 4xx, 5xx, Assertion, Other). Bundled commons-compress so .xlsx generation works reliably inside JMeter.",
+        "downloadUrl": "https://github.com/rishavsawarn/jmeter-jtl-xls-report-plugin/releases/download/v3.1.0/jmeter-jtl-xls-report-plugin-v3.1.0.jar"
       }
     }
   },

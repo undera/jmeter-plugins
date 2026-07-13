@@ -1,0 +1,113 @@
+# Throughput Shaping Timer
+
+<span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-tst)</span>
+
+Long time JMeter users had to try their tests on and on,
+finding exact number of threads and timer delays
+that produce desired number of requests per second (RPS) to server.
+This is "closed workload" approach, and it has major drawbacks
+(see [here](http://www.google.com/search?q=open+closed+workload) why).
+And if you changed load generator machine or server response time -
+you were doomed to do all this stuff again.
+
+Here's the solution - Throughput Shaping Timer! Now you can just
+set schedule of RPS easily, observing it on preview graph.
+This schedule can be as various as you want.
+It gives you the happiness of the "open workload" approach.
+
+## Few Important Notes
+
+  1. JMeter threads of Thread Groups in scope of the Element will be stopped when RPS schedule finishes.
+  1. provide enough working threads for your RPS, JMeter timers can only *delay* threads (and limit RPS). You may pair this plugin with [Concurrency Thread Group](/wiki/ConcurrencyThreadGroup/) using [ThroughputShapingTimer#Schedule-Feedback-Function Schedule Feedback Function] to dynamically maintain thread count required to achieve target RPS.
+  1. if you're using versions of JMeter lower than 3.3 and if you have RPS that lower at the end of test, make threads to lower also. Оtherwise you'll have a spike in last second.
+  1. avoid using zero RPS value as start of test, this produce spike also
+  1. avoid zero RPS during the test, this may lead to nasty effects
+
+## How Many Threads I Need To Produce Desired RPS?
+Threads pool size can be calculated like `RPS * <max response time> / 1000`. The more rate desired the more threads you will need. The more response time service have the more threads you will need.
+
+For example, if your service response time may be 2.5sec and target rps is 1230, you have to have `1230 * 2500 / 1000 = 3075` threads.
+
+It is better to have some threads overhead to handle unexpected response time spikes. But beware of too much overhead, it will lead to "final spike".
+
+## Example
+[Example JMX for Throughput Shaping Timer](/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/ThroughputShapingExample.jmx)
+
+Shaping Timer setting in example test plan:
+![](/img/wiki/throughput_shaping_timer1.png)
+
+Actual RPS provided:
+![](/img/wiki/throughput_shaping_timer2.png)
+
+## Properties exposed by Component
+
+The element will export the following properties that you can access through [__P](https://jmeter.apache.org/usermanual/functions.html#__P) function or using in JSR223 Test Elements `props.get("property name")`
+
+Properties are:
+
+  - elementName_totalDuration  - Total duration as sum of the "Duration,sec" column
+  - elementName_cntDelayed - Number of current threads waiting, if lower than 1 it means we don't have enough threads to reach RPS
+  - elementName_cntSent - Number of samples sent since last second tick
+  - elementName_rps - Current RPS
+
+
+```
+
+== Special Property Processing ==
+
+There is a way to specify load pattern from special jmeter property {{{tst-name.load_profile}}}, where tst-name
+is the name of the Throughput Shaping Timer to define the load pattern on.
+The {{{load.profile}}} jmeter property is used as a default if the {{{tst-name}}} is not defined.
+If neither the {{{tst_name.load_profile}}}  or default {{{load_profile}}} are defined, the values from GUI are taken
+Property can be specified either in user.properties file (jmeter.properties also applicable), or
+from command line like {{{-J "load\_profile=..."}}}.
+
+
+Load pattern specified with set of function-like declarations.
+"Functions" may be of 3 types: const, line and step.
+  * _const(N, T)_ - hold constant load of N requests per second for T seconds
+  * _line(N, K, T)_ - linear increase load from N to K RPS during T seconds
+  * _step(N, K, S, T)_ - generate stepping load from N RPS to K rps, each step height to will be of S RPS, each step duration will be T seconds
+
+Duration value in every function may be specified with shorthand case-insensitive modifiers:
+  * s - seconds
+  * m - minutes
+  * h - hours
+  * d - days
+
+Duration setting may be combined like _1d11h23m6s_.
+
+Example of load profile string: {{{my_timer.load_profile=const(10,10s) line(10,100,1m) step(5,25,5,1h)}}}
+Example of default load profile string : {{{load_profile=step(5, 50, 5, 2m) const(50, 10m)}}}
+
+Scenario 1:
+- Throughput Shaping Timer is named "my_timer"
+- The property {{{my_timer.load_profile}}} is not defined
+- {{{load_profile}}} is not defined
+Outcome:
+    Throughput will be shaped from values defined in GUI
+
+Scenario 2:
+- Throughput Shaping Timer is named "my_timer"
+- property {{{my_timer.load_profile}}} is defined {{{my_timer.load_profile=const(10, 1m)}}}
+Outcome:
+ Named property takes the first priority and the throughput will be shaped as defined in named property
+ The timer will attempt to keep the pace of 10 RPS for the duration of 1 minute
+
+ Scenario 3
+ - Throuhgput Shaping Timer is named "my_timer"
+ - property {{{my_timer.load_profile}}} is not defined
+ - property {{{load_profile}}} is defined {{{load_profile=step(5, 25, 5, 1m)}}}
+ Outcome:
+  Default property takes 2nd priority and the timer will attempt to generate the RPS defined in the {{{load_profile}} property}}}
+
+
+
+== Schedule Feedback Function ==
+There is special JMeter function that enables feeback loop for number of threads.
+Thread groups like [ConcurrencyThreadGroup.wiki Concurrency Thread Group] can use that function to supply additional
+threads during test runs when requested RPS schedule is not met.
+
+Example function call: {{{ ${__tstFeedback(tst-name,1,100,10)} }}}, where "tst-name" is name of Throughput Shaping Timer to integrate with, 1 and 100 are starting threads and max allowed threads, 10 is how many spare threads to keep in thread pool. 
+If spare threads parameter is a float value <1, then it is interpreted as a ratio relative to the current estimate of threads needed.  If above 1, spare threads is interpreted as an absolute count.
+

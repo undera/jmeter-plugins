@@ -26,7 +26,7 @@ def is_version_packed(fname):
 def get_packages():
     resp = requests.get("http://jmeter-plugins.org/files/packages/")
     assert resp.status_code == 200
-    return {x['file']: x['size'] for x in json.loads(resp.content)['files']}
+    return {x['name']: x['size'] for x in json.loads(resp.content)}
 
 
 def pack_version(fname, ver_obj, pmgr_obj, installer_cls):
@@ -106,11 +106,20 @@ if __name__ == "__main__":
         schema = json.load(fhd)
 
     plugins = []
-    for repo_file in os.listdir(repo_dir):
+    for repo_file in sorted(os.listdir(repo_dir)):
+        if repo_file == 'repo.json':
+            continue
         with open(os.path.join(repo_dir, repo_file)) as fhd:
             content = json.loads(fhd.read())
             jsonschema.validate(content, schema)
             plugins.extend(content)
+
+    seen_ids = {}
+    for plugin in plugins:
+        pid = plugin['id']
+        if pid in seen_ids:
+            raise ValueError("Duplicate plugin ID '%s' found in repo files" % pid)
+        seen_ids[pid] = True
 
     if len(sys.argv) > 1:
         logging.info("Doing no downloads, just checked JSON validity")

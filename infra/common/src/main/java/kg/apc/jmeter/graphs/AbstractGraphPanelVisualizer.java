@@ -468,6 +468,40 @@ public abstract class AbstractGraphPanelVisualizer
         return getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, null, canCompose);
     }
 
+    /**
+     * Enables subclasses to provide custom extensions of AbstractGraphRow.
+     * Note: In the 8-argument method, most lines may be replaced with this method to make code DRY,
+     * however, it has been left unchanged to avoid regression risk.
+     * @param row row to be added to the Model
+     * @param customColor optional custom color assignment, bypassing ColorDispatcher
+     * @param isAggregate whether row is sample aggregate
+     * @param canCompose whether row can be added to Composite Graph
+     */
+    protected synchronized AbstractGraphRow getNewRow(AbstractGraphRow row, Color customColor, boolean isAggregate, boolean canCompose) {
+        if (row == null) {
+            log.error("Cannot add null row");
+            return null;
+        }
+        final ConcurrentSkipListMap<String, AbstractGraphRow> modelForAdding = isAggregate ? this.modelAggregate : this.model;
+        final String label = row.getLabel();
+
+        if (modelForAdding.containsKey(label)) {
+            return modelForAdding.get(label);
+        }
+        final Color overrideColor = customColor != null ? customColor
+                : this.labelToColorMapping != null ? labelToColorMapping.getColorForLabel(label)
+                : null;
+        row.setColor(overrideColor != null ? overrideColor : colors.getNextColor());
+
+        modelForAdding.put(label, row);
+        this.graphPanel.addRow(row);
+
+        if (canCompose) {
+            addRowToCompositeModels(getModel().getName(), row);
+        }
+        return row;
+    }
+
     protected boolean isFromTransactionControler(SampleResult res) {
         return res.getResponseMessage() != null && res.getResponseMessage().startsWith("Number of samples in transaction");
     }

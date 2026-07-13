@@ -1,0 +1,121 @@
+# Redis Data Set
+
+<span class=''>[<i class='fa fa-download'></i> Download](/?search=jpgc-redis)</span>
+
+## Description
+
+Redis Data Set requests data from a Redis server and converts to JMeter variables. This allows data to be served from a single Redis server across multiple JMeter slave instances during a test, without needing to split the file or handle duplicate rows of data.
+
+The plugin has the following features:
+
+  - Automatic conversion to JMeter variables
+  - Data can be retrieved from a Redis List or Set
+  - Recycle or removal of test data on use
+  - Thread stop when no more data available
+  - Multiple concurrent JMeter clients from a single Redis instance
+  - Support for password-protected Redis instances
+
+Data is loaded to Redis under a key, where each entry is a string that is delimited into one or more variables. See [Loading Data to Redis](#loadingDataToRedis) below.
+
+In the following example, there are 2 Redis databases, 0 and 1. Database 0 has 2 index keys, ccKeys and userName.
+
+```
++- 0
+   +- ccKeys
+      +- "123456,1234"
+      +- "123457,1235"
+      +- "123458,1236"
+   +- userName
+      +- "user1"
+      +- "user2"
+      +- "user3"
+```
+
+## Redis Lists vs Sets
+
+List
+- Data retrieved sequentially
+- Supports repeated or duplicate data
+
+Set
+- Data retrieved randomly
+- Data is unique within the set (adding duplicate data is ignored)
+
+<a id="Configuration"></a>
+## Configuration
+
+![](/img/wiki/redis/RedisDataSet.png)
+
+### Data Configuration
+
+This section describes how the data is stored within Redis and how it should be mapped to JMeter Variables. All options in this section are mandatory.
+
+  - Redis Key : The list or set name
+  - Variable Names : The names of variables exported by Data Set to Test elements. These are the equivalent of CSV column headers in the CSV Data Set.
+  - Delimiter : Separator used within row stored in Redis List or Set
+  - Data Source Type : Whether the data is loaded to Redis as a List or Set
+  - Recycle Data on Use : Whether data can be re-used, or should be removed from Redis on use. If true, then data will be re-used, across multiple iterations, threads and load generators. If false, then data will be **consumed** upon use. Once the data is exhausted, no further iterations will be executed. This is useful if you must ensure unique data is used across load generators.
+
+### Connection Configuration
+
+The following options are mandatory:
+
+  - Redis Server Host : Hostname of the Redis server.
+  - Redis Server Port : This will typically be the standard Redis port 6379.
+  - Database : Redis database, typically set to 0.
+
+The following options are optional:
+
+  - Timeout for connection (ms)
+  - Password for connection : Add password for Redis databases that require authentication
+
+### Redis Pool Configuration
+
+These options are controlled by the Apache Commons Pool library, and are described in more detail in the [API page for that project](https://commons.apache.org/proper/commons-pool/api-1.6/org/apache/commons/pool/impl/GenericObjectPool.html).
+
+<a id="loadingDataToRedis"></a>
+## Loading Data to Redis
+
+It is typically most efficient to load data to Redis using [pipe mode](https://redis.io/topics/mass-insert), `redis-cli --pipe`.
+
+An input CSV file that looks like this:
+
+```
+   ccNum,expiryDate
+   123456,1234
+   123457,1235
+   123458,1236
+```
+
+would first need to be converted to a Redis-compatible input format before being loading into a List with an index key ccList:
+
+```
+LPUSH ccList 123456,1234
+LPUSH ccList 123457,1235
+LPUSH ccList 123458,1236
+```
+
+or, in the case of a Set, with an index key ccSet:
+
+```
+SADD ccSet 123456,1234
+SADD ccSet 123457,1235
+SADD ccSet 123458,1236
+```
+
+In the below example, we declare a Redis Data Set which exports cardNumber variable from a Redis List using a key ccList and then use it in a Debug Sampler:
+
+![](/img/wiki/redis/TestPlanWithRedisList.png)
+
+The JMX can be downloaded [here](/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/RedisDataSetExample.jmx).
+
+<a id="TechnicalDetails"></a>
+## Technical Details
+
+The RedisDataSet uses the [Jedis Java Redis library](https://github.com/xetorthio/jedis) for connection and access operations.
+Starting from version 0.6, RedisDataSet uses  [srandmember](https://redis.io/commands/srandmember/) and [lmove](https://redis.io/commands/lmove/) commands.
+For Redis versions below 6.2.0, you can define a "plugins.redis.legacy=true" property in jmeter.properties.
+
+For data loaded into a Redis set, RedisDataSet uses [spop](https://redis.io/commands/spop) and [sadd](https://redis.io/commands/sadd) commands.
+
+For data loaded into a Redis list, RedisDataSet uses [lpop](https://redis.io/commands/lpop) and [rpush](https://redis.io/commands/rpush) commands.

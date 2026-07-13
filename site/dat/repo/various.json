@@ -3210,6 +3210,10 @@
       "3.0.0": {
         "changes": "Baseline JTL comparison support. The Excel report now contains three sheets: Current, Baseline, and Comparison. Added 'Baseline Directory' field in the GUI listener.",
         "downloadUrl": "https://github.com/rishavsawarn/jmeter-jtl-xls-report-plugin/releases/download/v3.0.0/jmeter-jtl-xls-report-plugin-v3.0.0.jar"
+      },
+      "3.1.0": {
+        "changes": "Added Error Analysis sheet: per-transaction breakdown of failures by type (Timeout, 4xx, 5xx, Assertion, Other). Bundled commons-compress so .xlsx generation works reliably inside JMeter.",
+        "downloadUrl": "https://github.com/rishavsawarn/jmeter-jtl-xls-report-plugin/releases/download/v3.1.0/jmeter-jtl-xls-report-plugin-v3.1.0.jar"
       }
     }
   },
@@ -3367,6 +3371,10 @@
       "com.jmeter.sse.SSESamplerGui"
     ],
     "versions": {
+      "2.0.1": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/github/cuneytcakir/jmeter-sse-sampler/2.0.1/jmeter-sse-sampler-2.0.1.jar",
+        "changes": "increase OkHttp connection pool size for high-concurrency load tests"
+      },
       "2.0.0": {
         "downloadUrl": "https://repo1.maven.org/maven2/io/github/cuneytcakir/jmeter-sse-sampler/2.0.0/jmeter-sse-sampler-2.0.0.jar",
         "changes": "Maven Central release preparations and Maven groupId updates."
@@ -3466,6 +3474,29 @@
           "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
           "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
         }
+      }
+    }
+  },
+  {
+    "id": "jmeter-html-report-plugin",
+    "name": "JMeter HTML Report Plugin",
+    "description": "Interactive HTML report generator for JMeter API testing with request/response details, assertion results, filtering, charts and dark mode support.",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/srenevasanks/jmeter-html-report-plugin",
+    "vendor": "Srenevasan",
+    "markerClass": "listener.CustomHtmlReportListener",
+    "componentClasses": [
+      "listener.CustomHtmlReportListener",
+      "gui.CustomHtmlReportGui"
+    ],
+    "versions": {
+      "1.0.0": {
+        "changes": "Initial public release.",
+        "downloadUrl": "https://github.com/srenevasanks/jmeter-html-report-plugin/releases/download/v1.0.0/jmeter-html-report-plugin-1.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ],
+        "libs": {}
       }
     }
   }

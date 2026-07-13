@@ -3108,6 +3108,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.0.0": {
+        "changes": "NEW: Agentic Tool calls (Claude only for now). Auto correlation. Minor enhancements and fixes.",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.0.0/jmeter-agent-3.0.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

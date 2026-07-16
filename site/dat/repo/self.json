@@ -11,65 +11,65 @@
     "versions": {
       "1.3": {
         "changes": "Improve test plan parsing",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.3/jmeter-plugins-manager-1.3.jar",
+        "downloadUrl": "https://repo.maven.apache.org/maven2/kg/apc/jmeter-plugins-manager/1.3/jmeter-plugins-manager-1.3.jar",
         "libs": {
-          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
+          "cmdrunner>=2.2": "https://repo.maven.apache.org/maven2/kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
         }
       },
       "1.4": {
         "changes": "Fixes for JMeter 5.3 themes",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.4/jmeter-plugins-manager-1.4.jar",
+        "downloadUrl": "https://repo.maven.apache.org/maven2/kg/apc/jmeter-plugins-manager/1.4/jmeter-plugins-manager-1.4.jar",
         "libs": {
-          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
+          "cmdrunner>=2.2": "https://repo.maven.apache.org/maven2/kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
         }
       },
       "1.6": {
         "changes": "Changes to support JMeter 5.4 deprecation of old loggers",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.6/jmeter-plugins-manager-1.6.jar",
+        "downloadUrl": "https://repo.maven.apache.org/maven2/kg/apc/jmeter-plugins-manager/1.6/jmeter-plugins-manager-1.6.jar",
         "libs": {
-          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
+          "cmdrunner>=2.2": "https://repo.maven.apache.org/maven2/kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
         }
       },
       "1.7": {
         "changes": "Fix couple of security issues, including Log4Shell",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.7/jmeter-plugins-manager-1.7.jar",
+        "downloadUrl": "https://repo.maven.apache.org/maven2/kg/apc/jmeter-plugins-manager/1.7/jmeter-plugins-manager-1.7.jar",
         "libs": {
-          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
+          "cmdrunner>=2.2": "https://repo.maven.apache.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
         }
       },
       "1.8": {
         "changes": "Use headless mode in BAT file for Windows",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.8/jmeter-plugins-manager-1.8.jar",
+        "downloadUrl": "https://repo.maven.apache.org/maven2/kg/apc/jmeter-plugins-manager/1.8/jmeter-plugins-manager-1.8.jar",
         "libs": {
-          "cmdrunner>=2.3": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
+          "cmdrunner>=2.3": "https://repo.maven.apache.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
         }
       },
       "1.9": {
         "changes": "Fix issue of 1.8 of libs saved into wrond directory",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.9/jmeter-plugins-manager-1.9.jar",
+        "downloadUrl": "https://repo.maven.apache.org/maven2/kg/apc/jmeter-plugins-manager/1.9/jmeter-plugins-manager-1.9.jar",
         "libs": {
-          "cmdrunner>=2.3": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
+          "cmdrunner>=2.3": "https://repo.maven.apache.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
         }
       },
       "1.10": {
         "changes": "Detect missing classes of BackendListener",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.10/jmeter-plugins-manager-1.10.jar",
+        "downloadUrl": "https://repo.maven.apache.org/maven2/kg/apc/jmeter-plugins-manager/1.10/jmeter-plugins-manager-1.10.jar",
         "libs": {
-          "cmdrunner>=2.3": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
+          "cmdrunner>=2.3": "https://repo.maven.apache.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
         }
       },
       "1.11": {
         "changes": "Fix one CVE via beanutils, bump up to Java 1.8",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.11/jmeter-plugins-manager-1.11.jar",
+        "downloadUrl": "https://repo.maven.apache.org/maven2/kg/apc/jmeter-plugins-manager/1.11/jmeter-plugins-manager-1.11.jar",
         "libs": {
-          "cmdrunner>=2.3": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
+          "cmdrunner>=2.3": "https://repo.maven.apache.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
         }
       },
       "1.12": {
         "changes": "Fix canUninstall flag bypass in DependencyResolver, fix Log4j CVE",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.12/jmeter-plugins-manager-1.12.jar",
+        "downloadUrl": "https://repo.maven.apache.org/maven2/kg/apc/jmeter-plugins-manager/1.12/jmeter-plugins-manager-1.12.jar",
         "libs": {
-          "cmdrunner>=2.3": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
+          "cmdrunner>=2.3": "https://repo.maven.apache.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
         }
       }
     }

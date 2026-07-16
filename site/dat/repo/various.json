@@ -3193,6 +3193,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.0.2": {
+        "changes": "NEW: Meta API integration; @testplan command context",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.0.2/jmeter-agent-3.0.2.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

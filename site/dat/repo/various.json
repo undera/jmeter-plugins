@@ -3201,6 +3201,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.0.3": {
+        "changes": "NEW: AWS Bedrock Support",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.0.3/jmeter-agent-3.0.3.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

@@ -3610,6 +3610,12 @@
     "screenshotUrl": "https://raw.githubusercontent.com/altansayan/mock-jutsu-jmeter/main/assets/function-helper-preview.png",
     "vendor": "ASA Intelligence - Altan Sezer Ayan",
     "versions": {
+      "1.0.1": {
+        "changes": "Not backward compatible with 1.0.0 - corrects 273 mismatches against the Python (mockjutsu) reference implementation across all 39 generator files, fixes a Turkish-locale decimal separator bug, removes a dead registry entry. 4191 tests passed.",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.0.1/mock-jutsu-jmeter-1.0.1.jar",
+        "libs": {},
+        "depends": []
+      },
       "1.0.0": {
         "changes": "Initial release - 390 types, 49 categories, pipe separator syntax, mask support, 5955 tests passed.",
         "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.0.0/mock-jutsu-jmeter-1.0.0.jar",

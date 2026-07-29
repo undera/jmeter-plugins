@@ -3209,6 +3209,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.0.6": {
+        "changes": "NEW: OpenAI Tool calls support; Prompt to record, correlate, and more; JMeter Pets.",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.0.6/jmeter-agent-3.0.6.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

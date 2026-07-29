@@ -3600,5 +3600,34 @@
         "libs": {}
       }
     }
+  },
+  {
+    "id": "mock-jutsu",
+    "name": "Mock Jutsu - The Ultimate Algorithmic Mock Data Engine",
+    "description": "Generate format-valid synthetic test data directly inside JMeter test plans via custom functions - no Python, no subprocess, no CSV files needed. 390 types across 49 categories, 6 locales (TR/UK/US/DE/FR/RU), pipe-separated options, mask support (PCI DSS / GDPR / KVKK), zero external dependencies. Plugin Benchmark: https://github.com/altansayan/mock-jutsu-jmeter-plugin-benchmark",
+    "helpUrl": "https://github.com/altansayan/mock-jutsu-jmeter#readme",
+    "markerClass": "com.mockjutsu.jmeter.MockJutsuBaseFunction",
+    "screenshotUrl": "https://raw.githubusercontent.com/altansayan/mock-jutsu-jmeter/main/assets/function-helper-preview.png",
+    "vendor": "ASA Intelligence - Altan Sezer Ayan",
+    "versions": {
+      "1.1.0": {
+        "changes": "Performance: SecureRandom pool, JDK native EC crypto (crypto types 8-22ms to <1ms), Pattern cache, JWT SecureRandom consolidation. Bug fixes: 12 missing _masked registry entries, JSON control-char escapes, NUL byte in CryptoFuzzGen. Observability: SLF4J logging to all generators. Architecture: O(1) Map dispatch. Testing: per-type perf regression guard for all 429 type+qualifier combos. Benchmark: https://github.com/altansayan/mock-jutsu-jmeter-plugin-benchmark",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.1.0/mock-jutsu-jmeter-1.1.0.jar",
+        "libs": {},
+        "depends": []
+      },
+      "1.0.1": {
+        "changes": "Not backward compatible with 1.0.0 - corrects 273 mismatches against the Python (mockjutsu) reference implementation across all 39 generator files, fixes a Turkish-locale decimal separator bug, removes a dead registry entry. 4191 tests passed.",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.0.1/mock-jutsu-jmeter-1.0.1.jar",
+        "libs": {},
+        "depends": []
+      },
+      "1.0.0": {
+        "changes": "Initial release - 390 types, 49 categories, pipe separator syntax, mask support, 5955 tests passed.",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.0.0/mock-jutsu-jmeter-1.0.0.jar",
+        "libs": {},
+        "depends": []
+      }
+    }
   }
 ]

@@ -3227,7 +3227,7 @@
         ]
       },
       "3.4.0": {
-        "changes": "NEW: Model Picker, Attachments, UI touchups, Bug fixes and more.",
+        "changes": "NEW: Model Picker, Thinking cards, Attachments, UI touchups, Bug fixes and more.",
         "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.4.0/jmeter-agent-3.4.0.jar",
         "depends": [
           "jmeter-core",

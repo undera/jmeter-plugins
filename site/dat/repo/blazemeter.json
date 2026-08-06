@@ -1092,6 +1092,14 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "3.1.0": {
+        "changes": "Compatibility & parity release with deeper JMeter alignment, stronger SSL handling, HEAD method support, and a new CLI migration tool.",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http-plugin/releases/download/v3.1.0/jmeter-bzm-http2-3.1.0.jar",
+        "libs": {},
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

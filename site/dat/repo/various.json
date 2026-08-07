@@ -3233,6 +3233,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.6.1": {
+        "changes": "NEW: Enhanced Model Picker, UI touch ups, and bug fixes",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.6.1/jmeter-agent-3.6.1.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

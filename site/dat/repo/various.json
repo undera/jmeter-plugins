@@ -3201,6 +3201,46 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.0.3": {
+        "changes": "NEW: AWS Bedrock Support",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.0.3/jmeter-agent-3.0.3.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.0.6": {
+        "changes": "NEW: OpenAI Tool calls support; Prompt to record, correlate, and more; JMeter Pets.",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.0.6/jmeter-agent-3.0.6.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.1.0": {
+        "changes": "NEW: Polished UI/UX",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.1.0/jmeter-agent-3.1.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.4.0": {
+        "changes": "NEW: Model Picker, Thinking cards, Attachments, UI touchups, Bug fixes and more.",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.4.0/jmeter-agent-3.4.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.6.1": {
+        "changes": "NEW: Enhanced Model Picker, UI touch ups, and bug fixes",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.6.1/jmeter-agent-3.6.1.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },
@@ -3590,6 +3630,47 @@
           "jmeter-core"
         ],
         "libs": {}
+      }
+    }
+  },
+  {
+    "id": "mock-jutsu",
+    "name": "Mock Jutsu - The Ultimate Algorithmic Mock Data Engine",
+    "description": "Generate format & checksum-valid mock test data directly inside JMeter test plans via custom functions - no Python, no subprocess, no CSV files needed. 390 types across 49 categories, 6 locales (TR/UK/US/DE/FR/RU), pipe-separated options, mask support (PCI DSS / GDPR / KVKK), zero external dependencies.<br>Plugin Benchmark: https://github.com/altansayan/mock-jutsu-jmeter-plugin-benchmark<br>Requirements: JMeter 5.5+ | Java 17+",
+    "helpUrl": "https://github.com/altansayan/mock-jutsu-jmeter#readme",
+    "markerClass": "com.mockjutsu.jmeter.MockJutsuBaseFunction",
+    "screenshotUrl": "https://raw.githubusercontent.com/altansayan/mock-jutsu-jmeter/main/assets/function-helper-preview.png",
+    "vendor": "ASA Intelligence - Altan Sezer Ayan",
+    "versions": {
+      "1.1.2": {
+        "changes": "Backward compatibility: compiled against JMeter 5.5 (supports JMeter 5.5, 5.6, 5.6.1, 5.6.2, 5.6.3). All 4205 tests pass across all supported versions.",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.1.2/mock-jutsu-jmeter-1.1.2.jar",
+        "libs": {},
+        "depends": []
+      },
+      "1.1.1": {
+        "changes": "Concurrency: ThreadLocal<SecureRandom>, ThreadLocal<Mac> (HmacSHA256), ThreadLocal<MessageDigest> (SHA-256/SHA-512) eliminate lock contention under concurrent load. DateTimeFormatter.ofPattern() hoisted to static final fields in 15 generators. CI: 426-sampler all-types JMeter smoke test on every PR.",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.1.1/mock-jutsu-jmeter-1.1.1.jar",
+        "libs": {},
+        "depends": []
+      },
+      "1.1.0": {
+        "changes": "Performance: SecureRandom pool, JDK native EC crypto (crypto types 8-22ms to <1ms), Pattern cache, JWT SecureRandom consolidation. Bug fixes: 12 missing _masked registry entries, JSON control-char escapes, NUL byte in CryptoFuzzGen. Observability: SLF4J logging to all generators. Architecture: O(1) Map dispatch. Testing: per-type perf regression guard for all 429 type+qualifier combos. Benchmark: https://github.com/altansayan/mock-jutsu-jmeter-plugin-benchmark",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.1.0/mock-jutsu-jmeter-1.1.0.jar",
+        "libs": {},
+        "depends": []
+      },
+      "1.0.1": {
+        "changes": "Not backward compatible with 1.0.0 - corrects 273 mismatches against the Python (mockjutsu) reference implementation across all 39 generator files, fixes a Turkish-locale decimal separator bug, removes a dead registry entry. 4191 tests passed.",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.0.1/mock-jutsu-jmeter-1.0.1.jar",
+        "libs": {},
+        "depends": []
+      },
+      "1.0.0": {
+        "changes": "Initial release - 390 types, 49 categories, pipe separator syntax, mask support, 5955 tests passed.",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.0.0/mock-jutsu-jmeter-1.0.0.jar",
+        "libs": {},
+        "depends": []
       }
     }
   }

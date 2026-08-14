@@ -71,6 +71,13 @@
         "libs": {
           "cmdrunner>=2.3": "https://repo.maven.apache.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
         }
+      },
+      "2.0": {
+        "changes": "Much faster repository loading, half the download size. Requires JMeter 3.2+",
+        "downloadUrl": "https://repo.maven.apache.org/maven2/kg/apc/jmeter-plugins-manager/2.0/jmeter-plugins-manager-2.0.jar",
+        "libs": {
+          "cmdrunner>=2.3": "https://repo.maven.apache.org/maven2/kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
+        }
       }
     }
   }

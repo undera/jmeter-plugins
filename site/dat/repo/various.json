@@ -3636,12 +3636,18 @@
   {
     "id": "mock-jutsu",
     "name": "Mock Jutsu - The Ultimate Algorithmic Mock Data Engine",
-    "description": "Generate format & checksum-valid mock test data directly inside JMeter test plans via custom functions - no Python, no subprocess, no CSV files needed. 390 types across 49 categories, 6 locales (TR/UK/US/DE/FR/RU), pipe-separated options, mask support (PCI DSS / GDPR / KVKK), zero external dependencies.<br>Plugin Benchmark: https://github.com/altansayan/mock-jutsu-jmeter-plugin-benchmark",
+    "description": "Generate format & checksum-valid mock test data directly inside JMeter test plans via custom functions - no Python, no subprocess, no CSV files needed. 390 types across 49 categories, 6 locales (TR/UK/US/DE/FR/RU), pipe-separated options, mask support (PCI DSS / GDPR / KVKK), zero external dependencies.<br>Plugin Benchmark: https://github.com/altansayan/mock-jutsu-jmeter-plugin-benchmark<br>Requirements: JMeter 5.5+ | Java 17+",
     "helpUrl": "https://github.com/altansayan/mock-jutsu-jmeter#readme",
     "markerClass": "com.mockjutsu.jmeter.MockJutsuBaseFunction",
     "screenshotUrl": "https://raw.githubusercontent.com/altansayan/mock-jutsu-jmeter/main/assets/function-helper-preview.png",
     "vendor": "ASA Intelligence - Altan Sezer Ayan",
     "versions": {
+      "1.1.2": {
+        "changes": "Backward compatibility: compiled against JMeter 5.5 (supports JMeter 5.5, 5.6, 5.6.1, 5.6.2, 5.6.3). All 4205 tests pass across all supported versions.",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.1.2/mock-jutsu-jmeter-1.1.2.jar",
+        "libs": {},
+        "depends": []
+      },
       "1.1.1": {
         "changes": "Concurrency: ThreadLocal<SecureRandom>, ThreadLocal<Mac> (HmacSHA256), ThreadLocal<MessageDigest> (SHA-256/SHA-512) eliminate lock contention under concurrent load. DateTimeFormatter.ofPattern() hoisted to static final fields in 15 generators. CI: 426-sampler all-types JMeter smoke test on every PR.",
         "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.1.1/mock-jutsu-jmeter-1.1.1.jar",

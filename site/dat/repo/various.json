@@ -3681,5 +3681,25 @@
         "depends": []
       }
     }
+  },
+  {
+    "id": "reportportal-jmeter",
+    "name": "ReportPortal Performance Reporter (official)",
+    "description": "Official ReportPortal Backend Listener for JMeter. Reports aggregated latency percentiles (HdrHistogram), error rate, optional SLA quality gate, and failed sample details into a ReportPortal launch. Optionally attaches the native JMeter HTML dashboard as a ZIP. <ul><li>Add a Backend Listener</li><li>Set implementation to <code>com.epam.reportportal.jmeter.PerformanceReporterClient</code></li><li>Set ReportPortal_URL, Project_Name (project slug, not numeric id), and API_Token</li><li>Docs: <a href=\"https://github.com/reportportal/plugins-performance#jmeter-plugin\">setup guide</a></li></ul>",
+    "helpUrl": "https://github.com/reportportal/plugins-performance#jmeter-plugin",
+    "screenshotUrl": "https://raw.githubusercontent.com/reportportal/plugins-performance/main/media/reportportal-performance-launches.png",
+    "vendor": "ReportPortal",
+    "markerClass": "com.epam.reportportal.jmeter.PerformanceReporterClient",
+    "componentClasses": [
+      "com.epam.reportportal.jmeter.PerformanceReporterClient"
+    ],
+    "versions": {
+      "1.0.0": {
+        "changes": "Initial official release: Backend Listener with SLA, per-request metrics, failed sample history, optional HTML dashboard ZIP.",
+        "downloadUrl": "https://github.com/reportportal/plugins-performance/releases/download/jmeter-v1.0.0/plugin-jmeter-1.0.0-shaded.jar",
+        "libs": {},
+        "depends": []
+      }
+    }
   }
 ]

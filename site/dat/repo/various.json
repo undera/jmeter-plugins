@@ -3569,6 +3569,10 @@
       "0.0.1": {
         "changes": "NEW: README Config Element for documentation. Dark mode support. JMeter Deep link.",
         "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/readme-config-element/0.0.1/readme-config-element-0.0.1-jar-with-dependencies.jar"
+      },
+      "0.1.0": {
+        "changes": "NEW: Create CLAUDE.md and AGENTS.md; Word Wrap and more.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-readme-config/releases/download/v0.1.0/readme-config-element-0.1.0-jar-with-dependencies.jar"
       }
     }
   },

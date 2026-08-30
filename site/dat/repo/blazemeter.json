@@ -1100,6 +1100,14 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "3.2.0": {
+        "changes": "Enhanced HTTP/2 (h2c) support, DNSCacheManager, BASIC_DIGEST authentication, source address binding, and improved connection/timing reliability.",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http-plugin/releases/download/v3.2.0/jmeter-bzm-http2-3.2.0.jar",
+        "libs": {},
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

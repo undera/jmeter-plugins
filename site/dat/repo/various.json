@@ -3257,6 +3257,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.8.1": {
+        "changes": "NEW: ChatGPT and Anthropic Subscription support; UI/UX revamp; new logo.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.1/jmeter-agent-3.8.1.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

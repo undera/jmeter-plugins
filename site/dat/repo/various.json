@@ -3721,5 +3721,26 @@
         "depends": []
       }
     }
+  },
+  {
+    "id": "adaptive-capacity-listener",
+    "name": "Adaptive Capacity Listener",
+    "description": "Multi-policy capacity degradation listener that monitors performance windows (latency growth %, absolute latency ceiling, error rate %, error count) and automatically halts tests upon threshold breaches with synthetic failure reporting.",
+    "screenshotUrl": "https://raw.githubusercontent.com/hilalsidhic/AdaptiveCapacityJmeterPlugin/master/assets/img.png",
+    "helpUrl": "https://github.com/hilalsidhic/AdaptiveCapacityJmeterPlugin",
+    "vendor": "Hilal Sidhic",
+    "markerClass": "io.github.hilalsidhic.jmeter.AdaptiveCapacityBackendListener",
+    "componentClasses": [
+      "io.github.hilalsidhic.jmeter.AdaptiveCapacityBackendListener",
+      "io.github.hilalsidhic.jmeter.AdaptiveCapacityListenerGui",
+      "io.github.hilalsidhic.jmeter.AdaptiveCapacityListenerTestElement",
+      "io.github.hilalsidhic.jmeter.AdaptiveCapacityMenuCreator"
+    ],
+    "versions": {
+      "1.0.1": {
+        "changes": "Initial release — multi-policy capacity degradation monitoring, automatic test halt on SLA breach, and failure reporting",
+        "downloadUrl": "https://github.com/hilalsidhic/AdaptiveCapacityJmeterPlugin/releases/download/v1.0.1/AdaptiveCapacityJmeterPlugin-1.0.1.jar"
+      }
+    }
   }
 ]

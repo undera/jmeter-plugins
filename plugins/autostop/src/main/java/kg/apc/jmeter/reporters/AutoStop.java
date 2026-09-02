@@ -32,6 +32,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AutoStop
         extends AbstractListenerElement
@@ -83,13 +84,14 @@ public class AutoStop
     private int testValueCustomSec = 180;
     private boolean skipIter = false;
 
+    private final Object relWindowLock = new Object();
     private SamplingStatCalculator relWindowStatCalc = new SamplingStatCalculator();
     private long relWindowStart = 0;
     private double previousWindowPercentile = -1;
     private float testValueRelPercentileValue = 0;
     private int testValueRelWindowSecs = 0;
     private float testValueRelThresholdPct = 0;
-    private int errorCountInWindow = 0;
+    private final AtomicInteger errorCountInWindow = new AtomicInteger(0);
     private long errorCountWindowStart = 0;
     private int testValueErrorCount = 0;
     private int testValueErrorCountSec = 0;
@@ -103,12 +105,14 @@ public class AutoStop
     public void sampleOccurred(SampleEvent se) {
         long sec = System.currentTimeMillis() / 1000;
 
-        if (testValueRelWindowSecs > 0) {
-            relWindowStatCalc.addSample(se.getResult());
+        if (testValueRelPercentileValue > 0 && testValueRelWindowSecs > 0 && testValueRelThresholdPct > 0) {
+            synchronized (relWindowLock) {
+                relWindowStatCalc.addSample(se.getResult());
+            }
         }
 
-        if (testValueErrorCount > 0 && !se.getResult().isSuccessful()) {
-            errorCountInWindow++;
+        if (testValueErrorCount > 0 && testValueErrorCountSec > 0 && !se.getResult().isSuccessful()) {
+            errorCountInWindow.incrementAndGet();
         }
 
         if (curSec != sec) {
@@ -171,10 +175,14 @@ public class AutoStop
             }
 
             // Relative window-to-window percentile degradation check
-            if (testValueRelWindowSecs > 0 && testValueRelThresholdPct > 0) {
+            if (testValueRelPercentileValue > 0 && testValueRelWindowSecs > 0 && testValueRelThresholdPct > 0) {
                 if (sec - relWindowStart >= testValueRelWindowSecs) {
-                    double currentPct = relWindowStatCalc.getPercentPoint(testValueRelPercentileValue).doubleValue();
-                    if (previousWindowPercentile >= 0 && previousWindowPercentile > 0) {
+                    double currentPct;
+                    synchronized (relWindowLock) {
+                        currentPct = relWindowStatCalc.getPercentPoint(testValueRelPercentileValue).doubleValue();
+                        relWindowStatCalc = new SamplingStatCalculator();
+                    }
+                    if (previousWindowPercentile > 0) {
                         double growthPct = (currentPct - previousWindowPercentile) * 100.0 / previousWindowPercentile;
                         if (growthPct >= testValueRelThresholdPct) {
                             log.info("P" + (int)(testValueRelPercentileValue * 100) + " grew " + String.format("%.1f", growthPct) + "% (" + (int)previousWindowPercentile + " ms -> " + (int)currentPct + " ms) over " + testValueRelWindowSecs + "s window, threshold " + testValueRelThresholdPct + "%. Auto-shutdown test...");
@@ -183,20 +191,19 @@ public class AutoStop
                         }
                     }
                     previousWindowPercentile = currentPct;
-                    relWindowStatCalc = new SamplingStatCalculator();
                     relWindowStart = sec;
                 }
             }
 
             // Per-window error count ceiling check
             if (testValueErrorCount > 0 && testValueErrorCountSec > 0) {
-                if (errorCountInWindow > testValueErrorCount) {
-                    log.info("Error count more than " + getErrorCount() + " for " + getErrorCountSecs() + "s. Auto-shutdown test...");
-                    System.out.println("AutoStop - Error count more than " + getErrorCount() + " for " + getErrorCountSecs() + "s. Auto-shutdown test...");
+                if (errorCountInWindow.get() > testValueErrorCount) {
+                    log.info("Error count more than " + getErrorCount() + " within " + getErrorCountSecs() + "s. Auto-shutdown test...");
+                    System.out.println("AutoStop - Error count more than " + getErrorCount() + " within " + getErrorCountSecs() + "s. Auto-shutdown test...");
                     stopTest();
                 }
                 if (sec - errorCountWindowStart >= testValueErrorCountSec) {
-                    errorCountInWindow = 0;
+                    errorCountInWindow.set(0);
                     errorCountWindowStart = sec;
                 }
             }
@@ -251,12 +258,14 @@ public class AutoStop
         testValueRelPercentileValue = getRelPercentileValueAsFloat();
         testValueRelWindowSecs = getRelWindowSecsAsInt();
         testValueRelThresholdPct = getRelThresholdPctAsFloat();
-        relWindowStatCalc = new SamplingStatCalculator();
+        synchronized (relWindowLock) {
+            relWindowStatCalc = new SamplingStatCalculator();
+        }
         relWindowStart = System.currentTimeMillis() / 1000;
         previousWindowPercentile = -1;
         testValueErrorCount = getErrorCountAsInt();
         testValueErrorCountSec = getErrorCountSecsAsInt();
-        errorCountInWindow = 0;
+        errorCountInWindow.set(0);
         errorCountWindowStart = System.currentTimeMillis() / 1000;
     }
 
@@ -397,7 +406,7 @@ public class AutoStop
     private float getPercentileValueAsFloat() {
         String val = getPercentileValue();
         if (val == null || val.trim().isEmpty()) {
-            return 0;
+            return 1;
         }
         float res = 0;
         try {
@@ -406,7 +415,7 @@ public class AutoStop
             log.error("Wrong Percentile Value: " + val, e);
             setPercentileValue("1");
         }
-        return res > 0 ? res : 0;
+        return res > 0 ? res : 1;
     }
 
     private int getResponseTimeAsInt() {

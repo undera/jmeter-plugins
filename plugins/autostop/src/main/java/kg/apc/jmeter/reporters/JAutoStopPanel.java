@@ -39,39 +39,45 @@ public class JAutoStopPanel extends javax.swing.JPanel {
     }
 
     public void configure(AutoStop testElement) {
-        boolean hasRespTime = isConfigured(testElement.getResponseTime());
-        jCheckBoxRespTime.setSelected(hasRespTime);
-        jTextFieldRespTime.setText(hasRespTime ? testElement.getResponseTime() : "10000");
-        jTextFieldRespTimeSec.setText(isConfigured(testElement.getResponseTimeSecs()) ? testElement.getResponseTimeSecs() : "10");
+        String respTime = testElement.getResponseTime();
+        String respTimeSec = testElement.getResponseTimeSecs();
+        jCheckBoxRespTime.setSelected(isConfigured(respTime));
+        jTextFieldRespTime.setText(respTime != null ? respTime : "");
+        jTextFieldRespTimeSec.setText(respTimeSec != null ? respTimeSec : "");
 
-        boolean hasLatency = isConfigured(testElement.getResponseLatency());
-        jCheckBoxLatency.setSelected(hasLatency);
-        jTextFieldRespLatency.setText(hasLatency ? testElement.getResponseLatency() : "5000");
-        jTextFieldRespLatencySec.setText(isConfigured(testElement.getResponseLatencySecs()) ? testElement.getResponseLatencySecs() : "10");
+        String latency = testElement.getResponseLatency();
+        String latencySec = testElement.getResponseLatencySecs();
+        jCheckBoxLatency.setSelected(isConfigured(latency));
+        jTextFieldRespLatency.setText(latency != null ? latency : "");
+        jTextFieldRespLatencySec.setText(latencySec != null ? latencySec : "");
 
-        boolean hasError = isConfigured(testElement.getErrorRate());
-        jCheckBoxError.setSelected(hasError);
-        jTextFieldError.setText(hasError ? testElement.getErrorRate() : "50");
-        jTextFieldErrorSec.setText(isConfigured(testElement.getErrorRateSecs()) ? testElement.getErrorRateSecs() : "10");
+        String errorRate = testElement.getErrorRate();
+        String errorSec = testElement.getErrorRateSecs();
+        jCheckBoxError.setSelected(isConfigured(errorRate));
+        jTextFieldError.setText(errorRate != null ? errorRate : "");
+        jTextFieldErrorSec.setText(errorSec != null ? errorSec : "");
 
-        boolean hasPercentile = isConfigured(testElement.getPercentileResponseTime());
-        jCheckBoxPercentile.setSelected(hasPercentile);
-        jTextFieldPercentileRespTime.setText(hasPercentile ? testElement.getPercentileResponseTime() : "15000");
-        jTextFieldPercentileRespTimeSec.setText(isConfigured(testElement.getPercentileResponseTimeSecs()) ? testElement.getPercentileResponseTimeSecs() : "10");
-        jTextFieldPercentileValue.setText(isConfigured(testElement.getPercentileValue()) ? testElement.getPercentileValue() : "90");
+        String percRespTime = testElement.getPercentileResponseTime();
+        String percRespTimeSec = testElement.getPercentileResponseTimeSecs();
+        String percValue = testElement.getPercentileValue();
+        jCheckBoxPercentile.setSelected(isConfigured(percRespTime));
+        jTextFieldPercentileRespTime.setText(percRespTime != null ? percRespTime : "");
+        jTextFieldPercentileRespTimeSec.setText(percRespTimeSec != null ? percRespTimeSec : "");
+        jTextFieldPercentileValue.setText(percValue != null ? percValue : "");
 
-        boolean hasRelPercentile = isConfigured(testElement.getRelPercentileValue());
-        jCheckBoxRelPercentile.setSelected(hasRelPercentile);
-        jTextFieldRelPercentileValue.setText(hasRelPercentile ? testElement.getRelPercentileValue() : "95");
-        jTextFieldRelWindowSecs.setText(isConfigured(testElement.getRelWindowSecs()) ? testElement.getRelWindowSecs() : "30");
-        jTextFieldRelThresholdPct.setText(isConfigured(testElement.getRelThresholdPct()) ? testElement.getRelThresholdPct() : "20");
+        String relPerc = testElement.getRelPercentileValue();
+        String relWindow = testElement.getRelWindowSecs();
+        String relThresh = testElement.getRelThresholdPct();
+        jCheckBoxRelPercentile.setSelected(isConfigured(relPerc));
+        jTextFieldRelPercentileValue.setText(relPerc != null ? relPerc : "");
+        jTextFieldRelWindowSecs.setText(relWindow != null ? relWindow : "");
+        jTextFieldRelThresholdPct.setText(relThresh != null ? relThresh : "");
 
-        boolean hasErrorCount = isConfigured(testElement.getErrorCount());
-        jCheckBoxErrorCount.setSelected(hasErrorCount);
-        jTextFieldErrorCount.setText(hasErrorCount ? testElement.getErrorCount() : "10");
-        jTextFieldErrorCountSec.setText(isConfigured(testElement.getErrorCountSecs()) ? testElement.getErrorCountSecs() : "10");
-
-        jTextFieldCustomDuration.setText(testElement.getCustomValidationDuration());
+        String errCount = testElement.getErrorCount();
+        String errCountSec = testElement.getErrorCountSecs();
+        jCheckBoxErrorCount.setSelected(isConfigured(errCount));
+        jTextFieldErrorCount.setText(errCount != null ? errCount : "");
+        jTextFieldErrorCountSec.setText(errCountSec != null ? errCountSec : "");
 
         updateAllRowStates();
         processBullets();
@@ -129,8 +135,6 @@ public class JAutoStopPanel extends javax.swing.JPanel {
             testElement.setErrorCount("");
             testElement.setErrorCountSecs("");
         }
-
-        testElement.setCustomValidationDuration(jTextFieldCustomDuration.getText());
     }
 
     public final void initFields() {
@@ -302,7 +306,7 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         jTextFieldErrorCount.setToolTipText("Maximum allowed error count within the duration.");
         jPanelErrorCount.add(jTextFieldErrorCount);
 
-        jPanelErrorCount.add(new JLabel("for"));
+        jPanelErrorCount.add(new JLabel("within"));
 
         jTextFieldErrorCountSec = new JTextField(5);
         jTextFieldErrorCountSec.setHorizontalAlignment(JTextField.RIGHT);

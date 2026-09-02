@@ -3265,6 +3265,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.8.2": {
+        "changes": "NEW: LLM Gateway support; Corporate gateway should work now; also use OpenRounter, LiteLLM, etc.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.2/jmeter-agent-3.8.2.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

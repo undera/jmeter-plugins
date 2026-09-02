@@ -290,7 +290,7 @@ public class AutoStopTest {
         System.out.println("relativeWindowDisabledWhenNotConfigured");
         System.clearProperty("auto_stopped");
         AutoStop instance = new AutoStop();
-        // Rank blank, window and threshold set (Andrei's reproduction case)
+        // Rank blank, window and threshold set: must not fall back to comparing P0
         instance.setRelWindowSecs("1");
         instance.setRelThresholdPct("10");
         instance.testStarted();

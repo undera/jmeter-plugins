@@ -29,7 +29,7 @@ To disable auto-stop on rate criteria, just set error rate to zero.
 
 ## AutoStop on Percentile Response Time
 
-Percentile rank and threshold specified in milliseconds.
+Percentile rank specified as a number, e.g. 90 for P90; the threshold is specified in milliseconds.
 Test will be stopped only if specified percentile response time exceeded for *sequentially* N seconds.
 
 ## AutoStop on Relative Window Percentile Degradation

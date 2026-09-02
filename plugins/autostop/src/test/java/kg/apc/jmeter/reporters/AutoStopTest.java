@@ -7,6 +7,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class AutoStopTest {
     @BeforeClass
@@ -244,5 +247,244 @@ public class AutoStopTest {
         String expResult = "";
         String result = instance.getPercentileValue();
         assertEquals(expResult, result);
+    }
+
+    // --- New: relative window-to-window percentile tests ---
+
+    /** Creates a SampleResult with the given elapsed time in ms. */
+    private static SampleResult resultWithTime(long elapsedMs) {
+        SampleResult r = new SampleResult();
+        r.sampleStart();
+        r.setEndTime(r.getStartTime() + elapsedMs);
+        r.setSuccessful(true);
+        return r;
+    }
+
+    @Test
+    public void testSetGetRelPercentileValue() {
+        System.out.println("setGetRelPercentileValue");
+        AutoStop instance = new AutoStop();
+        instance.setRelPercentileValue("95");
+        assertEquals("95", instance.getRelPercentileValue());
+    }
+
+    @Test
+    public void testSetGetRelWindowSecs() {
+        System.out.println("setGetRelWindowSecs");
+        AutoStop instance = new AutoStop();
+        instance.setRelWindowSecs("30");
+        assertEquals("30", instance.getRelWindowSecs());
+    }
+
+    @Test
+    public void testSetGetRelThresholdPct() {
+        System.out.println("setGetRelThresholdPct");
+        AutoStop instance = new AutoStop();
+        instance.setRelThresholdPct("20");
+        assertEquals("20", instance.getRelThresholdPct());
+    }
+
+    /** Feature is a no-op when percentile rank is not configured (P0 must not be compared). */
+    @Test
+    public void testRelativeWindowDisabledWhenNotConfigured() throws InterruptedException {
+        System.out.println("relativeWindowDisabledWhenNotConfigured");
+        System.clearProperty("auto_stopped");
+        AutoStop instance = new AutoStop();
+        // Rank blank, window and threshold set (Andrei's reproduction case)
+        instance.setRelWindowSecs("1");
+        instance.setRelThresholdPct("10");
+        instance.testStarted();
+        for (int i = 0; i < 5; i++) instance.sampleOccurred(new SampleEvent(resultWithTime(100), ""));
+        Thread.sleep(1100);
+        for (int i = 0; i < 5; i++) instance.sampleOccurred(new SampleEvent(resultWithTime(100), ""));
+        Thread.sleep(1100);
+        for (int i = 0; i < 5; i++) instance.sampleOccurred(new SampleEvent(resultWithTime(900), ""));
+        Thread.sleep(1100);
+        instance.sampleOccurred(new SampleEvent(resultWithTime(900), ""));
+
+        assertNull("Blank percentile rank must not trigger shutdown", System.getProperty("auto_stopped"));
+    }
+
+    /** Percentile breach across windows stops the test. */
+    @Test
+    public void testRelativeWindowBreachStopsTest() throws InterruptedException {
+        System.out.println("relativeWindowBreachStopsTest");
+        System.clearProperty("auto_stopped");
+        AutoStop instance = new AutoStop();
+        instance.setRelPercentileValue("90");
+        instance.setRelWindowSecs("1");
+        instance.setRelThresholdPct("50");
+        instance.testStarted();
+
+        SampleEvent fastEvent = new SampleEvent(resultWithTime(100), "");
+        for (int i = 0; i < 10; i++) { instance.sampleOccurred(fastEvent); }
+
+        Thread.sleep(1100);
+
+        SampleEvent slowEvent = new SampleEvent(resultWithTime(500), "");
+        for (int i = 0; i < 10; i++) { instance.sampleOccurred(slowEvent); }
+
+        Thread.sleep(1100);
+        instance.sampleOccurred(slowEvent);
+
+        assertEquals("true", System.getProperty("auto_stopped"));
+    }
+
+    /** Stable latency across windows must not trigger stop. */
+    @Test
+    public void testRelativeWindowNoTriggerWhenStable() throws InterruptedException {
+        System.out.println("relativeWindowNoTriggerWhenStable");
+        System.clearProperty("auto_stopped");
+        AutoStop instance = new AutoStop();
+        instance.setRelPercentileValue("90");
+        instance.setRelWindowSecs("1");
+        instance.setRelThresholdPct("50");
+        instance.testStarted();
+
+        SampleEvent event = new SampleEvent(resultWithTime(100), "");
+        for (int i = 0; i < 10; i++) { instance.sampleOccurred(event); }
+        Thread.sleep(1100);
+        for (int i = 0; i < 10; i++) { instance.sampleOccurred(event); }
+        Thread.sleep(1100);
+        instance.sampleOccurred(event);
+
+        assertNull("Stable latency should not stop test", System.getProperty("auto_stopped"));
+    }
+
+    /** Verifies that concurrent sampleOccurred calls do not throw exceptions or corrupt state. */
+    @Test
+    public void testConcurrentSampleOccurredThreadSafety() throws Exception {
+        System.out.println("concurrentSampleOccurredThreadSafety");
+        System.clearProperty("auto_stopped");
+        final AutoStop instance = new AutoStop();
+        instance.setRelPercentileValue("90");
+        instance.setRelWindowSecs("10");
+        instance.setRelThresholdPct("50");
+        instance.setErrorCount("100000");
+        instance.setErrorCountSecs("10");
+        instance.testStarted();
+
+        int numThreads = 8;
+        final int samplesPerThread = 500;
+        Thread[] threads = new Thread[numThreads];
+        final java.util.concurrent.atomic.AtomicBoolean hasError = new java.util.concurrent.atomic.AtomicBoolean(false);
+
+        for (int t = 0; t < numThreads; t++) {
+            final int threadId = t;
+            threads[t] = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        for (int i = 0; i < samplesPerThread; i++) {
+                            boolean fail = (i % 5 == 0);
+                            SampleResult r = resultWithTime(50 + (i % 100));
+                            r.setSuccessful(!fail);
+                            instance.sampleOccurred(new SampleEvent(r, "Thread " + threadId));
+                        }
+                    } catch (Throwable ex) {
+                        ex.printStackTrace();
+                        hasError.set(true);
+                    }
+                }
+            });
+            threads[t].start();
+        }
+
+        for (Thread t : threads) {
+            t.join();
+        }
+
+        assertFalse("Concurrent samples must not throw exceptions or corrupt state", hasError.get());
+    }
+
+    // --- New: per-window error count ceiling tests ---
+
+    /** Creates a failed SampleResult. */
+    private static SampleResult resultFailed() {
+        SampleResult r = new SampleResult();
+        r.sampleStart();
+        r.setEndTime(r.getStartTime() + 50);
+        r.setSuccessful(false);
+        return r;
+    }
+
+    @Test
+    public void testSetGetErrorCount() {
+        System.out.println("setGetErrorCount");
+        AutoStop instance = new AutoStop();
+        instance.setErrorCount("15");
+        assertEquals("15", instance.getErrorCount());
+    }
+
+    @Test
+    public void testSetGetErrorCountSecs() {
+        System.out.println("setGetErrorCountSecs");
+        AutoStop instance = new AutoStop();
+        instance.setErrorCountSecs("10");
+        assertEquals("10", instance.getErrorCountSecs());
+    }
+
+    /** Feature is disabled when error count is not configured. */
+    @Test
+    public void testErrorCountDisabledWhenNotConfigured() throws InterruptedException {
+        System.out.println("errorCountDisabledWhenNotConfigured");
+        System.clearProperty("auto_stopped");
+        AutoStop instance = new AutoStop();
+        instance.setErrorCountSecs("5");
+        instance.testStarted();
+        SampleEvent event = new SampleEvent(resultFailed(), "");
+        for (int i = 0; i < 10; i++) {
+            instance.sampleOccurred(event);
+        }
+        Thread.sleep(1100);
+        instance.sampleOccurred(event);
+
+        assertNull("Unconfigured error count must not stop test", System.getProperty("auto_stopped"));
+    }
+
+    /** Error count exceeding threshold stops test. */
+    @Test
+    public void testErrorCountExceededStopsTest() throws InterruptedException {
+        System.out.println("errorCountExceededStopsTest");
+        System.clearProperty("auto_stopped");
+        AutoStop instance = new AutoStop();
+        instance.setErrorCount("3");
+        instance.setErrorCountSecs("10");
+        instance.testStarted();
+
+        SampleEvent event = new SampleEvent(resultFailed(), "");
+        for (int i = 0; i < 5; i++) {
+            instance.sampleOccurred(event);
+        }
+        Thread.sleep(1100);
+        instance.sampleOccurred(event);
+
+        assertEquals("true", System.getProperty("auto_stopped"));
+    }
+
+    /** Error count within limit does not stop test across window boundary. */
+    @Test
+    public void testErrorCountBelowThresholdDoesNotStop() throws InterruptedException {
+        System.out.println("errorCountBelowThresholdDoesNotStop");
+        System.clearProperty("auto_stopped");
+        AutoStop instance = new AutoStop();
+        instance.setErrorCount("5");
+        instance.setErrorCountSecs("1");
+        instance.testStarted();
+
+        SampleEvent event = new SampleEvent(resultFailed(), "");
+        // 2 errors in window 1 (< 5)
+        for (int i = 0; i < 2; i++) {
+            instance.sampleOccurred(event);
+        }
+        Thread.sleep(1100);
+        // 2 errors in window 2 (< 5)
+        for (int i = 0; i < 2; i++) {
+            instance.sampleOccurred(event);
+        }
+        Thread.sleep(1100);
+        instance.sampleOccurred(new SampleEvent(resultWithTime(10), ""));
+
+        assertNull("Errors below limit should not stop test", System.getProperty("auto_stopped"));
     }
 }

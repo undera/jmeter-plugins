@@ -3731,7 +3731,7 @@
     }
   },
   {
-        "id" : "smartVariableDetector,
+        "id" : "smartVariableDetector",
         "name" : "Smart variable detector",
         "description" : "This plugin is created for smart detecting the correlation and parameterization variables in jmx test plan in JMeter",
         "screenshotUrl" : "https://raw.githubusercontent.com/karthi23592/jmeter_corr_param_plugin/refs/heads/main/src/main/docs/UIscreenshot.png",
@@ -3740,8 +3740,7 @@
         "markerClass": "com.performance.jmeter.correlation.ui.CorrelationParameterizationMenuCreator",
         "versions" : {
             "0.1" : {
-                "downloadUrl" : "https://github.com/karrhik567/jmeter_corr_param_plugin/releases/download/v1.0.0/Smart_variable_detector.jar",
-              
+                "downloadUrl" : "https://github.com/karrhik567/jmeter_corr_param_plugin/releases/download/v1.0.0/Smart_variable_detector.jar",    
             },
            
         }

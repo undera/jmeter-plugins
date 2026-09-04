@@ -3730,18 +3730,18 @@
       }
     }
   },
- {
-    "id": "SmartVariableTracker&Navigator",
-    "name": "Smart Variable Tracker and Navigator",
-    "description": "A powerful JMeter GUI plugin that provides intelligent variable tracking and bidirectional navigation across jmeter entire test plan. Navigate instantly from variable usage to source extractors and vice versa. Track all variables including underscore-prefixed names and JSR223 script variables. Save hours with instant navigation, visual flow tracking, and comprehensive variable inventory.",
+  {
+    "id": "smart-variable-tracker-navigator",
+    "name": "Smart Variable Tracker Navigator",
+    "description": "A JMeter GUI plugin for navigating variable extraction and usage across a JMeter test plan. Navigate instantly from variable usage to source extractors and vice versa. Track all variables including underscore-prefixed names and JSR223 script variables. Save hours with instant navigation, visual flow tracking, and comprehensive variable inventory.",
     "screenshotUrl": "https://raw.githubusercontent.com/karthi23592/jmeter_corr_param_plugin/refs/heads/main/src/main/docs/UIscreenshot.png",
     "helpUrl": "https://github.com/karthi23592/jmeter_corr_param_plugin/blob/main/README.md",
     "vendor": "KARTHIC S V",
     "markerClass": "com.performance.jmeter.correlation.ui.CorrelationParameterizationMenuCreator",
     "versions": {
-        "1.0.0": {
-            "downloadUrl": "https://github.com/karthi23592/jmeter_corr_param_plugin/releases/download/v1.0.0/SmartVariable_Tracker_And_Navigator_Jmeterplugin_1.0.0.jar"
-        }
+      "1.0.0": {
+        "downloadUrl": "https://github.com/karthi23592/jmeter_corr_param_plugin/releases/download/v1.0.0/smart-variable-tracker-navigator-plugin-1.0.0.jar"
+      }
     }
-}
+  }
 ]

@@ -3733,7 +3733,7 @@
   {
     "id": "smart-variable-tracker-navigator",
     "name": "Smart Variable Tracker Navigator",
-    "description": "A JMeter GUI plugin for navigating variable extraction and usage across a JMeter test plan. Navigate instantly from variable usage to source extractors and vice versa. Track all variables including underscore-prefixed names and JSR223 script variables. Save hours with instant navigation, visual flow tracking, and comprehensive variable inventory.",
+    "description": "A JMeter GUI plugin for navigating variable extraction and usage across a JMeter test plan. Navigate instantly from variable usage to source extractors and vice versa. Track all variables including underscore-prefixed names and JSR223 script variables.",
     "screenshotUrl": "https://raw.githubusercontent.com/karthi23592/jmeter_corr_param_plugin/refs/heads/main/src/main/docs/UIscreenshot.png",
     "helpUrl": "https://github.com/karthi23592/jmeter_corr_param_plugin/blob/main/README.md",
     "vendor": "KARTHIC S V",

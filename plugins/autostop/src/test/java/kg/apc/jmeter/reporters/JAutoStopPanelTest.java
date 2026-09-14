@@ -64,4 +64,20 @@ public class JAutoStopPanelTest {
         instance.initFields();
     }
 
+    @Test
+    public void testConfigureUnsetFieldsRoundTrip() {
+        System.out.println("configureUnsetFieldsRoundTrip");
+        AutoStop testElement = new AutoStop();
+        JAutoStopPanel instance = new JAutoStopPanel();
+        instance.configure(testElement);
+        AutoStop outputElement = new AutoStop();
+        instance.modifyTestElement(outputElement);
+
+        org.junit.Assert.assertEquals("", outputElement.getResponseTime());
+        org.junit.Assert.assertEquals("", outputElement.getResponseLatency());
+        org.junit.Assert.assertEquals("", outputElement.getErrorRate());
+        org.junit.Assert.assertEquals("", outputElement.getPercentileResponseTime());
+        org.junit.Assert.assertEquals("", outputElement.getRelPercentileValue());
+        org.junit.Assert.assertEquals("", outputElement.getErrorCount());
+    }
 }

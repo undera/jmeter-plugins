@@ -3273,6 +3273,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.8.3": {
+        "changes": "NEW: Agent mode support for Grok, DeepSeek, and Meta models. Bug fixes.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.3/jmeter-agent-3.8.3.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

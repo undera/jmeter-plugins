@@ -3281,6 +3281,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.8.4": {
+        "changes": "NEW: Usage logging. Bug fixes.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.4/jmeter-agent-3.8.4.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

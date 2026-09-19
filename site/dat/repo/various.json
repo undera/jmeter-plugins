@@ -3289,6 +3289,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.8.5": {
+        "changes": "NEW: Typesafe Jev integration for agent tool routing and results analysis.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.5/jmeter-agent-3.8.5.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

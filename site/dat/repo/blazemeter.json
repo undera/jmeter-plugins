@@ -286,6 +286,16 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "0.13.1": {
+        "changes": "Fix parallel controller iteration count synchronization. Removed shaded JMeter classes from the plugin jar.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.13.1/jmeter-parallel-0.13.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

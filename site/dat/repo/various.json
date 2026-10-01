@@ -3297,6 +3297,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.8.6": {
+        "changes": "NEW: Bug fixes; anonymous usage telemetry, enabled by default (opt out via jmeter.ai.telemetry.enabled=false or FEATHER_WAND_TELEMETRY=0).",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.6/jmeter-agent-3.8.6.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

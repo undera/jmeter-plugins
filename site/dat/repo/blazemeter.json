@@ -296,6 +296,16 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "0.13.2": {
+        "changes": "Fix parallel thread variable sharing",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.13.2/jmeter-parallel-0.13.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },
@@ -1822,6 +1832,29 @@
           "jmeter-components",
           "jmeter-http"
         ]
+      }
+    }
+  },
+  {
+    "id": "bzm-mcp-v1",
+    "name": "BlazeMeter - MCP Plugin",
+    "description": "Apache JMeter plugin for Model Context Protocol (MCP) servers. Provides a client config, an optional managed HTTP/SSE server process, and a sampler to ping, list tools, call tools, and read resources over STDIO, SSE, or Streamable HTTP.",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-mcp-plugin/master/docs/images/mcp-client-config-stdio.png",
+    "helpUrl": "https://github.com/Blazemeter/jmeter-mcp-plugin/blob/master/README.md",
+    "vendor": "BlazeMeter",
+    "markerClass": "com.blazemeter.jmeter.mcp.sampler.McpSampler",
+    "componentClasses": [
+      "com.blazemeter.jmeter.mcp.config.McpClientConfig",
+      "com.blazemeter.jmeter.mcp.config.gui.McpClientConfigGui",
+      "com.blazemeter.jmeter.mcp.server.McpServerProcess",
+      "com.blazemeter.jmeter.mcp.server.gui.McpServerProcessGui",
+      "com.blazemeter.jmeter.mcp.sampler.McpSampler",
+      "com.blazemeter.jmeter.mcp.sampler.gui.McpSamplerGui"
+    ],
+    "versions": {
+      "1.0.0": {
+        "changes": "Initial release",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-mcp-plugin/releases/download/v1.0.0/jmeter-mcp-plugin-1.0.0.jar"
       }
     }
   }

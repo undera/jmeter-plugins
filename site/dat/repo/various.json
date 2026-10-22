@@ -3313,6 +3313,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.8.9": {
+        "changes": "FIXES: Terminal and Chat can stay together. Minor class loading fixes. ",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.9/jmeter-agent-3.8.9.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

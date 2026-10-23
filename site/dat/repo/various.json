@@ -3321,6 +3321,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.9.0": {
+        "changes": "NEW: Apple Foundational Models support and other bug fixes ",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.9.0/jmeter-agent-3.9.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

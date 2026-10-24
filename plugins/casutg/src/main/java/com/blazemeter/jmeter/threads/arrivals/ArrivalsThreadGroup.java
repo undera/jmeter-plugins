@@ -71,14 +71,25 @@ public class ArrivalsThreadGroup extends AbstractDynamicThreadGroup {
     @Override
     public void tellThreadsToStop() {
         super.tellThreadsToStop();
+        // stopThread() looks only through active threads, so wake idle pool threads directly
         for (DynamicThread thread : poolThreads) {
-            stopThread(thread.getThreadName(), true);
+            thread.stop();
+            thread.interruptOSThread();
         }
     }
 
     @Override
     public boolean verifyThreadsStopped() {
         boolean parent = super.verifyThreadsStopped();
+        for (DynamicThread thread : poolThreads) {
+            if (thread.getOSThread() != null) {
+                try {
+                    thread.getOSThread().join(WAIT_TO_DIE);
+                } catch (InterruptedException e) {
+                    log.warn("Interrupted", e);
+                }
+            }
+        }
         log.info("Verify shutdown thread counts: " + threads.size() + "/" + poolThreads.size());
         return parent && poolThreads.isEmpty();
     }
@@ -102,6 +113,8 @@ public class ArrivalsThreadGroup extends AbstractDynamicThreadGroup {
                 log.debug("Interrupted", e);
             }
         }
+        // releasedPoolThread() has already removed it, but a thread woken by stop/interrupt has not
+        poolThreads.remove(thread);
         ThreadCountsAccessor.incrNumberOfThreads();
         return running;
     }

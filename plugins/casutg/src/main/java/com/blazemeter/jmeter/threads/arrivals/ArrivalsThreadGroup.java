@@ -71,10 +71,14 @@ public class ArrivalsThreadGroup extends AbstractDynamicThreadGroup {
     @Override
     public void tellThreadsToStop() {
         super.tellThreadsToStop();
-        // stopThread() looks only through active threads, so wake idle pool threads directly
+        // stopThread() looks only through active threads, so wake idle pool threads directly.
+        // No OS interrupt here: a thread being released concurrently would get it mid-sample
         for (DynamicThread thread : poolThreads) {
             thread.stop();
-            thread.interruptOSThread();
+            //noinspection SynchronizationOnLocalVariableOrMethodParameter
+            synchronized (thread) {
+                thread.notify();
+            }
         }
     }
 
@@ -108,12 +112,15 @@ public class ArrivalsThreadGroup extends AbstractDynamicThreadGroup {
         //noinspection SynchronizationOnLocalVariableOrMethodParameter
         synchronized (thread) {
             try {
-                thread.wait();
+                // releasedPoolThread() removes the thread before notify, so the guard also covers
+                // a release or stop that comes before this wait, and spurious wakeups
+                while (running && !thread.isStopping() && poolThreads.contains(thread)) {
+                    thread.wait();
+                }
             } catch (InterruptedException e) {
                 log.debug("Interrupted", e);
             }
         }
-        // releasedPoolThread() has already removed it, but a thread woken by stop/interrupt has not
         poolThreads.remove(thread);
         ThreadCountsAccessor.incrNumberOfThreads();
         return running;

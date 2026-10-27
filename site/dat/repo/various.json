@@ -3862,5 +3862,24 @@
         "downloadUrl": "https://github.com/karthi23592/jmeter_corr_param_plugin/releases/download/v1.0.0/smart-variable-tracker-navigator-plugin-1.0.0.jar"
       }
     }
+  },
+  {
+    "id": "interval-controller",
+    "name": "Interval Controller",
+    "description": "Logic Controller that executes nested elements at most once per configured interval per JMeter thread, only when the thread encounters the controller. Supports optional retry-on-failure, jitter, dynamic interval expressions, and token refresh helpers. SKIP does not sleep or block sibling samplers. Not a Timer and not a background scheduler.",
+    "screenshotUrl": "https://raw.githubusercontent.com/GeorgeKalyaev/jmeter-interval-controller/v1.1.2/docs/images/01-interval-controller-gui.png",
+    "helpUrl": "https://github.com/GeorgeKalyaev/jmeter-interval-controller",
+    "vendor": "Georgii Kaliaev",
+    "markerClass": "com.example.jmeter.interval.IntervalControllerGui",
+    "componentClasses": [
+      "com.example.jmeter.interval.IntervalControllerGui",
+      "com.example.jmeter.interval.IntervalController"
+    ],
+    "versions": {
+      "1.1.2": {
+        "changes": "Stable release: interval EXECUTE/SKIP per thread, retry, jitter, dynamic interval, token TTL helpers, nested controller compatibility. Target JMeter 5.6.3, Java 8 bytecode.",
+        "downloadUrl": "https://github.com/GeorgeKalyaev/jmeter-interval-controller/releases/download/v1.1.2/jmeter-interval-controller-1.1.2.jar"
+      }
+    }
   }
 ]

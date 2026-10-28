@@ -1704,6 +1704,13 @@
       "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
     ],
     "versions": {
+      "1.0.1": {
+        "changes": "Fix thread hangs on unresponsive Datadog endpoints; logs intake success by HTTP status",
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/1.0.1/jmeter-datadog-backend-listener-1.0.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "1.0.0": {
         "changes": "Cumulative metrics, statistics calculation modes, assertion metrics, test run events",
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/1.0.0/jmeter-datadog-backend-listener-1.0.0.jar",

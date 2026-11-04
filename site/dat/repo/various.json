@@ -3177,6 +3177,158 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "3.0.0": {
+        "changes": "NEW: Agentic Tool calls (Claude only for now). Auto correlation. Minor enhancements and fixes.",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.0.0/jmeter-agent-3.0.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.0.1": {
+        "changes": "NEW: Support for x.ai Grok models in Chat and CLI; fix Chinese characters display.",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.0.1/jmeter-agent-3.0.1.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.0.2": {
+        "changes": "NEW: Meta API integration; @testplan command context",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.0.2/jmeter-agent-3.0.2.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.0.3": {
+        "changes": "NEW: AWS Bedrock Support",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.0.3/jmeter-agent-3.0.3.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.0.6": {
+        "changes": "NEW: OpenAI Tool calls support; Prompt to record, correlate, and more; JMeter Pets.",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.0.6/jmeter-agent-3.0.6.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.1.0": {
+        "changes": "NEW: Polished UI/UX",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.1.0/jmeter-agent-3.1.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.4.0": {
+        "changes": "NEW: Model Picker, Thinking cards, Attachments, UI touchups, Bug fixes and more.",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.4.0/jmeter-agent-3.4.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.6.1": {
+        "changes": "NEW: Enhanced Model Picker, UI touch ups, and bug fixes",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.6.1/jmeter-agent-3.6.1.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.7.0": {
+        "changes": "Fixes broken 3.5.0/3.6.1 installs (missing dependencies)",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.7.0/jmeter-agent-3.7.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.8.0": {
+        "changes": "NEW: Support for agent mode for Google Gemini models",
+        "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/jmeter-agent/3.8.0/jmeter-agent-3.8.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.8.1": {
+        "changes": "NEW: ChatGPT and Anthropic Subscription support; UI/UX revamp; new logo.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.1/jmeter-agent-3.8.1.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.8.2": {
+        "changes": "NEW: Corporate n/w support via LLM gateway, now you can use OpenRouter, LiteLLM etc.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.2/jmeter-agent-3.8.2.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.8.3": {
+        "changes": "NEW: Agent mode support for Grok, DeepSeek, and Meta models. Bug fixes.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.3/jmeter-agent-3.8.3.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.8.4": {
+        "changes": "NEW: Usage logging. Bug fixes.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.4/jmeter-agent-3.8.4.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.8.5": {
+        "changes": "NEW: Typesafe Jev integration for agent tool routing and results analysis.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.5/jmeter-agent-3.8.5.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.8.6": {
+        "changes": "NEW: Bug fixes; anonymous usage telemetry, enabled by default (opt out via jmeter.ai.telemetry.enabled=false or FEATHER_WAND_TELEMETRY=0).",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.6/jmeter-agent-3.8.6.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.8.8": {
+        "changes": "NEW: Support for OpenAI Decisions model and Microsoft Decision-1 model. Decisions model anonymous usage telemetry, enabled by default (opt out via jmeter.ai.telemetry.enabled=false or FEATHER_WAND_TELEMETRY=0) ",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.8/jmeter-agent-3.8.8.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.8.9": {
+        "changes": "FIXES: Terminal and Chat can stay together. Minor class loading fixes. ",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.8.9/jmeter-agent-3.8.9.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "3.9.0": {
+        "changes": "NEW: Apple Foundational Models support and other bug fixes ",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.9.0/jmeter-agent-3.9.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },
@@ -3489,6 +3641,10 @@
       "0.0.1": {
         "changes": "NEW: README Config Element for documentation. Dark mode support. JMeter Deep link.",
         "downloadUrl": "https://repo1.maven.org/maven2/com/qainsights/readme-config-element/0.0.1/readme-config-element-0.0.1-jar-with-dependencies.jar"
+      },
+      "0.1.0": {
+        "changes": "NEW: Create CLAUDE.md and AGENTS.md; Word Wrap and more.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-readme-config/releases/download/v0.1.0/readme-config-element-0.1.0-jar-with-dependencies.jar"
       }
     }
   },
@@ -3543,6 +3699,83 @@
           "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
           "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
         }
+      },
+      "1.1.0": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/perfana/perfana-jmeter-timescaledb/1.1.0/perfana-jmeter-timescaledb-1.1.0.jar",
+        "libs": {
+          "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
+          "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
+        }
+      },
+      "1.2.0": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/perfana/perfana-jmeter-timescaledb/1.2.0/perfana-jmeter-timescaledb-1.2.0.jar",
+        "libs": {
+          "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
+          "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
+        }
+      },
+      "1.3.0": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/perfana/perfana-jmeter-timescaledb/1.3.0/perfana-jmeter-timescaledb-1.3.0.jar",
+        "libs": {
+          "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
+          "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
+        }
+      },
+      "1.3.1": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/perfana/perfana-jmeter-timescaledb/1.3.1/perfana-jmeter-timescaledb-1.3.1.jar",
+        "libs": {
+          "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
+          "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
+        }
+      },
+      "1.4.0": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/perfana/perfana-jmeter-timescaledb/1.4.0/perfana-jmeter-timescaledb-1.4.0.jar",
+        "libs": {
+          "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
+          "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
+        }
+      },
+      "1.4.1": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/perfana/perfana-jmeter-timescaledb/1.4.1/perfana-jmeter-timescaledb-1.4.1.jar",
+        "libs": {
+          "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
+          "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
+        }
+      },
+      "1.5.0": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/perfana/perfana-jmeter-timescaledb/1.5.0/perfana-jmeter-timescaledb-1.5.0.jar",
+        "libs": {
+          "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
+          "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
+        }
+      },
+      "1.6.0": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/perfana/perfana-jmeter-timescaledb/1.6.0/perfana-jmeter-timescaledb-1.6.0.jar",
+        "libs": {
+          "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
+          "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
+        }
+      },
+      "1.7.0": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/perfana/perfana-jmeter-timescaledb/1.7.0/perfana-jmeter-timescaledb-1.7.0.jar",
+        "libs": {
+          "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
+          "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
+        }
+      },
+      "1.8.0": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/perfana/perfana-jmeter-timescaledb/1.8.0/perfana-jmeter-timescaledb-1.8.0.jar",
+        "libs": {
+          "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
+          "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
+        }
+      },
+      "1.8.1": {
+        "downloadUrl": "https://repo1.maven.org/maven2/io/perfana/perfana-jmeter-timescaledb/1.8.1/perfana-jmeter-timescaledb-1.8.1.jar",
+        "libs": {
+          "postgresql>=42.7.4": "https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.4/postgresql-42.7.4.jar",
+          "HikariCP>=5.1.0": "https://repo1.maven.org/maven2/com/zaxxer/HikariCP/5.1.0/HikariCP-5.1.0.jar"
+        }
       }
     }
   },
@@ -3566,6 +3799,100 @@
           "jmeter-core"
         ],
         "libs": {}
+      }
+    }
+  },
+  {
+    "id": "mock-jutsu",
+    "name": "Mock Jutsu - The Ultimate Algorithmic Mock Data Engine",
+    "description": "Generate format & checksum-valid mock test data directly inside JMeter test plans via custom functions - no Python, no subprocess, no CSV files needed. 390 types across 49 categories, 6 locales (TR/UK/US/DE/FR/RU), pipe-separated options, mask support (PCI DSS / GDPR / KVKK), zero external dependencies.<br>Plugin Benchmark: https://github.com/altansayan/mock-jutsu-jmeter-plugin-benchmark<br>Requirements: JMeter 5.5+ | Java 17+",
+    "helpUrl": "https://github.com/altansayan/mock-jutsu-jmeter#readme",
+    "markerClass": "com.mockjutsu.jmeter.MockJutsuBaseFunction",
+    "screenshotUrl": "https://raw.githubusercontent.com/altansayan/mock-jutsu-jmeter/main/assets/function-helper-preview.png",
+    "vendor": "ASA Intelligence - Altan Sezer Ayan",
+    "versions": {
+      "1.1.2": {
+        "changes": "Backward compatibility: compiled against JMeter 5.5 (supports JMeter 5.5, 5.6, 5.6.1, 5.6.2, 5.6.3). All 4205 tests pass across all supported versions.",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.1.2/mock-jutsu-jmeter-1.1.2.jar",
+        "libs": {},
+        "depends": []
+      },
+      "1.1.1": {
+        "changes": "Concurrency: ThreadLocal<SecureRandom>, ThreadLocal<Mac> (HmacSHA256), ThreadLocal<MessageDigest> (SHA-256/SHA-512) eliminate lock contention under concurrent load. DateTimeFormatter.ofPattern() hoisted to static final fields in 15 generators. CI: 426-sampler all-types JMeter smoke test on every PR.",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.1.1/mock-jutsu-jmeter-1.1.1.jar",
+        "libs": {},
+        "depends": []
+      },
+      "1.1.0": {
+        "changes": "Performance: SecureRandom pool, JDK native EC crypto (crypto types 8-22ms to <1ms), Pattern cache, JWT SecureRandom consolidation. Bug fixes: 12 missing _masked registry entries, JSON control-char escapes, NUL byte in CryptoFuzzGen. Observability: SLF4J logging to all generators. Architecture: O(1) Map dispatch. Testing: per-type perf regression guard for all 429 type+qualifier combos. Benchmark: https://github.com/altansayan/mock-jutsu-jmeter-plugin-benchmark",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.1.0/mock-jutsu-jmeter-1.1.0.jar",
+        "libs": {},
+        "depends": []
+      },
+      "1.0.1": {
+        "changes": "Not backward compatible with 1.0.0 - corrects 273 mismatches against the Python (mockjutsu) reference implementation across all 39 generator files, fixes a Turkish-locale decimal separator bug, removes a dead registry entry. 4191 tests passed.",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.0.1/mock-jutsu-jmeter-1.0.1.jar",
+        "libs": {},
+        "depends": []
+      },
+      "1.0.0": {
+        "changes": "Initial release - 390 types, 49 categories, pipe separator syntax, mask support, 5955 tests passed.",
+        "downloadUrl": "https://github.com/altansayan/mock-jutsu-jmeter/releases/download/v1.0.0/mock-jutsu-jmeter-1.0.0.jar",
+        "libs": {},
+        "depends": []
+      }
+    }
+  },
+  {
+    "id": "reportportal-jmeter",
+    "name": "ReportPortal Performance Reporter (official)",
+    "description": "Official ReportPortal Backend Listener for JMeter. Reports aggregated latency percentiles (HdrHistogram), error rate, optional SLA quality gate, and failed sample details into a ReportPortal launch. Optionally attaches the native JMeter HTML dashboard as a ZIP. <ul><li>Add a Backend Listener</li><li>Set implementation to <code>com.epam.reportportal.jmeter.PerformanceReporterClient</code></li><li>Set ReportPortal_URL, Project_Name (project slug, not numeric id), and API_Token</li><li>Docs: <a href=\"https://github.com/reportportal/plugins-performance#jmeter-plugin\">setup guide</a></li></ul>",
+    "helpUrl": "https://github.com/reportportal/plugins-performance#jmeter-plugin",
+    "screenshotUrl": "https://raw.githubusercontent.com/reportportal/plugins-performance/main/media/reportportal-performance-launches.png",
+    "vendor": "ReportPortal",
+    "markerClass": "com.epam.reportportal.jmeter.PerformanceReporterClient",
+    "componentClasses": [
+      "com.epam.reportportal.jmeter.PerformanceReporterClient"
+    ],
+    "versions": {
+      "1.0.0": {
+        "changes": "Initial official release: Backend Listener with SLA, per-request metrics, failed sample history, optional HTML dashboard ZIP.",
+        "downloadUrl": "https://github.com/reportportal/plugins-performance/releases/download/jmeter-v1.0.0/plugin-jmeter-1.0.0-shaded.jar",
+        "libs": {},
+        "depends": []
+      }
+    }
+  },
+  {
+    "id": "smart-variable-tracker-navigator",
+    "name": "Smart Variable Tracker Navigator",
+    "description": "A JMeter GUI plugin for navigating variable extraction and usage across a JMeter test plan. Navigate instantly from variable usage to source extractors and vice versa. Track all variables including underscore-prefixed names and JSR223 script variables.",
+    "screenshotUrl": "https://raw.githubusercontent.com/karthi23592/jmeter_corr_param_plugin/refs/heads/main/src/main/docs/UIscreenshot.png",
+    "helpUrl": "https://github.com/karthi23592/jmeter_corr_param_plugin/blob/main/README.md",
+    "vendor": "KARTHIC S V",
+    "markerClass": "com.performance.jmeter.correlation.ui.CorrelationParameterizationMenuCreator",
+    "versions": {
+      "1.0.0": {
+        "downloadUrl": "https://github.com/karthi23592/jmeter_corr_param_plugin/releases/download/v1.0.0/smart-variable-tracker-navigator-plugin-1.0.0.jar"
+      }
+    }
+  },
+  {
+    "id": "interval-controller",
+    "name": "Interval Controller",
+    "description": "Logic Controller that executes nested elements at most once per configured interval per JMeter thread, only when the thread encounters the controller. Supports optional retry-on-failure, jitter, dynamic interval expressions, and token refresh helpers. SKIP does not sleep or block sibling samplers. Not a Timer and not a background scheduler.",
+    "screenshotUrl": "https://raw.githubusercontent.com/GeorgeKalyaev/jmeter-interval-controller/v1.1.2/docs/images/01-interval-controller-gui.png",
+    "helpUrl": "https://github.com/GeorgeKalyaev/jmeter-interval-controller",
+    "vendor": "Georgii Kaliaev",
+    "markerClass": "com.example.jmeter.interval.IntervalControllerGui",
+    "componentClasses": [
+      "com.example.jmeter.interval.IntervalControllerGui",
+      "com.example.jmeter.interval.IntervalController"
+    ],
+    "versions": {
+      "1.1.2": {
+        "changes": "Stable release: interval EXECUTE/SKIP per thread, retry, jitter, dynamic interval, token TTL helpers, nested controller compatibility. Target JMeter 5.6.3, Java 8 bytecode.",
+        "downloadUrl": "https://github.com/GeorgeKalyaev/jmeter-interval-controller/releases/download/v1.1.2/jmeter-interval-controller-1.1.2.jar"
       }
     }
   }

@@ -1,6 +1,16 @@
 package kg.apc.jmeter.reporters;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ItemListener;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -20,45 +30,329 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         registerJTextfieldForValidation(jTextFieldPercentileRespTimeSec, false);
         registerJTextfieldForValidation(jTextFieldPercentileValue, false);
         registerJTextfieldForValidation(jTextFieldCustomDuration, false);
+        initExtraComponents();
         initFields();
     }
 
+    private boolean isConfigured(String value) {
+        return value != null && !value.trim().isEmpty() && !value.equals("0");
+    }
+
     public void configure(AutoStop testElement) {
-        jTextFieldRespTime.setText(testElement.getResponseTime());
-        jTextFieldRespTimeSec.setText(testElement.getResponseTimeSecs());
-        jTextFieldError.setText(testElement.getErrorRate());
-        jTextFieldErrorSec.setText(testElement.getErrorRateSecs());
-        jTextFieldRespLatency.setText(testElement.getResponseLatency());
-        jTextFieldRespLatencySec.setText(testElement.getResponseLatencySecs());
-        jTextFieldPercentileRespTime.setText(testElement.getPercentileResponseTime());
-        jTextFieldPercentileRespTimeSec.setText(testElement.getPercentileResponseTimeSecs());
-        jTextFieldPercentileValue.setText(testElement.getPercentileValue());
-        jTextFieldCustomDuration.setText(testElement.getCustomValidationDuration());
+        String respTime = testElement.getResponseTime();
+        String respTimeSec = testElement.getResponseTimeSecs();
+        jCheckBoxRespTime.setSelected(isConfigured(respTime));
+        jTextFieldRespTime.setText(respTime != null ? respTime : "");
+        jTextFieldRespTimeSec.setText(respTimeSec != null ? respTimeSec : "");
+
+        String latency = testElement.getResponseLatency();
+        String latencySec = testElement.getResponseLatencySecs();
+        jCheckBoxLatency.setSelected(isConfigured(latency));
+        jTextFieldRespLatency.setText(latency != null ? latency : "");
+        jTextFieldRespLatencySec.setText(latencySec != null ? latencySec : "");
+
+        String errorRate = testElement.getErrorRate();
+        String errorSec = testElement.getErrorRateSecs();
+        jCheckBoxError.setSelected(isConfigured(errorRate));
+        jTextFieldError.setText(errorRate != null ? errorRate : "");
+        jTextFieldErrorSec.setText(errorSec != null ? errorSec : "");
+
+        String percRespTime = testElement.getPercentileResponseTime();
+        String percRespTimeSec = testElement.getPercentileResponseTimeSecs();
+        String percValue = testElement.getPercentileValue();
+        jCheckBoxPercentile.setSelected(isConfigured(percRespTime));
+        jTextFieldPercentileRespTime.setText(percRespTime != null ? percRespTime : "");
+        jTextFieldPercentileRespTimeSec.setText(percRespTimeSec != null ? percRespTimeSec : "");
+        jTextFieldPercentileValue.setText(percValue != null ? percValue : "");
+
+        String relPerc = testElement.getRelPercentileValue();
+        String relWindow = testElement.getRelWindowSecs();
+        String relThresh = testElement.getRelThresholdPct();
+        jCheckBoxRelPercentile.setSelected(isConfigured(relPerc));
+        jTextFieldRelPercentileValue.setText(relPerc != null ? relPerc : "");
+        jTextFieldRelWindowSecs.setText(relWindow != null ? relWindow : "");
+        jTextFieldRelThresholdPct.setText(relThresh != null ? relThresh : "");
+
+        String errCount = testElement.getErrorCount();
+        String errCountSec = testElement.getErrorCountSecs();
+        jCheckBoxErrorCount.setSelected(isConfigured(errCount));
+        jTextFieldErrorCount.setText(errCount != null ? errCount : "");
+        jTextFieldErrorCountSec.setText(errCountSec != null ? errCountSec : "");
+
+        updateAllRowStates();
+        processBullets();
     }
 
     public void modifyTestElement(AutoStop testElement) {
-        testElement.setResponseTime(jTextFieldRespTime.getText());
-        testElement.setResponseTimeSecs(jTextFieldRespTimeSec.getText());
-        testElement.setErrorRate(jTextFieldError.getText());
-        testElement.setErrorRateSecs(jTextFieldErrorSec.getText());
-        testElement.setResponseLatency(jTextFieldRespLatency.getText());
-        testElement.setResponseLatencySecs(jTextFieldRespLatencySec.getText());
-        testElement.setPercentileResponseTime(jTextFieldPercentileRespTime.getText());
-        testElement.setPercentileResponseTimeSecs(jTextFieldPercentileRespTimeSec.getText());
-        testElement.setPercentileValue(jTextFieldPercentileValue.getText());
-        testElement.setCustomValidationDuration(jTextFieldCustomDuration.getText());
+        if (jCheckBoxRespTime.isSelected()) {
+            testElement.setResponseTime(jTextFieldRespTime.getText());
+            testElement.setResponseTimeSecs(jTextFieldRespTimeSec.getText());
+        } else {
+            testElement.setResponseTime("");
+            testElement.setResponseTimeSecs("");
+        }
+
+        if (jCheckBoxLatency.isSelected()) {
+            testElement.setResponseLatency(jTextFieldRespLatency.getText());
+            testElement.setResponseLatencySecs(jTextFieldRespLatencySec.getText());
+        } else {
+            testElement.setResponseLatency("");
+            testElement.setResponseLatencySecs("");
+        }
+
+        if (jCheckBoxError.isSelected()) {
+            testElement.setErrorRate(jTextFieldError.getText());
+            testElement.setErrorRateSecs(jTextFieldErrorSec.getText());
+        } else {
+            testElement.setErrorRate("");
+            testElement.setErrorRateSecs("");
+        }
+
+        if (jCheckBoxPercentile.isSelected()) {
+            testElement.setPercentileResponseTime(jTextFieldPercentileRespTime.getText());
+            testElement.setPercentileResponseTimeSecs(jTextFieldPercentileRespTimeSec.getText());
+            testElement.setPercentileValue(jTextFieldPercentileValue.getText());
+        } else {
+            testElement.setPercentileResponseTime("");
+            testElement.setPercentileResponseTimeSecs("");
+            testElement.setPercentileValue("");
+        }
+
+        if (jCheckBoxRelPercentile.isSelected()) {
+            testElement.setRelPercentileValue(jTextFieldRelPercentileValue.getText());
+            testElement.setRelWindowSecs(jTextFieldRelWindowSecs.getText());
+            testElement.setRelThresholdPct(jTextFieldRelThresholdPct.getText());
+        } else {
+            testElement.setRelPercentileValue("");
+            testElement.setRelWindowSecs("");
+            testElement.setRelThresholdPct("");
+        }
+
+        if (jCheckBoxErrorCount.isSelected()) {
+            testElement.setErrorCount(jTextFieldErrorCount.getText());
+            testElement.setErrorCountSecs(jTextFieldErrorCountSec.getText());
+        } else {
+            testElement.setErrorCount("");
+            testElement.setErrorCountSecs("");
+        }
     }
 
     public final void initFields() {
+        jCheckBoxRespTime.setSelected(true);
         jTextFieldRespTime.setText("10000");
         jTextFieldRespTimeSec.setText("10");
-        jTextFieldError.setText("50");
-        jTextFieldErrorSec.setText("10");
+
+        jCheckBoxLatency.setSelected(true);
         jTextFieldRespLatency.setText("5000");
         jTextFieldRespLatencySec.setText("10");
+
+        jCheckBoxError.setSelected(true);
+        jTextFieldError.setText("50");
+        jTextFieldErrorSec.setText("10");
+
+        jCheckBoxPercentile.setSelected(true);
         jTextFieldPercentileRespTime.setText("15000");
         jTextFieldPercentileRespTimeSec.setText("10");
         jTextFieldPercentileValue.setText("90");
+
+        jCheckBoxRelPercentile.setSelected(false);
+        jTextFieldRelPercentileValue.setText("95");
+        jTextFieldRelWindowSecs.setText("30");
+        jTextFieldRelThresholdPct.setText("20");
+
+        jCheckBoxErrorCount.setSelected(false);
+        jTextFieldErrorCount.setText("10");
+        jTextFieldErrorCountSec.setText("10");
+
+        updateAllRowStates();
+        processBullets();
+    }
+
+    private void updateAllRowStates() {
+        updateRowState(jPanel1, jCheckBoxRespTime);
+        updateRowState(jPanel2, jCheckBoxLatency);
+        updateRowState(jPanel4, jCheckBoxError);
+        updateRowState(jPanel5, jCheckBoxPercentile);
+        if (jPanelRelPercentile != null && jCheckBoxRelPercentile != null) {
+            updateRowState(jPanelRelPercentile, jCheckBoxRelPercentile);
+        }
+        if (jPanelErrorCount != null && jCheckBoxErrorCount != null) {
+            updateRowState(jPanelErrorCount, jCheckBoxErrorCount);
+        }
+    }
+
+    private void updateRowState(JPanel panel, JCheckBox cb) {
+        boolean selected = cb.isSelected();
+        for (Component c : panel.getComponents()) {
+            if (c != cb) {
+                c.setEnabled(selected);
+            }
+        }
+    }
+
+    /** Adds checkboxes and new condition rows to the layout. */
+    private void initExtraComponents() {
+        GridBagLayout layout = (GridBagLayout) getLayout();
+
+        // Adjust spacing for existing panels
+        jPanel1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 2));
+        jPanel2.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 2));
+        jPanel4.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 2));
+        jPanel5.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 2));
+
+        // Add checkboxes to existing rows
+        jCheckBoxRespTime = new JCheckBox();
+        jCheckBoxRespTime.setToolTipText("Enable Average Response Time condition");
+        jPanel1.add(jCheckBoxRespTime, 0);
+
+        jCheckBoxLatency = new JCheckBox();
+        jCheckBoxLatency.setToolTipText("Enable Average Latency condition");
+        jPanel2.add(jCheckBoxLatency, 0);
+
+        jCheckBoxError = new JCheckBox();
+        jCheckBoxError.setToolTipText("Enable Error Rate condition");
+        jPanel4.add(jCheckBoxError, 0);
+
+        jCheckBoxPercentile = new JCheckBox();
+        jCheckBoxPercentile.setToolTipText("Enable Percentile Response Time condition");
+        jPanel5.add(jCheckBoxPercentile, 0);
+
+        // Adjust OR label indentation
+        adjustOrLabelInsets(jLabel8);
+        adjustOrLabelInsets(jLabel9);
+        adjustOrLabelInsets(jLabel13);
+
+        // Remove unused placeholder components to eliminate extra blank rows between criteria
+        remove(jLabel20);
+        remove(jPanel6);
+        remove(jPanel3);
+
+        GridBagConstraints gbc;
+
+        // "OR" separator before relative percentile
+        JLabel orLabelRel = new JLabel("OR");
+        orLabelRel.setFont(new Font("Tahoma", 0, 10));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 8;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(0, 32, 0, 0);
+        add(orLabelRel, gbc);
+
+        // Row: [✓] [•] P [95] th percentile grew more than [20] % in a window of [30] seconds
+        jPanelRelPercentile = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+
+        jCheckBoxRelPercentile = new JCheckBox();
+        jCheckBoxRelPercentile.setToolTipText("Enable Relative Percentile Degradation condition");
+        jPanelRelPercentile.add(jCheckBoxRelPercentile);
+
+        jLabelBulletRelPercentile = new JLabel();
+        jLabelBulletRelPercentile.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/kg/apc/jmeter/reporters/bulletGreen.png")));
+        jPanelRelPercentile.add(jLabelBulletRelPercentile);
+
+        jPanelRelPercentile.add(new JLabel("P"));
+
+        jTextFieldRelPercentileValue = new JTextField(3);
+        jTextFieldRelPercentileValue.setHorizontalAlignment(JTextField.RIGHT);
+        jTextFieldRelPercentileValue.setToolTipText("Percentile rank, e.g. 95 for P95.");
+        jPanelRelPercentile.add(jTextFieldRelPercentileValue);
+
+        jPanelRelPercentile.add(new JLabel("th percentile grew more than"));
+
+        jTextFieldRelThresholdPct = new JTextField(4);
+        jTextFieldRelThresholdPct.setHorizontalAlignment(JTextField.RIGHT);
+        jTextFieldRelThresholdPct.setToolTipText("Max allowed growth % before stop, e.g. 20.");
+        jPanelRelPercentile.add(jTextFieldRelThresholdPct);
+
+        jPanelRelPercentile.add(new JLabel("% in a window of"));
+
+        jTextFieldRelWindowSecs = new JTextField(4);
+        jTextFieldRelWindowSecs.setHorizontalAlignment(JTextField.RIGHT);
+        jTextFieldRelWindowSecs.setToolTipText("Observation window in seconds. Pn is computed per window and compared to the previous one.");
+        jPanelRelPercentile.add(jTextFieldRelWindowSecs);
+
+        jPanelRelPercentile.add(new JLabel("seconds"));
+
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 9;
+        gbc.anchor = GridBagConstraints.WEST;
+        add(jPanelRelPercentile, gbc);
+
+        // "OR" separator before error count
+        JLabel orLabelErrCount = new JLabel("OR");
+        orLabelErrCount.setFont(new Font("Tahoma", 0, 10));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 10;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(0, 32, 0, 0);
+        add(orLabelErrCount, gbc);
+
+        // Row: [✓] [•] Error Count is greater than [10] for [10] seconds
+        jPanelErrorCount = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+
+        jCheckBoxErrorCount = new JCheckBox();
+        jCheckBoxErrorCount.setToolTipText("Enable Error Count condition");
+        jPanelErrorCount.add(jCheckBoxErrorCount);
+
+        jLabelBulletErrorCount = new JLabel();
+        jLabelBulletErrorCount.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/kg/apc/jmeter/reporters/bulletGreen.png")));
+        jPanelErrorCount.add(jLabelBulletErrorCount);
+
+        jPanelErrorCount.add(new JLabel("Error Count is greater than"));
+
+        jTextFieldErrorCount = new JTextField(5);
+        jTextFieldErrorCount.setHorizontalAlignment(JTextField.RIGHT);
+        jTextFieldErrorCount.setToolTipText("Maximum allowed error count within the duration.");
+        jPanelErrorCount.add(jTextFieldErrorCount);
+
+        jPanelErrorCount.add(new JLabel("within"));
+
+        jTextFieldErrorCountSec = new JTextField(5);
+        jTextFieldErrorCountSec.setHorizontalAlignment(JTextField.RIGHT);
+        jTextFieldErrorCountSec.setToolTipText("Duration window in seconds.");
+        jPanelErrorCount.add(jTextFieldErrorCountSec);
+
+        jPanelErrorCount.add(new JLabel("seconds"));
+
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 11;
+        gbc.anchor = GridBagConstraints.WEST;
+        add(jPanelErrorCount, gbc);
+
+        // Bottom filler to restore resize room
+        JPanel newFiller = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0; gbc.gridy = 12;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0; gbc.weighty = 1.0;
+        add(newFiller, gbc);
+
+        // Attach item listeners to all checkboxes
+        ItemListener itemListener = e -> {
+            updateAllRowStates();
+            processBullets();
+        };
+        jCheckBoxRespTime.addItemListener(itemListener);
+        jCheckBoxLatency.addItemListener(itemListener);
+        jCheckBoxError.addItemListener(itemListener);
+        jCheckBoxPercentile.addItemListener(itemListener);
+        jCheckBoxRelPercentile.addItemListener(itemListener);
+        jCheckBoxErrorCount.addItemListener(itemListener);
+
+        // Register new fields for live validation colouring
+        registerJTextfieldForValidation(jTextFieldRelPercentileValue, false);
+        registerJTextfieldForValidation(jTextFieldRelWindowSecs, false);
+        registerJTextfieldForValidation(jTextFieldRelThresholdPct, false);
+        registerJTextfieldForValidation(jTextFieldErrorCount, false);
+        registerJTextfieldForValidation(jTextFieldErrorCountSec, false);
+    }
+
+    private void adjustOrLabelInsets(JLabel label) {
+        GridBagLayout layout = (GridBagLayout) getLayout();
+        GridBagConstraints gbc = layout.getConstraints(label);
+        gbc.insets = new Insets(0, 32, 0, 0);
+        layout.setConstraints(label, gbc);
     }
 
     private int getIntValue(JTextField tf) {
@@ -83,7 +377,7 @@ public class JAutoStopPanel extends javax.swing.JPanel {
 
     private boolean isVariableValue(JTextField tf) {
         String value = tf.getText();
-        if(value != null) {
+        if (value != null) {
             return value.startsWith("${") && value.endsWith("}");
         } else {
             return false;
@@ -91,16 +385,24 @@ public class JAutoStopPanel extends javax.swing.JPanel {
     }
 
     private void processBullets() {
-        jLabelBulletError.setEnabled(getFloatValue(jTextFieldError) > 0 || isVariableValue(jTextFieldError));
-        jLabelBulletRespTime.setEnabled(getIntValue(jTextFieldRespTime) > 0 || isVariableValue(jTextFieldRespTime));
-        jLabelBulletLatency.setEnabled(getIntValue(jTextFieldRespLatency) > 0 || isVariableValue(jTextFieldRespLatency));
-        jLabelBulletPercentile.setEnabled(getIntValue(jTextFieldPercentileRespTime) > 0 || isVariableValue(jTextFieldPercentileRespTime));
+        jLabelBulletRespTime.setEnabled(jCheckBoxRespTime != null && jCheckBoxRespTime.isSelected()
+                && (getIntValue(jTextFieldRespTime) > 0 || isVariableValue(jTextFieldRespTime)));
+        jLabelBulletLatency.setEnabled(jCheckBoxLatency != null && jCheckBoxLatency.isSelected()
+                && (getIntValue(jTextFieldRespLatency) > 0 || isVariableValue(jTextFieldRespLatency)));
+        jLabelBulletError.setEnabled(jCheckBoxError != null && jCheckBoxError.isSelected()
+                && (getFloatValue(jTextFieldError) > 0 || isVariableValue(jTextFieldError)));
+        jLabelBulletPercentile.setEnabled(jCheckBoxPercentile != null && jCheckBoxPercentile.isSelected()
+                && (getIntValue(jTextFieldPercentileRespTime) > 0 || isVariableValue(jTextFieldPercentileRespTime)));
+        jLabelBulletRelPercentile.setEnabled(jCheckBoxRelPercentile != null && jCheckBoxRelPercentile.isSelected()
+                && (getIntValue(jTextFieldRelPercentileValue) > 0 || isVariableValue(jTextFieldRelPercentileValue)));
+        jLabelBulletErrorCount.setEnabled(jCheckBoxErrorCount != null && jCheckBoxErrorCount.isSelected()
+                && (getIntValue(jTextFieldErrorCount) > 0 || isVariableValue(jTextFieldErrorCount)));
     }
 
     private void setJTextFieldColor(final JTextField tf, boolean isFloat) {
-        if(!isFloat && (getIntValue(tf) > -1 || isVariableValue(tf))) {
+        if (!isFloat && (getIntValue(tf) > -1 || isVariableValue(tf))) {
             tf.setForeground(Color.black);
-        } else if(isFloat && (getFloatValue(tf) > -1 || isVariableValue(tf))) {
+        } else if (isFloat && (getFloatValue(tf) > -1 || isVariableValue(tf))) {
             tf.setForeground(Color.black);
         } else {
             tf.setForeground(Color.red);
@@ -409,4 +711,24 @@ public class JAutoStopPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldRespTimeSec;
     // End of variables declaration//GEN-END:variables
 
+    // Checkboxes for enabling/disabling each condition
+    private javax.swing.JCheckBox jCheckBoxRespTime;
+    private javax.swing.JCheckBox jCheckBoxLatency;
+    private javax.swing.JCheckBox jCheckBoxError;
+    private javax.swing.JCheckBox jCheckBoxPercentile;
+    private javax.swing.JCheckBox jCheckBoxRelPercentile;
+    private javax.swing.JCheckBox jCheckBoxErrorCount;
+
+    // Extra fields for relative window-to-window percentile row
+    private javax.swing.JPanel jPanelRelPercentile;
+    private javax.swing.JLabel jLabelBulletRelPercentile;
+    private javax.swing.JTextField jTextFieldRelPercentileValue;
+    private javax.swing.JTextField jTextFieldRelWindowSecs;
+    private javax.swing.JTextField jTextFieldRelThresholdPct;
+
+    // Extra fields for per-window error count ceiling row
+    private javax.swing.JPanel jPanelErrorCount;
+    private javax.swing.JLabel jLabelBulletErrorCount;
+    private javax.swing.JTextField jTextFieldErrorCount;
+    private javax.swing.JTextField jTextFieldErrorCountSec;
 }

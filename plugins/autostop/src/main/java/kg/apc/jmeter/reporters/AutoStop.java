@@ -32,6 +32,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AutoStop
         extends AbstractListenerElement
@@ -49,6 +50,13 @@ public class AutoStop
     private final static String PERCENTILE_RESPONSE_TIME_SECS ="percentile_response_time_secs";
     private final static String PERCENTILE_VALUE = "percentile_value";
     private final static String CUSTOM_VALIDATION_DURATION = "custom_validation_duration";
+    // New: relative window-to-window percentile degradation
+    private final static String REL_PERCENTILE_VALUE = "rel_percentile_value";
+    private final static String REL_PERCENTILE_WINDOW_SECS = "rel_percentile_window_secs";
+    private final static String REL_PERCENTILE_THRESHOLD_PCT = "rel_percentile_threshold_pct";
+    // New: per-window error count ceiling
+    private final static String ERROR_COUNT = "error_count";
+    private final static String ERROR_COUNT_SECS = "error_count_length";
     private long curSec = 0L;
     private GraphPanelChartAverageElement avgRespTime = new GraphPanelChartAverageElement();
     private GraphPanelChartAverageElement avgRespLatency = new GraphPanelChartAverageElement();
@@ -76,6 +84,18 @@ public class AutoStop
     private int testValueCustomSec = 180;
     private boolean skipIter = false;
 
+    private final Object relWindowLock = new Object();
+    private SamplingStatCalculator relWindowStatCalc = new SamplingStatCalculator();
+    private long relWindowStart = 0;
+    private double previousWindowPercentile = -1;
+    private float testValueRelPercentileValue = 0;
+    private int testValueRelWindowSecs = 0;
+    private float testValueRelThresholdPct = 0;
+    private final AtomicInteger errorCountInWindow = new AtomicInteger(0);
+    private long errorCountWindowStart = 0;
+    private int testValueErrorCount = 0;
+    private int testValueErrorCountSec = 0;
+
 
     public AutoStop() {
         super();
@@ -84,6 +104,16 @@ public class AutoStop
     @Override
     public void sampleOccurred(SampleEvent se) {
         long sec = System.currentTimeMillis() / 1000;
+
+        if (testValueRelPercentileValue > 0 && testValueRelWindowSecs > 0 && testValueRelThresholdPct > 0) {
+            synchronized (relWindowLock) {
+                relWindowStatCalc.addSample(se.getResult());
+            }
+        }
+
+        if (testValueErrorCount > 0 && testValueErrorCountSec > 0 && !se.getResult().isSuccessful()) {
+            errorCountInWindow.incrementAndGet();
+        }
 
         if (curSec != sec) {
             if (testValueRespTime > 0) {
@@ -144,6 +174,40 @@ public class AutoStop
                 }
             }
 
+            // Relative window-to-window percentile degradation check
+            if (testValueRelPercentileValue > 0 && testValueRelWindowSecs > 0 && testValueRelThresholdPct > 0) {
+                if (sec - relWindowStart >= testValueRelWindowSecs) {
+                    double currentPct;
+                    synchronized (relWindowLock) {
+                        currentPct = relWindowStatCalc.getPercentPoint(testValueRelPercentileValue).doubleValue();
+                        relWindowStatCalc = new SamplingStatCalculator();
+                    }
+                    if (previousWindowPercentile > 0) {
+                        double growthPct = (currentPct - previousWindowPercentile) * 100.0 / previousWindowPercentile;
+                        if (growthPct >= testValueRelThresholdPct) {
+                            log.info("P" + (int)(testValueRelPercentileValue * 100) + " grew " + String.format("%.1f", growthPct) + "% (" + (int)previousWindowPercentile + " ms -> " + (int)currentPct + " ms) over " + testValueRelWindowSecs + "s window, threshold " + testValueRelThresholdPct + "%. Auto-shutdown test...");
+                            System.out.println("AutoStop - P" + (int)(testValueRelPercentileValue * 100) + " grew " + String.format("%.1f", growthPct) + "% (" + (int)previousWindowPercentile + " ms -> " + (int)currentPct + " ms) over " + testValueRelWindowSecs + "s window, threshold " + testValueRelThresholdPct + "%. Auto-shutdown test...");
+                            stopTest();
+                        }
+                    }
+                    previousWindowPercentile = currentPct;
+                    relWindowStart = sec;
+                }
+            }
+
+            // Per-window error count ceiling check
+            if (testValueErrorCount > 0 && testValueErrorCountSec > 0) {
+                if (errorCountInWindow.get() > testValueErrorCount) {
+                    log.info("Error count more than " + getErrorCount() + " within " + getErrorCountSecs() + "s. Auto-shutdown test...");
+                    System.out.println("AutoStop - Error count more than " + getErrorCount() + " within " + getErrorCountSecs() + "s. Auto-shutdown test...");
+                    stopTest();
+                }
+                if (sec - errorCountWindowStart >= testValueErrorCountSec) {
+                    errorCountInWindow.set(0);
+                    errorCountWindowStart = sec;
+                }
+            }
+
             curSec = sec;
             avgRespTime = new GraphPanelChartAverageElement();
             avgRespLatency = new GraphPanelChartAverageElement();
@@ -191,6 +255,18 @@ public class AutoStop
         testPercentileValue = getPercentileValueAsFloat();
         testValueCustomSec = getCustomValidationDurationAsInt();
 
+        testValueRelPercentileValue = getRelPercentileValueAsFloat();
+        testValueRelWindowSecs = getRelWindowSecsAsInt();
+        testValueRelThresholdPct = getRelThresholdPctAsFloat();
+        synchronized (relWindowLock) {
+            relWindowStatCalc = new SamplingStatCalculator();
+        }
+        relWindowStart = System.currentTimeMillis() / 1000;
+        previousWindowPercentile = -1;
+        testValueErrorCount = getErrorCountAsInt();
+        testValueErrorCountSec = getErrorCountSecsAsInt();
+        errorCountInWindow.set(0);
+        errorCountWindowStart = System.currentTimeMillis() / 1000;
     }
 
     @Override
@@ -238,6 +314,18 @@ public class AutoStop
         setProperty(ERROR_RATE_SECS, text);
     }
 
+    void setRelPercentileValue(String text) { setProperty(REL_PERCENTILE_VALUE, text); }
+    void setRelWindowSecs(String text) { setProperty(REL_PERCENTILE_WINDOW_SECS, text); }
+    void setRelThresholdPct(String text) { setProperty(REL_PERCENTILE_THRESHOLD_PCT, text); }
+    String getRelPercentileValue() { return getPropertyAsString(REL_PERCENTILE_VALUE); }
+    String getRelWindowSecs() { return getPropertyAsString(REL_PERCENTILE_WINDOW_SECS); }
+    String getRelThresholdPct() { return getPropertyAsString(REL_PERCENTILE_THRESHOLD_PCT); }
+
+    void setErrorCount(String text) { setProperty(ERROR_COUNT, text); }
+    void setErrorCountSecs(String text) { setProperty(ERROR_COUNT_SECS, text); }
+    String getErrorCount() { return getPropertyAsString(ERROR_COUNT); }
+    String getErrorCountSecs() { return getPropertyAsString(ERROR_COUNT_SECS); }
+
     String getPercentileResponseTime() { return getPropertyAsString(PERCENTILE_RESPONSE_TIME); }
 
     String getPercentileResponseTimeSecs() { return getPropertyAsString(PERCENTILE_RESPONSE_TIME_SECS); }
@@ -271,113 +359,224 @@ public class AutoStop
     }
 
     private int getPercentileResponseTimeAsInt() {
+        String val = getPercentileResponseTime();
+        if (val == null || val.trim().isEmpty()) {
+            return 0;
+        }
         int res = 0;
         try {
-            res = Integer.parseInt(getPercentileResponseTime());
+            res = Integer.parseInt(val.trim());
         } catch (NumberFormatException e) {
-            log.error("Wrong response time: " + getPercentileResponseTime(), e);
+            log.error("Wrong response time: " + val, e);
             setPercentileResponseTime("0");
         }
         return res;
     }
 
     private int getPercentileResponseTimeSecsAsInt() {
+        String val = getPercentileResponseTimeSecs();
+        if (val == null || val.trim().isEmpty()) {
+            return 1;
+        }
         int res = 0;
         try {
-            res = Integer.parseInt(getPercentileResponseTimeSecs());
+            res = Integer.parseInt(val.trim());
         } catch (NumberFormatException e) {
-            log.error("Wrong response time period: " + getPercentileResponseTimeSecs(), e);
+            log.error("Wrong response time period: " + val, e);
             setPercentileResponseTimeSecs("1");
         }
         return res > 0 ? res : 1;
     }
 
     private int getCustomValidationDurationAsInt() {
+        String val = getCustomValidationDuration();
+        if (val == null || val.trim().isEmpty()) {
+            return 1;
+        }
         int res = 0;
         try {
-            res = Integer.parseInt(getCustomValidationDuration());
+            res = Integer.parseInt(val.trim());
         } catch (NumberFormatException e) {
-            log.error("Wrong time period: " + getCustomValidationDuration(), e);
+            log.error("Wrong time period: " + val, e);
             setCustomValidationDuration("1");
         }
         return res > 0 ? res : 1;
     }
 
     private float getPercentileValueAsFloat() {
+        String val = getPercentileValue();
+        if (val == null || val.trim().isEmpty()) {
+            return 1;
+        }
         float res = 0;
         try {
-            res = Float.parseFloat(getPercentileValue()) / 100;
+            res = Float.parseFloat(val.trim()) / 100;
         } catch (NumberFormatException e) {
-            log.error("Wrong Percentile Value: " + getPercentileValue(), e);
+            log.error("Wrong Percentile Value: " + val, e);
             setPercentileValue("1");
         }
         return res > 0 ? res : 1;
     }
 
     private int getResponseTimeAsInt() {
+        String val = getResponseTime();
+        if (val == null || val.trim().isEmpty()) {
+            return 0;
+        }
         int res = 0;
         try {
-            res = Integer.parseInt(getResponseTime());
+            res = Integer.parseInt(val.trim());
         } catch (NumberFormatException e) {
-            log.error("Wrong response time: " + getResponseTime(), e);
+            log.error("Wrong response time: " + val, e);
             setResponseTime("0");
         }
         return res;
     }
 
     private int getResponseTimeSecsAsInt() {
+        String val = getResponseTimeSecs();
+        if (val == null || val.trim().isEmpty()) {
+            return 1;
+        }
         int res = 0;
         try {
-            res = Integer.parseInt(getResponseTimeSecs());
+            res = Integer.parseInt(val.trim());
         } catch (NumberFormatException e) {
-            log.error("Wrong response time period: " + getResponseTime(), e);
+            log.error("Wrong response time period: " + val, e);
             setResponseTimeSecs("1");
         }
         return res > 0 ? res : 1;
     }
 
     private int getResponseLatencyAsInt() {
+        String val = getResponseLatency();
+        if (val == null || val.trim().isEmpty()) {
+            return 0;
+        }
         int res = 0;
         try {
-            res = Integer.parseInt(getResponseLatency());
+            res = Integer.parseInt(val.trim());
         } catch (NumberFormatException e) {
-            log.error("Wrong response time: " + getResponseLatency(), e);
+            log.error("Wrong response latency: " + val, e);
             setResponseLatency("0");
         }
         return res;
     }
 
     private int getResponseLatencySecsAsInt() {
+        String val = getResponseLatencySecs();
+        if (val == null || val.trim().isEmpty()) {
+            return 1;
+        }
         int res = 0;
         try {
-            res = Integer.parseInt(getResponseLatencySecs());
+            res = Integer.parseInt(val.trim());
         } catch (NumberFormatException e) {
-            log.error("Wrong response time period: " + getResponseLatencySecs(), e);
+            log.error("Wrong response latency period: " + val, e);
             setResponseLatencySecs("1");
         }
         return res > 0 ? res : 1;
     }
 
     private float getErrorRateAsFloat() {
+        String val = getErrorRate();
+        if (val == null || val.trim().isEmpty()) {
+            return 0;
+        }
         float res = 0;
         try {
-            res = Float.parseFloat(getErrorRate()) / 100;
+            res = Float.parseFloat(val.trim()) / 100;
         } catch (NumberFormatException e) {
-            log.error("Wrong error rate: " + getErrorRate(), e);
+            log.error("Wrong error rate: " + val, e);
             setErrorRate("0");
         }
         return res;
     }
 
     private int getErrorRateSecsAsInt() {
+        String val = getErrorRateSecs();
+        if (val == null || val.trim().isEmpty()) {
+            return 1;
+        }
         int res = 0;
         try {
-            res = Integer.parseInt(getErrorRateSecs());
+            res = Integer.parseInt(val.trim());
         } catch (NumberFormatException e) {
-            log.error("Wrong error rate period: " + getResponseTime(), e);
+            log.error("Wrong error rate period: " + val, e);
             setErrorRateSecs("1");
         }
         return res > 0 ? res : 1;
+    }
+
+    // New: parsers for relative window properties
+    private float getRelPercentileValueAsFloat() {
+        String val = getRelPercentileValue();
+        if (val == null || val.trim().isEmpty()) {
+            return 0;
+        }
+        float res = 0;
+        try {
+            res = Float.parseFloat(val.trim()) / 100f;
+        } catch (NumberFormatException e) {
+            log.error("Wrong relative percentile value: " + val, e);
+        }
+        return (res > 0 && res <= 1) ? res : 0;
+    }
+
+    private int getRelWindowSecsAsInt() {
+        String val = getRelWindowSecs();
+        if (val == null || val.trim().isEmpty()) {
+            return 0;
+        }
+        int res = 0;
+        try {
+            res = Integer.parseInt(val.trim());
+        } catch (NumberFormatException e) {
+            log.error("Wrong relative window secs: " + val, e);
+        }
+        return res > 0 ? res : 0;
+    }
+
+    private float getRelThresholdPctAsFloat() {
+        String val = getRelThresholdPct();
+        if (val == null || val.trim().isEmpty()) {
+            return 0;
+        }
+        float res = 0;
+        try {
+            res = Float.parseFloat(val.trim());
+        } catch (NumberFormatException e) {
+            log.error("Wrong relative threshold pct: " + val, e);
+        }
+        return res > 0 ? res : 0;
+    }
+
+    private int getErrorCountAsInt() {
+        String val = getErrorCount();
+        if (val == null || val.trim().isEmpty()) {
+            return 0;
+        }
+        int res = 0;
+        try {
+            res = Integer.parseInt(val.trim());
+        } catch (NumberFormatException e) {
+            log.error("Wrong error count: " + val, e);
+        }
+        return res > 0 ? res : 0;
+    }
+
+    private int getErrorCountSecsAsInt() {
+        String val = getErrorCountSecs();
+        if (val == null || val.trim().isEmpty()) {
+            return 0;
+        }
+        int res = 0;
+        try {
+            res = Integer.parseInt(val.trim());
+        } catch (NumberFormatException e) {
+            log.error("Wrong error count secs: " + val, e);
+        }
+        return res > 0 ? res : 0;
     }
 
     private void stopTest() {

@@ -54,7 +54,7 @@
     "canUninstall": false,
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_core/%1$s/ApacheJMeter_core-%1$s.jar"
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_core/%1$s/ApacheJMeter_core-%1$s.jar"
       }
     }
   },
@@ -73,7 +73,7 @@
     ],
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_tcp/%1$s/ApacheJMeter_tcp-%1$s.jar"
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_tcp/%1$s/ApacheJMeter_tcp-%1$s.jar"
       }
     }
   },
@@ -97,7 +97,7 @@
     ],
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_ldap/%1$s/ApacheJMeter_ldap-%1$s.jar"
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_ldap/%1$s/ApacheJMeter_ldap-%1$s.jar"
       }
     }
   },
@@ -115,7 +115,7 @@
     ],
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_native/%1$s/ApacheJMeter_native-%1$s.jar"
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_native/%1$s/ApacheJMeter_native-%1$s.jar"
       }
     }
   },
@@ -133,7 +133,7 @@
     ],
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_mongodb/%1$s/ApacheJMeter_mongodb-%1$s.jar"
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_mongodb/%1$s/ApacheJMeter_mongodb-%1$s.jar"
       }
     }
   },
@@ -153,7 +153,7 @@
     ],
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_mail/%1$s/ApacheJMeter_mail-%1$s.jar"
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_mail/%1$s/ApacheJMeter_mail-%1$s.jar"
       }
     }
   },
@@ -171,7 +171,7 @@
     ],
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_junit/%1$s/ApacheJMeter_junit-%1$s.jar"
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_junit/%1$s/ApacheJMeter_junit-%1$s.jar"
       }
     }
   },
@@ -193,7 +193,7 @@
     ],
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_jms/%1$s/ApacheJMeter_jms-%1$s.jar"
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_jms/%1$s/ApacheJMeter_jms-%1$s.jar"
       }
     }
   },
@@ -213,7 +213,7 @@
     ],
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_jdbc/%1$s/ApacheJMeter_jdbc-%1$s.jar"
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_jdbc/%1$s/ApacheJMeter_jdbc-%1$s.jar"
       }
     }
   },
@@ -237,7 +237,7 @@
     ],
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_java/%1$s/ApacheJMeter_java-%1$s.jar"
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_java/%1$s/ApacheJMeter_java-%1$s.jar"
       }
     }
   },
@@ -256,7 +256,7 @@
     ],
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_ftp/%1$s/ApacheJMeter_ftp-%1$s.jar"
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_ftp/%1$s/ApacheJMeter_ftp-%1$s.jar"
       }
     }
   },
@@ -302,7 +302,7 @@
     ],
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_http/%1$s/ApacheJMeter_http-%1$s.jar"
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_http/%1$s/ApacheJMeter_http-%1$s.jar"
       }
     }
   },
@@ -417,12 +417,12 @@
     ],
     "versions": {
       "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_components/%1$s/ApacheJMeter_components-%1$s.jar",
+        "downloadUrl": "https://repo.maven.apache.org/maven2/org/apache/jmeter/ApacheJMeter_components/%1$s/ApacheJMeter_components-%1$s.jar",
         "libs": {
-          "json-path": "http://search.maven.org/remotecontent?filepath=com/jayway/jsonpath/json-path/2.4.0/json-path-2.4.0.jar",
-          "json-lib": "http://search.maven.org/remotecontent?filepath=net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
-          "json-smart": "http://search.maven.org/remotecontent?filepath=net/minidev/json-smart/2.3/json-smart-2.3.jar",
-          "asm": "http://search.maven.org/remotecontent?filepath=net/minidev/asm/1.0.2/asm-1.0.2.jar"
+          "json-path": "https://repo.maven.apache.org/maven2/com/jayway/jsonpath/json-path/2.4.0/json-path-2.4.0.jar",
+          "json-lib": "https://repo.maven.apache.org/maven2/net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
+          "json-smart": "https://repo.maven.apache.org/maven2/net/minidev/json-smart/2.3/json-smart-2.3.jar",
+          "asm": "https://repo.maven.apache.org/maven2/net/minidev/asm/1.0.2/asm-1.0.2.jar"
         }
       }
     }

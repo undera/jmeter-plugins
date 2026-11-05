@@ -3077,8 +3077,8 @@
   {
     "id": "feather-wand-jmeter-ai-agent",
     "name": "Feather Wand - JMeter AI Agent",
-    "description": "Add AI Agent to JMeter",
-    "screenshotUrl": "https://raw.githubusercontent.com/QAInsights/jmeter-ai/main/images/Feather-Wand-AI-Agent-JMeter.png",
+    "description": "AI assistant and autonomous agent for Apache JMeter. Chat with Claude, OpenAI, Google Gemini, DeepSeek, Grok, Meta Muse, AWS Bedrock, Ollama or Apple on-device models, or sign in with your ChatGPT/Codex or Claude Code account, without leaving the JMeter GUI.<ul><li><b>Agent Mode</b>: describe a load test in plain English and the agent builds and edits the test plan for you with 21 JMeter tools, from Thread Groups and samplers to assertions and listeners.</li><li><b>Extract this</b>: highlight a value in View Results Tree and get JSON, CSS selector, regex or boundary extractors that are verified against the real response. Correlation without guesswork, and it works without an API key.</li><li><b>Context-aware commands</b>: @this, @testplan, @optimize, @lint, @sla and @wrap review and tune the plan you have open.</li><li><b>JSR223 refactoring</b>: right-click a Groovy script to refactor, format or add functions.</li><li><b>AI CLI terminal</b>: run Claude Code, OpenAI Codex, OpenCode or Grok CLI in a JMeter tab.</li><li><b>MCP server</b>: let Claude Code, Cursor, Codex or any MCP client read, edit, run and analyze the open test plan.</li><li>Attach jmeter.log or JTL results for error and percentile analysis, record browser flows, and export conversations to Markdown or HTML.</li></ul>Requires Java 17 or later. Ollama and Apple on-device need no API key; for the other providers, add a key to user.properties using the quick-start file in the documentation.",
+    "screenshotUrl": "https://raw.githubusercontent.com/QAInsights/jmeter-ai/refs/heads/main/images/Feather-Wand-AI-Agent-JMeter.png",
     "helpUrl": "https://github.com/QAInsights/jmeter-ai",
     "vendor": "QAInsights.com",
     "markerClass": "org.qainsights.jmeter.ai.gui.AI",
@@ -3394,6 +3394,14 @@
       "3.9.0": {
         "changes": "NEW: Apple Foundational Models support and other bug fixes ",
         "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v3.9.0/jmeter-agent-3.9.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+      "4.0.0": {
+        "changes": "NEW: Workload Designer, Connection Provider, Workload Preflight, OpenRouter support, Context Aware suggestions, minor enhancements, slimmer JAR and bug fixes.",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v4.0.0/jmeter-agent-4.0.0.jar",
         "depends": [
           "jmeter-core",
           "jmeter-components"

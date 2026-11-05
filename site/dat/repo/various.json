@@ -3400,7 +3400,7 @@
         ]
       },
       "4.0.0": {
-        "changes": "NEW: Workload Designer, Connection Provider, Workload Preflight, OpenRouter support, Context Aware suggestions, minor enhancements, slimmer JAR and bug fixes.",
+        "changes": "NEW: Workload Designer, Connection Provider, Workload Preflight, OpenRouter support, Context Aware suggestions, minor enhancements, slimmer JAR and bug fixes. enabled by default (opt out via jmeter.ai.telemetry.enabled=false or FEATHER_WAND_TELEMETRY=0).",
         "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v4.0.0/jmeter-agent-4.0.0.jar",
         "depends": [
           "jmeter-core",

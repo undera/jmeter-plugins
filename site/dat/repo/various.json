@@ -3972,5 +3972,67 @@
         "downloadUrl": "https://github.com/GeorgeKalyaev/jmeter-interval-controller/releases/download/v1.1.2/jmeter-interval-controller-1.1.2.jar"
       }
     }
+  },
+  {
+    "id": "jmeter-correlationstudio",
+    "name": "Correlation Studio for JMeter",
+    "description": "Automates the full release-to-release lifecycle of a JMeter script. Auto-Correlator: detects session tokens, CSRF values, and hidden fields by analyzing a HAR/JTL recording, suggests Regular Expression Extractors, and lets you review and apply them (with a built-in regex tester, NeoLoad-style). Saves correlation rules as reusable templates, organized by project, so the next release's script gets the same correlations applied automatically. Record Scenario: records browser scenarios via Playwright — either a fully scripted, repeatable .js file or a live, click-through interactive session — with named Transaction Controller grouping, text/response-code assertions, and one-time browser rendering-timing and per-request network-timing baselines (DNS/connect/SSL/TTFB/download). Generates a fresh .jmx directly from a HAR recording. Compare Scripts/Recordings: diffs two .jmx/.har/.jtl files — added/removed/changed requests, parameter and body field changes, and Transaction Controller differences — as a color-coded, IDE-style diff, so you can see exactly what the application changed between releases before re-correlating anything. Capture Render Timing Under Load: starts your test plan's own load test, then runs one real browser through your scenario while that load is active, to see what the UI experiences under realistic concurrent load.",
+    "screenshotUrl": "https://github.com/ajinsudhir/jmeter-correlationstudio/raw/main/docs/screenshot.png",
+    "helpUrl": "https://github.com/ajinsudhir/jmeter-correlationstudio",
+    "vendor": "Ajin Sudhir",
+    "markerClass": "io.correlationstudio.jmeter.CorrelatorMenuCreator",
+    "componentClasses": [
+      "io.correlationstudio.jmeter.CorrelatorMenuCreator",
+      "io.correlationstudio.jmeter.CorrelatorDialog",
+      "io.correlationstudio.jmeter.PlaywrightRecorderDialog",
+      "io.correlationstudio.jmeter.InteractiveRecorderDialog",
+      "io.correlationstudio.jmeter.CompareDialog",
+      "io.correlationstudio.jmeter.LoadTestRenderCaptureDialog"
+    ],
+    "canUninstall": true,
+    "versions": {
+      "1.0.0": {
+        "changes": "Initial public release.",
+        "downloadUrl": "https://github.com/ajinsudhir/jmeter-correlationstudio/releases/download/v1.0.0/jmeter-correlationstudio-1.0.0.jar"
+      }
+    }
+  },
+  {
+    "id": "jmeter-insightdashboard",
+    "name": "Insight Dashboard for JMeter",
+    "description": "A real-time, collapsible per-transaction results listener for JMeter: live stat cards, response-time charts, a tree table (expand a transaction to see its individual requests, SLA threshold highlighting, throughput/P90/P95/P99), CSV/Excel export, a structured, numbered performance report (test overview, slowest transactions/requests, failures, error codes, SLA compliance) that populates automatically as soon as a test finishes, and an AI-assisted Observations section, Chat tab, and failure explanations (via a local Gemini CLI or Claude Code install) — all computed directly from the test data, with the AI layer entirely optional.",
+    "screenshotUrl": "https://github.com/ajinsudhir/jmeter-insightdashboard/raw/main/docs/screenshot.png",
+    "helpUrl": "https://github.com/ajinsudhir/jmeter-insightdashboard",
+    "vendor": "Ajin Sudhir",
+    "markerClass": "io.insightdashboard.jmeter.CustomDashboardVisualizer",
+    "componentClasses": [
+      "io.insightdashboard.jmeter.CustomDashboardVisualizer"
+    ],
+    "canUninstall": true,
+    "versions": {
+      "1.0.0": {
+        "changes": "Initial public release.",
+        "downloadUrl": "https://github.com/ajinsudhir/jmeter-insightdashboard/releases/download/v1.0.0/jmeter-insightdashboard-1.0.0.jar"
+      }
+    }
+  },
+  {
+    "id": "jmeter-mcpbridge",
+    "name": "MCP Bridge for JMeter",
+    "description": "A localhost-only MCP (Model Context Protocol) server exposing generic JMeter test-plan operations — reading and editing whatever's currently open in the GUI — to any MCP-capable agent (Claude Code, Codex, opencode). Ten tools: get_tree, get_element_properties, add_element, modify_element, clone_element, move_element, delete_element, get_arguments, modify_argument and a heuristic analyze_dynamic_candidates scan. Every write goes through JMeter's own undo transaction. Split out from Correlation Studio so it's usable independently of that or any other plugin.",
+    "screenshotUrl": "https://github.com/ajinsudhir/jmeter-mcpbridge/raw/main/docs/screenshot.png",
+    "helpUrl": "https://github.com/ajinsudhir/jmeter-mcpbridge",
+    "vendor": "Ajin Sudhir",
+    "markerClass": "io.mcpbridge.jmeter.McpBridgeMenuCreator",
+    "componentClasses": [
+      "io.mcpbridge.jmeter.McpBridgeMenuCreator"
+    ],
+    "canUninstall": true,
+    "versions": {
+      "1.0.0": {
+        "changes": "Initial public release.",
+        "downloadUrl": "https://github.com/ajinsudhir/jmeter-mcpbridge/releases/download/v1.0.0/jmeter-mcpbridge-1.0.0.jar"
+      }
+    }
   }
 ]

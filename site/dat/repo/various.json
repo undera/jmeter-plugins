@@ -3406,6 +3406,14 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+      "4.0.1": {
+        "changes": "NEW: Save tokens; OpenCode v2 compatibility and minor fixes. Telemetry enabled by default (opt out via jmeter.ai.telemetry.enabled=false or FEATHER_WAND_TELEMETRY=0).",
+        "downloadUrl": "https://github.com/QAInsights/jmeter-ai/releases/download/v4.0.1/jmeter-agent-4.0.1.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   },

@@ -127,5 +127,48 @@ public class ArrivalsThreadGroupTest {
         atg.tellThreadsToStop();
         atg.verifyThreadsStopped();
     }
-}
 
+    @Test
+    public void testStopWithIdlePoolThread() throws Exception {
+        ArrivalsThreadGroupEmul atg = startWithIdlePoolThread();
+        try {
+            atg.tellThreadsToStop();
+            assertTrue(atg.verifyThreadsStopped());
+        } finally {
+            atg.stop();
+            atg.testEnded();
+        }
+    }
+
+    @Test
+    public void testStopNowWithIdlePoolThread() throws Exception {
+        ArrivalsThreadGroupEmul atg = startWithIdlePoolThread();
+        try {
+            atg.stop();
+            assertTrue(atg.verifyThreadsStopped());
+        } finally {
+            atg.testEnded();
+        }
+    }
+
+    private static ArrivalsThreadGroupEmul startWithIdlePoolThread() throws InterruptedException {
+        ArrivalsThreadGroupEmul atg = new ArrivalsThreadGroupEmul();
+        atg.setName("TEST");
+        atg.setTargetLevel("1");
+        atg.setHold("60");
+        ListedHashTree tree = new ListedHashTree();
+        TestAction pauser = new TestAction();
+        pauser.setAction(TestAction.PAUSE);
+        pauser.setTarget(TestAction.THREAD);
+        pauser.setDuration("100");
+        tree.add(atg, pauser);
+        atg.testStarted();
+        atg.start(0, null, tree, null);
+        long deadline = System.currentTimeMillis() + 5000;
+        while (atg.poolThreads.isEmpty()) {
+            assertTrue("no thread has moved to the pool", System.currentTimeMillis() < deadline);
+            Thread.sleep(10);
+        }
+        return atg;
+    }
+}

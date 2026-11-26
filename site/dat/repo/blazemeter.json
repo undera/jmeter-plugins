@@ -1149,6 +1149,14 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "3.2.1": {
+        "changes": "Stability & reliability maintenance release focused on long, high-concurrency runs",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http-plugin/releases/download/v3.2.1/jmeter-bzm-http2-3.2.1.jar",
+        "libs": {},
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

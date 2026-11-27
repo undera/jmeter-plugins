@@ -71,14 +71,29 @@ public class ArrivalsThreadGroup extends AbstractDynamicThreadGroup {
     @Override
     public void tellThreadsToStop() {
         super.tellThreadsToStop();
+        // stopThread() looks only through active threads, so wake idle pool threads directly.
+        // No OS interrupt here: a thread being released concurrently would get it mid-sample
         for (DynamicThread thread : poolThreads) {
-            stopThread(thread.getThreadName(), true);
+            thread.stop();
+            //noinspection SynchronizationOnLocalVariableOrMethodParameter
+            synchronized (thread) {
+                thread.notify();
+            }
         }
     }
 
     @Override
     public boolean verifyThreadsStopped() {
         boolean parent = super.verifyThreadsStopped();
+        for (DynamicThread thread : poolThreads) {
+            if (thread.getOSThread() != null) {
+                try {
+                    thread.getOSThread().join(WAIT_TO_DIE);
+                } catch (InterruptedException e) {
+                    log.warn("Interrupted", e);
+                }
+            }
+        }
         log.info("Verify shutdown thread counts: " + threads.size() + "/" + poolThreads.size());
         return parent && poolThreads.isEmpty();
     }
@@ -97,11 +112,16 @@ public class ArrivalsThreadGroup extends AbstractDynamicThreadGroup {
         //noinspection SynchronizationOnLocalVariableOrMethodParameter
         synchronized (thread) {
             try {
-                thread.wait();
+                // releasedPoolThread() removes the thread before notify, so the guard also covers
+                // a release or stop that comes before this wait, and spurious wakeups
+                while (running && !thread.isStopping() && poolThreads.contains(thread)) {
+                    thread.wait();
+                }
             } catch (InterruptedException e) {
                 log.debug("Interrupted", e);
             }
         }
+        poolThreads.remove(thread);
         ThreadCountsAccessor.incrNumberOfThreads();
         return running;
     }
